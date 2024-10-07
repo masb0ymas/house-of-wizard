@@ -1,5 +1,6 @@
 {
   "name": "house-of-wizard",
+  "description": "Learn Web3 Academy with House of Wizard",
   "version": "0.0.1",
   "private": true,
   "scripts": {
