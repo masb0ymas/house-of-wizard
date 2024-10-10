@@ -4,6 +4,7 @@ import { Button, Stack, Text } from "@mantine/core"
 import { IconReload } from "@tabler/icons-react"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
+import _ from "lodash"
 import Link from "next/link"
 import { type BaseError } from "viem"
 import { base } from "viem/chains"
@@ -11,6 +12,7 @@ import {
   useAccount,
   useEnsName,
   useReadContract,
+  useSwitchChain,
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi"
@@ -32,8 +34,11 @@ export default function Attendance() {
     hash,
   })
 
+  const defaultChainId = base.id
+  const { switchChain } = useSwitchChain()
+
   const { data } = useWebinarLatest()
-  const attendanceContract = getContractByChain(base.id)
+  const attendanceContract = getContractByChain(defaultChainId)
 
   const mutation = useMutation({
     // @ts-expect-error
@@ -81,7 +86,7 @@ export default function Attendance() {
     args: [account.address, start_date],
   })
 
-  console.log(result.data, start_date, data)
+  // console.log(result.data, result.isLoading, result.isFetching, start_date, data, chains)
 
   function checkingButton() {
     return (
@@ -105,6 +110,14 @@ export default function Attendance() {
 
       if (result.isLoading || result.isFetching) {
         return checkingButton()
+      }
+
+      if (_.isNil(result.data) && (!result.isLoading || !result.isFetching)) {
+        return (
+          <Button size="lg" radius="lg" onClick={() => switchChain({ chainId: defaultChainId })}>
+            Switch to Base
+          </Button>
+        )
       }
 
       if (is_attendance) {
