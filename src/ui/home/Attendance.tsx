@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import Link from "next/link"
 import { type BaseError } from "viem"
+import { base } from "viem/chains"
 import {
   useAccount,
   useEnsName,
@@ -32,7 +33,7 @@ export default function Attendance() {
   })
 
   const { data, refetch } = useWebinarLatest()
-  const attendanceContract = getContractByChain()
+  const attendanceContract = getContractByChain(base.id)
 
   const mutation = useMutation({
     // @ts-expect-error

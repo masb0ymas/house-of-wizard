@@ -17,7 +17,7 @@ export default function Welcome() {
   const account = useAccount()
 
   const { data, isLoading, isFetching } = useWebinarLatest()
-  const attendanceContract = getContractByChain()
+  const attendanceContract = getContractByChain(base.id)
 
   const isFetchingData = isLoading || isFetching
   const start_date = data?.start_date && dateToUnixtime(data?.start_date)
