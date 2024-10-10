@@ -5,6 +5,7 @@ import { formatDate } from "date-fns"
 import { id } from "date-fns/locale"
 import _ from "lodash"
 import Link from "next/link"
+import { base } from "viem/chains"
 import { useAccount, useReadContract } from "wagmi"
 import { getContractByChain } from "~/artifact/contract/attendance"
 import classes from "~/components/description/description.module.css"
@@ -16,7 +17,7 @@ export default function Welcome() {
   const account = useAccount()
 
   const { data, isLoading, isFetching } = useWebinarLatest()
-  const attendanceContract = getContractByChain()
+  const attendanceContract = getContractByChain(base.id)
 
   const isFetchingData = isLoading || isFetching
   const start_date = data?.start_date && dateToUnixtime(data?.start_date)

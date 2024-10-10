@@ -4,6 +4,7 @@ import { Button, Text } from "@mantine/core"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { useState } from "react"
+import { base } from "viem/chains"
 import { useAccount, useEnsName, useReadContract, useWriteContract } from "wagmi"
 import { z } from "zod"
 import { getContractByChain } from "~/artifact/contract/attendance"
@@ -22,7 +23,7 @@ export default function Attendance() {
   const [visible, setVisible] = useState(false)
 
   const { data } = useWebinarLatest()
-  const attendanceContract = getContractByChain()
+  const attendanceContract = getContractByChain(base.id)
 
   const mutation = useMutation({
     // @ts-expect-error
