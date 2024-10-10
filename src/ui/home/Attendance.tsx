@@ -32,7 +32,7 @@ export default function Attendance() {
     hash,
   })
 
-  const { data, refetch } = useWebinarLatest()
+  const { data } = useWebinarLatest()
   const attendanceContract = getContractByChain(base.id)
 
   const mutation = useMutation({
@@ -160,7 +160,7 @@ export default function Attendance() {
 
               {isConfirmed && (
                 <Button
-                  onClick={() => refetch()}
+                  onClick={() => result.refetch()}
                   leftSection={<IconReload />}
                   radius="lg"
                   size="md"
