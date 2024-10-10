@@ -1,6 +1,6 @@
 import { Abi } from "viem"
 import { base, sepolia } from "viem/chains"
-import sepolia_contract_abi from "./abi_sepolia.json"
+import contract_abi from "./contractAbi.json"
 
 interface AttendanceContractProps {
   address: `0x${string}`
@@ -19,7 +19,7 @@ export function getContractByChain(chain?: number) {
 
   let attendanceContract: AttendanceContractProps = {
     address: sepolia_contract_address,
-    abi: sepolia_contract_abi.abi,
+    abi: contract_abi.abi,
     explorer: "https://sepolia.etherscan.io",
   } as const
 
@@ -27,7 +27,7 @@ export function getContractByChain(chain?: number) {
   if (chain === sepolia.id) {
     attendanceContract = {
       address: sepolia_contract_address,
-      abi: sepolia_contract_abi.abi,
+      abi: contract_abi.abi,
       explorer: "https://sepolia.etherscan.io",
     } as const
   }
@@ -36,7 +36,7 @@ export function getContractByChain(chain?: number) {
   if (chain === base.id) {
     attendanceContract = {
       address: base_contract_address,
-      abi: sepolia_contract_abi.abi,
+      abi: contract_abi.abi,
       explorer: "https://basescan.org",
     } as const
   }
