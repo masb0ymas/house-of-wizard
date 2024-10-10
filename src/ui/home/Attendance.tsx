@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@mantine/core"
+import { Button, Text } from "@mantine/core"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { useState } from "react"
@@ -70,7 +70,7 @@ export default function Attendance() {
     args: [account.address, start_date],
   })
 
-  console.log(result.data, start_date)
+  console.log(result.data, start_date, data)
 
   function checkingButton() {
     return (
@@ -81,56 +81,62 @@ export default function Attendance() {
   }
 
   function buttonAction() {
-    // account connected with checking attendance
-    if (account.isConnected && (result.isLoading || result.isFetching)) {
-      return checkingButton()
-    }
-
-    // account connect with attendance
     // @ts-expect-error
-    if (result.data && validate.boolean(result.data[0])) {
-      return (
-        <Button size="lg" radius="lg" variant="subtle" disabled>
-          You are Attendance
-        </Button>
-      )
-    }
+    const is_attendance = result.data && validate.boolean(result.data[0])
 
-    // account connect without attendance
     // @ts-expect-error
-    if (account.isConnected && result.data && validate.boolean(result.data[0]) === false) {
-      return (
-        <Button
-          size="lg"
-          radius="lg"
-          onClick={() => {
-            setVisible(true)
+    const is_not_attendance = result.data && validate.boolean(result.data[0]) === false
 
-            const epochTime = data?.start_date && dateToUnixtime(data?.start_date)
-            const ipfs_cid = data?.ipfs_cid
+    if (account.isConnected) {
+      if (!data) {
+        return <Text size="lg">There are no webinars at this time</Text>
+      }
 
-            console.log("Save to DB")
-            markAttendance()
+      if (result.isLoading || result.isFetching) {
+        return checkingButton()
+      }
 
-            console.log("Mark Attendance to Contract", epochTime)
-            writeContract({
-              abi: attendanceContract.abi,
-              address: attendanceContract.address,
-              functionName: "markAttendance",
-              args: [epochTime, true, ipfs_cid],
-            })
+      if (is_attendance) {
+        return (
+          <Button size="lg" radius="lg" variant="subtle" disabled>
+            You are Attendance
+          </Button>
+        )
+      }
 
-            setVisible(false)
-          }}
-          loading={visible}
-        >
-          Attendance
-        </Button>
-      )
+      if (is_not_attendance) {
+        return (
+          <Button
+            size="lg"
+            radius="lg"
+            onClick={() => {
+              setVisible(true)
+
+              const epochTime = data?.start_date && dateToUnixtime(data?.start_date)
+              const ipfs_cid = data?.ipfs_cid
+
+              console.log("Save to DB")
+              markAttendance()
+
+              console.log("Mark Attendance to Contract", epochTime)
+              writeContract({
+                abi: attendanceContract.abi,
+                address: attendanceContract.address,
+                functionName: "markAttendance",
+                args: [epochTime, true, ipfs_cid],
+              })
+
+              setVisible(false)
+            }}
+            loading={visible}
+          >
+            Attendance
+          </Button>
+        )
+      }
     }
 
-    // checking
-    return checkingButton()
+    return null
   }
 
   return <>{buttonAction()}</>
