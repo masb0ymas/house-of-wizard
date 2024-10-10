@@ -1,11 +1,18 @@
 "use client"
 
-import { Button, Text } from "@mantine/core"
+import { Button, Stack, Text } from "@mantine/core"
+import { IconReload } from "@tabler/icons-react"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
-import { useState } from "react"
-import { base } from "viem/chains"
-import { useAccount, useEnsName, useReadContract, useWriteContract } from "wagmi"
+import Link from "next/link"
+import { type BaseError } from "viem"
+import {
+  useAccount,
+  useEnsName,
+  useReadContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi"
 import { z } from "zod"
 import { getContractByChain } from "~/artifact/contract/attendance"
 import { env } from "~/config/env"
@@ -19,11 +26,13 @@ export default function Attendance() {
   const account = useAccount()
   const ens = useEnsName({ address: account.address })
 
-  const { writeContract } = useWriteContract()
-  const [visible, setVisible] = useState(false)
+  const { data: hash, error, isPending, writeContract } = useWriteContract()
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  })
 
-  const { data } = useWebinarLatest()
-  const attendanceContract = getContractByChain(base.id)
+  const { data, refetch } = useWebinarLatest()
+  const attendanceContract = getContractByChain()
 
   const mutation = useMutation({
     // @ts-expect-error
@@ -107,32 +116,59 @@ export default function Attendance() {
 
       if (is_not_attendance) {
         return (
-          <Button
-            size="lg"
-            radius="lg"
-            onClick={() => {
-              setVisible(true)
+          <>
+            <Button
+              size="lg"
+              radius="lg"
+              onClick={() => {
+                const epochTime = data?.start_date && dateToUnixtime(data?.start_date)
+                const ipfs_cid = data?.ipfs_cid
 
-              const epochTime = data?.start_date && dateToUnixtime(data?.start_date)
-              const ipfs_cid = data?.ipfs_cid
+                console.log("Save to DB")
+                markAttendance()
 
-              console.log("Save to DB")
-              markAttendance()
+                console.log("Mark Attendance to Contract", epochTime)
+                writeContract({
+                  abi: attendanceContract.abi,
+                  address: attendanceContract.address,
+                  functionName: "markAttendance",
+                  args: [epochTime, true, ipfs_cid],
+                })
+              }}
+              disabled={isPending || isConfirming}
+            >
+              {isPending || isConfirming ? "Confirming..." : "Attendance"}
+            </Button>
 
-              console.log("Mark Attendance to Contract", epochTime)
-              writeContract({
-                abi: attendanceContract.abi,
-                address: attendanceContract.address,
-                functionName: "markAttendance",
-                args: [epochTime, true, ipfs_cid],
-              })
+            <Stack gap={10} mt={16} align="center">
+              {hash && (
+                <Text>
+                  Transaction Hash:{" "}
+                  <Link
+                    href={`${attendanceContract.explorer}/tx/${hash}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {hash}
+                  </Link>
+                </Text>
+              )}
+              {isConfirming && <Text>Waiting for confirmation...</Text>}
+              {isConfirmed && <Text>Transaction confirmed.</Text>}
+              {error && <Text>Error: {(error as BaseError).shortMessage || error.message}</Text>}
 
-              setVisible(false)
-            }}
-            loading={visible}
-          >
-            Attendance
-          </Button>
+              {isConfirmed && (
+                <Button
+                  onClick={() => refetch()}
+                  leftSection={<IconReload />}
+                  radius="lg"
+                  size="md"
+                >
+                  Refresh
+                </Button>
+              )}
+            </Stack>
+          </>
         )
       }
     }
@@ -140,5 +176,5 @@ export default function Attendance() {
     return null
   }
 
-  return <>{buttonAction()}</>
+  return buttonAction()
 }
