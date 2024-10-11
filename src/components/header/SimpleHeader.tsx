@@ -2,8 +2,11 @@
 
 import { Burger, Button, Center, Container, Group, Menu, Paper } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
-import { IconChevronDown } from "@tabler/icons-react"
+import { IconChevronDown, IconUnlink } from "@tabler/icons-react"
 import Link from "next/link"
+import { base } from "viem/chains"
+import { useAccount, useConnect, useDisconnect } from "wagmi"
+import { injected } from "wagmi/connectors"
 import Brand from "../brand"
 import { LinksGroup } from "./partials/LinkGroup"
 import classes from "./partials/simpleHeader.module.css"
@@ -23,6 +26,26 @@ const links = [
     ],
   },
 ]
+
+function WalletConnect() {
+  const account = useAccount()
+  const { connect } = useConnect()
+  const { disconnect } = useDisconnect()
+
+  if (account.isConnected) {
+    return (
+      <Button variant="light" radius="lg" onClick={() => disconnect()} leftSection={<IconUnlink size={18} />}>
+        Disconnect
+      </Button>
+    )
+  }
+
+  return (
+    <Button radius="lg" onClick={() => connect({ connector: injected(), chainId: base.id })}>
+      Connect Wallet
+    </Button>
+  )
+}
 
 export default function SimpleHeader() {
   const [opened, { toggle }] = useDisclosure(false)
@@ -62,14 +85,18 @@ export default function SimpleHeader() {
           <Brand />
           <Group gap={5} visibleFrom="sm">
             {desktopNavItems}
-            <Button radius="lg">Connect Wallet</Button>
+
+            <WalletConnect />
           </Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
         </div>
 
+        {/* mobile version */}
         {opened && (
           <Paper shadow="lg" className={classes.mobile_link}>
             {mobileNavItems}
+
+            <WalletConnect />
           </Paper>
         )}
       </Container>
