@@ -36,7 +36,6 @@ export default function Attendance() {
   })
 
   const chainId = useChainId()
-  const { switchChain } = useSwitchChain()
 
   const { data } = useWebinarLatest()
   const attendanceContract = getContractByChain(chainId)

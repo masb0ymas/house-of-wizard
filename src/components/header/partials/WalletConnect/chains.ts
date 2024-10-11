@@ -17,3 +17,5 @@ export const testnets = [
     chainId: sepolia.id,
   },
 ]
+
+export const listChains = [...mainnets, ...testnets]
