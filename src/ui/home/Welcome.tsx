@@ -61,7 +61,11 @@ export default function Welcome() {
       }
     }
 
-    return <Text>To become a great wizard, connect your wallet first.</Text>
+    if (account.isDisconnected) {
+      return <Text>To become a great wizard, connect your wallet first.</Text>
+    }
+    
+    return null
   }
 
   return gretting()
