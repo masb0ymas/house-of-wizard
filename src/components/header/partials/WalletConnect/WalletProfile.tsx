@@ -20,7 +20,11 @@ import { useAccount, useDisconnect, useSwitchChain } from "wagmi"
 import { shortText } from "~/lib/string"
 import { mainnets, testnets } from "./chains"
 
-function Mainnet() {
+interface WalletProfileProps {
+  close: () => void
+}
+
+function Mainnet(props: WalletProfileProps) {
   const { switchChain } = useSwitchChain()
 
   return (
@@ -33,7 +37,12 @@ function Mainnet() {
         {mainnets.map((item) => {
           return (
             <Grid.Col span={2} key={item.chainId}>
-              <UnstyledButton onClick={() => switchChain({ chainId: item.chainId })}>
+              <UnstyledButton
+                onClick={() => {
+                  switchChain({ chainId: item.chainId })
+                  props.close()
+                }}
+              >
                 <Stack gap={0} align="center">
                   <Avatar size="md" src={item.image} alt={item.description} />
                   <Text size="sm">{item.title}</Text>
@@ -47,7 +56,7 @@ function Mainnet() {
   )
 }
 
-function Testnet() {
+function Testnet(props: WalletProfileProps) {
   const { switchChain } = useSwitchChain()
 
   return (
@@ -60,7 +69,12 @@ function Testnet() {
         {testnets.map((item) => {
           return (
             <Grid.Col span={2} key={item.chainId}>
-              <UnstyledButton onClick={() => switchChain({ chainId: item.chainId })}>
+              <UnstyledButton
+                onClick={() => {
+                  switchChain({ chainId: item.chainId })
+                  props.close()
+                }}
+              >
                 <Stack gap={0} align="center">
                   <Avatar size="md" src={item.image} alt={item.description} />
                   <Text size="sm">{item.title}</Text>
@@ -74,7 +88,7 @@ function Testnet() {
   )
 }
 
-export default function WalletProfile() {
+export default function WalletProfile(props: WalletProfileProps) {
   const account = useAccount()
   const { disconnect } = useDisconnect()
 
@@ -108,11 +122,11 @@ export default function WalletProfile() {
 
       <Divider variant="dashed" my={7} />
 
-      <Mainnet />
+      <Mainnet close={props.close} />
 
       <Divider variant="dashed" my={7} />
 
-      <Testnet />
+      <Testnet close={props.close} />
 
       <Button
         variant="filled"

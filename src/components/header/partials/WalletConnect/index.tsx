@@ -3,6 +3,7 @@
 import { Button, Group, Modal, Tooltip, UnstyledButton } from "@mantine/core"
 import { useDisclosure, useViewportSize } from "@mantine/hooks"
 import { IconWallet } from "@tabler/icons-react"
+import _ from "lodash"
 import { base } from "viem/chains"
 import { useAccount, useChainId, useConnect, useEnsName } from "wagmi"
 import { injected } from "wagmi/connectors"
@@ -10,7 +11,6 @@ import MyImage from "~/components/image"
 import { shortText } from "~/lib/string"
 import { listChains } from "./chains"
 import WalletProfile from "./WalletProfile"
-import _ from "lodash"
 
 export default function WalletConnect() {
   const account = useAccount()
@@ -98,7 +98,7 @@ export default function WalletConnect() {
           centered
           withCloseButton={false}
         >
-          <WalletProfile />
+          <WalletProfile close={close} />
         </Modal>
       </>
     )
@@ -112,7 +112,13 @@ export default function WalletConnect() {
         position="bottom"
         transitionProps={{ transition: "pop", duration: 300 }}
       >
-        <Button radius="lg" onClick={() => connect({ connector: injected(), chainId: base.id })}>
+        <Button
+          radius="lg"
+          onClick={() => {
+            connect({ connector: injected(), chainId: base.id })
+            close()
+          }}
+        >
           Connect Wallet
         </Button>
       </Tooltip>
