@@ -1,15 +1,13 @@
 "use client"
 
-import { Burger, Button, Center, Container, Group, Menu, Paper } from "@mantine/core"
+import { Burger, Center, Container, Group, Menu, Paper } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
-import { IconChevronDown, IconUnlink } from "@tabler/icons-react"
+import { IconChevronDown } from "@tabler/icons-react"
 import Link from "next/link"
-import { base } from "viem/chains"
-import { useAccount, useConnect, useDisconnect } from "wagmi"
-import { injected } from "wagmi/connectors"
 import Brand from "../brand"
 import { LinksGroup } from "./partials/LinkGroup"
 import classes from "./partials/simpleHeader.module.css"
+import WalletConnect from "./partials/WalletConnect"
 
 const links = [
   { link: "/", label: "Webinar" },
@@ -26,26 +24,6 @@ const links = [
     ],
   },
 ]
-
-function WalletConnect() {
-  const account = useAccount()
-  const { connect } = useConnect()
-  const { disconnect } = useDisconnect()
-
-  if (account.isConnected) {
-    return (
-      <Button variant="light" radius="lg" onClick={() => disconnect()} leftSection={<IconUnlink size={18} />}>
-        Disconnect
-      </Button>
-    )
-  }
-
-  return (
-    <Button radius="lg" onClick={() => connect({ connector: injected(), chainId: base.id })}>
-      Connect Wallet
-    </Button>
-  )
-}
 
 export default function SimpleHeader() {
   const [opened, { toggle }] = useDisclosure(false)
