@@ -61,7 +61,7 @@ export default function Welcome() {
       }
     }
 
-    return null
+    return <Text>To become a great wizard, connect your wallet first.</Text>
   }
 
   return gretting()
