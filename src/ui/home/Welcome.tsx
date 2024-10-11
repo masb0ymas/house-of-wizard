@@ -1,13 +1,10 @@
 "use client"
 
-import { Center, Divider, Group, rem, Stack, Text } from "@mantine/core"
-import { formatDate } from "date-fns"
-import { id } from "date-fns/locale"
+import { Stack, Text } from "@mantine/core"
 import _ from "lodash"
-import Link from "next/link"
 import { useAccount, useChainId, useReadContract } from "wagmi"
 import { getContractByChain } from "~/artifact/contract/attendance"
-import classes from "~/components/description/description.module.css"
+import Description, { ItemType } from "~/components/description"
 import useWebinarLatest from "~/data/query/useWebinarLatest"
 import { dateToUnixtime } from "~/lib/date"
 import { validate } from "~/lib/validate"
@@ -49,55 +46,16 @@ export default function Welcome() {
       }
 
       if (is_attendance && data instanceof Object && !_.isNil(data.id) && !isFetchingData) {
+        const details = [
+          { key: "title", title: "Webinar", type: ItemType.string },
+          { key: "speakers", title: "Speakers", type: ItemType.string },
+          { key: "start_date", title: "Schedule", type: ItemType.date },
+          { key: "link", title: "Link", type: ItemType.link },
+        ]
+
         return (
           <Stack gap={10} mb={16}>
-            <>
-              <Group justify="space-between">
-                <Text className={classes.modal_label} size="md">
-                  Webinar
-                </Text>
-                <Text size="md">{data.title}</Text>
-              </Group>
-              <Divider variant="dashed" />
-            </>
-
-            <>
-              <Group justify="space-between">
-                <Text className={classes.modal_label} size="md">
-                  Speakers
-                </Text>
-                <Text size="md">{data.speakers}</Text>
-              </Group>
-              <Divider variant="dashed" />
-            </>
-
-            <>
-              <Group justify="space-between">
-                <Text className={classes.modal_label} size="md">
-                  Schedule
-                </Text>
-                <Text size="md">
-                  {data.start_date &&
-                    `${formatDate(new Date(data.start_date), "dd MMM yyyy HH:mm", {
-                      locale: id,
-                    })} WIB`}
-                </Text>
-              </Group>
-              <Divider variant="dashed" />
-            </>
-
-            <>
-              <Group justify="space-between">
-                <Text className={classes.modal_label} size="md">
-                  Link
-                </Text>
-
-                <Link href={data.link} target="_blank" rel="noreferrer">
-                  <Text size="md">{data.link}</Text>
-                </Link>
-              </Group>
-              <Divider variant="dashed" />
-            </>
+            {details.map((content) => Description<WebinarEntity>({ item: data, content }))}
           </Stack>
         )
       }

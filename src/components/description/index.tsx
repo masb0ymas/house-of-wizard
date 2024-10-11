@@ -1,4 +1,6 @@
-import { Divider, Group, Paper, Text } from "@mantine/core"
+"use client"
+
+import { Checkbox, Divider, Group, Text } from "@mantine/core"
 import { formatDate } from "date-fns"
 import { id } from "date-fns/locale"
 import _ from "lodash"
@@ -32,32 +34,43 @@ export default function Description<T>({ item, content }: ItemProps<T>) {
   const { title, key, type } = content
 
   const data = _.get(item, key, null) as any
-  console.log(data, item, key)
+
+  function renderValue() {
+    if (_.isNil(data)) {
+      return <Text size="md">{"-"}</Text>
+    }
+
+    if (type === ItemType.date) {
+      const value = formatDate(new Date(data), "dd MMM yyyy HH:mm", { locale: id })
+      return <Text size="md">{value}</Text>
+    }
+
+    if (type === ItemType.boolean) {
+      return <Checkbox checked={data} label={data ? "Yes" : "No"} />
+    }
+
+    if (type === ItemType.link) {
+      return (
+        <Link href={data} target="_blank" rel="noreferrer">
+          <Text size="md">{data}</Text>
+        </Link>
+      )
+    }
+
+    return <Text size="md">{data}</Text>
+  }
 
   return (
-    <Paper>
+    <>
       <Group justify="space-between">
-        <Text className={classes.modal_label} size="sm">
+        <Text className={classes.modal_label} size="md">
           {title} :
         </Text>
 
-        {type === ItemType.string && <Text size="sm">{data}</Text>}
-
-        {type === ItemType.date && !_.isNil(data) && (
-          <Text size="sm">
-            {data && formatDate(new Date(data || null), "dd MMM yyyy HH:mm", { locale: id })}
-            {/* {data} */}
-          </Text>
-        )}
-
-        {type === ItemType.link && (
-          <Link href={data} target="_blank" rel="noreferrer">
-            <Text size="sm">{data}</Text>
-          </Link>
-        )}
+        {renderValue()}
       </Group>
 
       <Divider variant="dashed" />
-    </Paper>
+    </>
   )
 }
