@@ -1,16 +1,13 @@
 "use client"
 
-import { Center, Divider, Group, Stack, Text, Image, rem } from "@mantine/core"
+import { Center, Divider, Group, rem, Stack, Text } from "@mantine/core"
 import { formatDate } from "date-fns"
 import { id } from "date-fns/locale"
 import _ from "lodash"
-import NextImage from "next/image"
 import Link from "next/link"
-import { base } from "viem/chains"
-import { useAccount, useReadContract } from "wagmi"
+import { useAccount, useChainId, useReadContract } from "wagmi"
 import { getContractByChain } from "~/artifact/contract/attendance"
 import classes from "~/components/description/description.module.css"
-import MyImage from "~/components/image"
 import useWebinarLatest from "~/data/query/useWebinarLatest"
 import { dateToUnixtime } from "~/lib/date"
 import { validate } from "~/lib/validate"
@@ -19,7 +16,9 @@ export default function Welcome() {
   const account = useAccount()
 
   const { data, isLoading, isFetching } = useWebinarLatest()
-  const attendanceContract = getContractByChain(base.id)
+
+  const chainId = useChainId()
+  const attendanceContract = getContractByChain(chainId)
 
   const isFetchingData = isLoading || isFetching
   const start_date = data?.start_date && dateToUnixtime(data?.start_date)
@@ -46,51 +45,38 @@ export default function Welcome() {
       }
 
       if (is_not_attendance) {
-        return (
-          <Stack gap={0} mb={16} align="center">
-            <Text component="h1" size={rem("32px")} fw={700} c={"#705C53"} my={16}>
-              Welcome to House of Wizard
-            </Text>
-            <Text>Please check attendance first</Text>
-          </Stack>
-        )
+        return <Text>Please check attendance first</Text>
       }
 
       if (is_attendance && data instanceof Object && !_.isNil(data.id) && !isFetchingData) {
         return (
           <Stack gap={10} mb={16}>
-            <Center>
-              <Text component="h1" size={rem("32px")} fw={700} c={"#705C53"} my={16}>
-                Welcome to House of Wizard
-              </Text>
-            </Center>
-
             <>
               <Group justify="space-between">
-                <Text className={classes.modal_label} size="sm">
+                <Text className={classes.modal_label} size="md">
                   Webinar
                 </Text>
-                <Text size="sm">{data.title}</Text>
+                <Text size="md">{data.title}</Text>
               </Group>
               <Divider variant="dashed" />
             </>
 
             <>
               <Group justify="space-between">
-                <Text className={classes.modal_label} size="sm">
+                <Text className={classes.modal_label} size="md">
                   Speakers
                 </Text>
-                <Text size="sm">{data.speakers}</Text>
+                <Text size="md">{data.speakers}</Text>
               </Group>
               <Divider variant="dashed" />
             </>
 
             <>
               <Group justify="space-between">
-                <Text className={classes.modal_label} size="sm">
+                <Text className={classes.modal_label} size="md">
                   Schedule
                 </Text>
-                <Text size="sm">
+                <Text size="md">
                   {data.start_date &&
                     `${formatDate(new Date(data.start_date), "dd MMM yyyy HH:mm", {
                       locale: id,
@@ -102,12 +88,12 @@ export default function Welcome() {
 
             <>
               <Group justify="space-between">
-                <Text className={classes.modal_label} size="sm">
+                <Text className={classes.modal_label} size="md">
                   Link
                 </Text>
 
                 <Link href={data.link} target="_blank" rel="noreferrer">
-                  <Text size="sm">{data.link}</Text>
+                  <Text size="md">{data.link}</Text>
                 </Link>
               </Group>
               <Divider variant="dashed" />
@@ -117,14 +103,7 @@ export default function Welcome() {
       }
     }
 
-    return (
-      <Stack gap={0} mb={16} align="center">
-        <MyImage src="/static/logo-how.png" alt="logo how" width="150px" height="150px" />
-        <Text component="h1" size={rem("32px")} fw={700} c={"#705C53"} my={16}>
-          Welcome to House of Wizard
-        </Text>
-      </Stack>
-    )
+    return null
   }
 
   return gretting()

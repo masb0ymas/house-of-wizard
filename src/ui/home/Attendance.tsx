@@ -1,15 +1,15 @@
 "use client"
 
-import { Button, Stack, Text } from "@mantine/core"
+import { Button, Divider, Group, Stack, Text } from "@mantine/core"
 import { IconReload } from "@tabler/icons-react"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import _ from "lodash"
 import Link from "next/link"
 import { type BaseError } from "viem"
-import { base } from "viem/chains"
 import {
   useAccount,
+  useChainId,
   useEnsName,
   useReadContract,
   useSwitchChain,
@@ -18,6 +18,7 @@ import {
 } from "wagmi"
 import { z } from "zod"
 import { getContractByChain } from "~/artifact/contract/attendance"
+import classes from "~/components/description/description.module.css"
 import { env } from "~/config/env"
 import useWebinarLatest from "~/data/query/useWebinarLatest"
 import webinarAttendanceSchema from "~/data/schema/webinar_attendance.schema"
@@ -34,11 +35,11 @@ export default function Attendance() {
     hash,
   })
 
-  const defaultChainId = base.id
+  const chainId = useChainId()
   const { switchChain } = useSwitchChain()
 
   const { data } = useWebinarLatest()
-  const attendanceContract = getContractByChain(defaultChainId)
+  const attendanceContract = getContractByChain(chainId)
 
   const mutation = useMutation({
     // @ts-expect-error
@@ -113,11 +114,7 @@ export default function Attendance() {
       }
 
       if (_.isNil(result.data) && (!result.isLoading || !result.isFetching)) {
-        return (
-          <Button size="lg" radius="lg" onClick={() => switchChain({ chainId: defaultChainId })}>
-            Switch to Base
-          </Button>
-        )
+        return <Text size="lg">Contract not available for this chain</Text>
       }
 
       if (is_attendance) {
@@ -156,20 +153,37 @@ export default function Attendance() {
 
             <Stack gap={10} mt={16} align="center">
               {hash && (
-                <Text>
-                  Transaction Hash:{" "}
-                  <Link
-                    href={`${attendanceContract.explorer}/tx/${hash}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {hash}
-                  </Link>
-                </Text>
+                <>
+                  <Group justify="space-between">
+                    <Text className={classes.modal_label} size="md">
+                      Trx Hash:
+                    </Text>
+
+                    <Link
+                      href={`${attendanceContract.explorer}/tx/${hash}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Text size="md">{hash}</Text>
+                    </Link>
+                  </Group>
+                  <Divider variant="dashed" />
+                </>
               )}
+
               {isConfirming && <Text>Waiting for confirmation...</Text>}
               {isConfirmed && <Text>Transaction confirmed.</Text>}
-              {error && <Text>Error: {(error as BaseError).shortMessage || error.message}</Text>}
+              {error && (
+                <>
+                  <Group justify="space-between">
+                    <Text className={classes.modal_label} size="md">
+                      Error:
+                    </Text>
+                    <Text size="md">{(error as BaseError).shortMessage || error.message}</Text>
+                  </Group>
+                  <Divider variant="dashed" />
+                </>
+              )}
 
               {isConfirmed && (
                 <Button

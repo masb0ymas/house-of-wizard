@@ -1,17 +1,20 @@
-import { Container, Stack } from "@mantine/core"
+import { Container, rem, Stack, Text } from "@mantine/core"
+import MyImage from "~/components/image"
 import Attendance from "~/ui/home/Attendance"
-import WalletConnect from "~/ui/home/WalletConnect"
 import Welcome from "~/ui/home/Welcome"
 
 export default function page() {
   return (
     <Container size="sm">
-      <Welcome />
-
       <Stack align="center" gap={16}>
-        <Attendance />
+        <MyImage src="/static/logo-how.png" alt="logo how" width="150px" height="150px" />
+        <Text component="h1" size={rem("32px")} fw={700} c={"#705C53"} my={16}>
+          Welcome to House of Wizard
+        </Text>
 
-        <WalletConnect />
+        <Welcome />
+
+        <Attendance />
       </Stack>
     </Container>
   )
