@@ -1,6 +1,6 @@
 "use client"
 
-import { Center, Divider, Group, Stack, Text, Image } from "@mantine/core"
+import { Center, Divider, Group, Stack, Text, Image, rem } from "@mantine/core"
 import { formatDate } from "date-fns"
 import { id } from "date-fns/locale"
 import _ from "lodash"
@@ -48,7 +48,9 @@ export default function Welcome() {
       if (is_not_attendance) {
         return (
           <Stack gap={0} mb={16} align="center">
-            <h1>Welcome to House of Wizard</h1>
+            <Text component="h1" size={rem("32px")} fw={700} c={"#705C53"} my={16}>
+              Welcome to House of Wizard
+            </Text>
             <Text>Please check attendance first</Text>
           </Stack>
         )
@@ -58,7 +60,9 @@ export default function Welcome() {
         return (
           <Stack gap={10} mb={16}>
             <Center>
-              <h1>Welcome to House of Wizard</h1>
+              <Text component="h1" size={rem("32px")} fw={700} c={"#705C53"} my={16}>
+                Welcome to House of Wizard
+              </Text>
             </Center>
 
             <>
@@ -116,7 +120,9 @@ export default function Welcome() {
     return (
       <Stack gap={0} mb={16} align="center">
         <MyImage src="/static/logo-how.png" alt="logo how" width="150px" height="150px" />
-        <h1>Welcome to House of Wizard</h1>
+        <Text component="h1" size={rem("32px")} fw={700} c={"#705C53"} my={16}>
+          Welcome to House of Wizard
+        </Text>
       </Stack>
     )
   }
