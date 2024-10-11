@@ -5,7 +5,7 @@ import Welcome from "~/ui/home/Welcome"
 
 export default function page() {
   return (
-    <Container size="sm" mt={100}>
+    <Container size="sm">
       <Welcome />
 
       <Stack align="center" gap={16}>

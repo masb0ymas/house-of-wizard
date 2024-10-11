@@ -1,18 +1,12 @@
 "use client"
 
-import { Group, Image, Text } from "@mantine/core"
+import { Group, Text } from "@mantine/core"
+import MyImage from "../image"
 
 export default function Brand() {
   return (
     <Group>
-      <Image
-        src={"/static/logo-how.png"}
-        alt="logo house of wizard"
-        width="auto"
-        height={50}
-        fit="contain"
-        radius="lg"
-      />
+      <MyImage src="/static/logo-how.png" alt="logo house of wizard" width="45px" height="45px" />
       <Text size="lg" fw={700} c={"#705C53"}>
         House of Wizard
       </Text>

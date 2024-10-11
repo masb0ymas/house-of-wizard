@@ -12,15 +12,15 @@ import WalletConnect from "./partials/WalletConnect"
 const links = [
   { link: "/", label: "Webinar" },
   { link: "/", label: "Course" },
-  { link: "/about", label: "About" },
+  { link: "/", label: "About" },
   {
     link: "#2",
     label: "Support",
     links: [
-      { link: "/faq", label: "FAQ" },
-      { link: "/forums", label: "Forums" },
-      { link: "/term-of-condition", label: "Term of Condition" },
-      { link: "/policy-privacy", label: "Policy & Privacy" },
+      { link: "/", label: "FAQ" },
+      { link: "/", label: "Forums" },
+      { link: "/", label: "Term of Condition" },
+      { link: "/", label: "Policy & Privacy" },
     ],
   },
 ]

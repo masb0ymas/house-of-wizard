@@ -55,7 +55,7 @@ export default function WalletConnect() {
             <Text component="h2" fw={600} size="lg">
               Mainnet
             </Text>
-            <Divider variant="dashed" />
+            <Divider variant="dashed" my={7} />
 
             <Grid my={7}>
               {mainnets.map((item) => {
@@ -79,7 +79,7 @@ export default function WalletConnect() {
             <Text component="h2" fw={600} size="lg">
               Testnet
             </Text>
-            <Divider variant="dashed" />
+            <Divider variant="dashed" my={7} />
 
             <Grid my={7}>
               {testnets.map((item) => {

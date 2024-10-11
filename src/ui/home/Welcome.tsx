@@ -1,14 +1,16 @@
 "use client"
 
-import { Center, Divider, Group, Stack, Text } from "@mantine/core"
+import { Center, Divider, Group, Stack, Text, Image } from "@mantine/core"
 import { formatDate } from "date-fns"
 import { id } from "date-fns/locale"
 import _ from "lodash"
+import NextImage from "next/image"
 import Link from "next/link"
 import { base } from "viem/chains"
 import { useAccount, useReadContract } from "wagmi"
 import { getContractByChain } from "~/artifact/contract/attendance"
 import classes from "~/components/description/description.module.css"
+import MyImage from "~/components/image"
 import useWebinarLatest from "~/data/query/useWebinarLatest"
 import { dateToUnixtime } from "~/lib/date"
 import { validate } from "~/lib/validate"
@@ -113,6 +115,7 @@ export default function Welcome() {
 
     return (
       <Stack gap={0} mb={16} align="center">
+        <MyImage src="/static/logo-how.png" alt="logo how" width="150px" height="150px" />
         <h1>Welcome to House of Wizard</h1>
       </Stack>
     )
