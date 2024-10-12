@@ -154,7 +154,7 @@ export default function Attendance() {
               {hash && (
                 <>
                   <Group justify="space-between">
-                    <Text className={classes.modal_label} size="md">
+                    <Text className={classes.modal_label} size="lg">
                       Trx Hash:
                     </Text>
 
@@ -163,22 +163,22 @@ export default function Attendance() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <Text size="md">{hash}</Text>
+                      <Text size="lg">{hash}</Text>
                     </Link>
                   </Group>
                   <Divider variant="dashed" />
                 </>
               )}
 
-              {isConfirming && <Text>Waiting for confirmation...</Text>}
-              {isConfirmed && <Text>Transaction confirmed.</Text>}
+              {isConfirming && <Text size="lg">Waiting for confirmation...</Text>}
+              {isConfirmed && <Text size="lg">Transaction confirmed.</Text>}
               {error && (
                 <>
                   <Group justify="space-between">
-                    <Text className={classes.modal_label} size="md">
+                    <Text className={classes.modal_label} size="lg">
                       Error:
                     </Text>
-                    <Text size="md">{(error as BaseError).shortMessage || error.message}</Text>
+                    <Text size="lg">{(error as BaseError).shortMessage || error.message}</Text>
                   </Group>
                   <Divider variant="dashed" />
                 </>

@@ -38,11 +38,11 @@ export default function Welcome() {
 
     if (account.isConnected) {
       if (isFetchingData) {
-        return <Text>Loading...</Text>
+        return <Text size="lg">Loading...</Text>
       }
 
       if (is_not_attendance) {
-        return <Text>Please check attendance first</Text>
+        return <Text size="lg">Please check attendance first</Text>
       }
 
       if (is_attendance && data instanceof Object && !_.isNil(data.id) && !isFetchingData) {
@@ -62,9 +62,9 @@ export default function Welcome() {
     }
 
     if (account.isDisconnected) {
-      return <Text>To become a great wizard, connect your wallet first.</Text>
+      return <Text size="lg">To become a great wizard, connect your wallet first.</Text>
     }
-    
+
     return null
   }
 
