@@ -2,10 +2,11 @@ import "@mantine/core/styles.css"
 
 import { ColorSchemeScript } from "@mantine/core"
 import { PropsWithChildren } from "react"
+import SimpleFooter from "~/components/footer/SimpleFooter"
+import SimpleHeader from "~/components/header/SimpleHeader"
 import WrapperMantine from "~/lib/WrapperMantine"
 import WrapperReactQuery from "~/lib/WrapperReactQuery"
 import WrapperWagmi from "~/lib/WrapperWagmi"
-import SimpleHeader from "~/components/header/SimpleHeader"
 
 export const metadata = {
   title: "House of Wizard",
@@ -36,8 +37,8 @@ export default function RootLayout({ children }: IProps) {
           <WrapperWagmi>
             <WrapperReactQuery>
               <SimpleHeader />
-
               {children}
+              <SimpleFooter />
             </WrapperReactQuery>
           </WrapperWagmi>
         </WrapperMantine>
