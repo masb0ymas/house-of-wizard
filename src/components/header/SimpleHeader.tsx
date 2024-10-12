@@ -1,7 +1,7 @@
 "use client"
 
 import { Burger, Center, Container, Group, Menu, Paper } from "@mantine/core"
-import { useDisclosure } from "@mantine/hooks"
+import { useDisclosure, useViewportSize } from "@mantine/hooks"
 import { IconChevronDown } from "@tabler/icons-react"
 import Link from "next/link"
 import Brand from "../brand"
@@ -26,6 +26,7 @@ const links = [
 ]
 
 export default function SimpleHeader() {
+  const { width } = useViewportSize()
   const [opened, { toggle }] = useDisclosure(false)
 
   const desktopNavItems = links.map((link) => {
@@ -70,7 +71,7 @@ export default function SimpleHeader() {
         </div>
 
         {/* mobile version */}
-        {opened && (
+        {width < 780 && opened && (
           <Paper shadow="lg" className={classes.mobile_link}>
             {mobileNavItems}
 
