@@ -19,6 +19,7 @@ import { IconCheck, IconCopy, IconUnlink } from '@tabler/icons-react'
 import { useAccount, useDisconnect, useSwitchChain } from 'wagmi'
 import { shortText } from '~/lib/string'
 import { mainnets, testnets } from './chains'
+import { useStore } from '~/config/zustand'
 
 interface WalletProfileProps {
   close: () => void
@@ -92,6 +93,7 @@ export default function WalletProfile(props: WalletProfileProps) {
   const account = useAccount()
   const { disconnect } = useDisconnect()
 
+  const removeEvmWallet = useStore((state) => state.removeEvmWallet)
   const profileAddress = shortText(String(account.address), 22, 6)
 
   return (
@@ -131,7 +133,10 @@ export default function WalletProfile(props: WalletProfileProps) {
       <Button
         variant="filled"
         radius="lg"
-        onClick={() => disconnect()}
+        onClick={() => {
+          disconnect()
+          removeEvmWallet()
+        }}
         leftSection={<IconUnlink size={18} />}
         fullWidth
         mt={16}

@@ -5,9 +5,10 @@ import { useDisclosure, useViewportSize } from '@mantine/hooks'
 import { IconWallet } from '@tabler/icons-react'
 import _ from 'lodash'
 import { base } from 'viem/chains'
-import { useAccount, useChainId, useConnect, useEnsName } from 'wagmi'
+import { useAccount, useChainId, useConnect, useEnsName, useSignMessage } from 'wagmi'
 import { injected } from 'wagmi/connectors'
 import MyImage from '~/components/image'
+import { useStore } from '~/config/zustand'
 import { shortText } from '~/lib/string'
 import { listChains } from './chains'
 import WalletProfile from './WalletProfile'
@@ -16,9 +17,12 @@ export default function WalletConnect() {
   const account = useAccount()
   const { connect } = useConnect()
   const chainId = useChainId()
+  const { signMessage } = useSignMessage()
 
   const { width } = useViewportSize()
   const [opened, { open, close }] = useDisclosure(false)
+
+  const setEvmWallet = useStore((state) => state.setEvmWallet)
 
   const resultEns = useEnsName({ address: account.address })
   const ens = resultEns.data
@@ -104,6 +108,28 @@ export default function WalletConnect() {
     )
   }
 
+  function connectWallet() {
+    // connect wallet
+    connect(
+      { connector: injected(), chainId: base.id },
+      {
+        onSuccess: () => {
+          // sign wallet address
+          signMessage(
+            { account: account.address, message: 'Verify Wallet' },
+            {
+              onSuccess: (signature) => {
+                setEvmWallet({ signature })
+              },
+            }
+          )
+        },
+      }
+    )
+
+    close()
+  }
+
   return (
     <>
       <Tooltip
@@ -112,13 +138,7 @@ export default function WalletConnect() {
         position="bottom"
         transitionProps={{ transition: 'pop', duration: 300 }}
       >
-        <Button
-          radius="lg"
-          onClick={() => {
-            connect({ connector: injected(), chainId: base.id })
-            close()
-          }}
-        >
+        <Button radius="lg" onClick={connectWallet}>
           Connect Wallet
         </Button>
       </Tooltip>

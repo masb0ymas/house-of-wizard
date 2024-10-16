@@ -41,7 +41,7 @@ export const useStore = create<StateProps, [['zustand/persist', StateProps]]>(
       setEvmWallet: (data: Web3WalletProps) => {
         set((state) => ({ ...state, evm_wallet: data }))
       },
-      removeEvmWallet: () => set({ auth: null }),
+      removeEvmWallet: () => set({ evm_wallet: null }),
     }),
     {
       name: keyStorage, // name of the item in the storage (must be unique)

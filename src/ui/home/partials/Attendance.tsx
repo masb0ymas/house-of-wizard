@@ -13,6 +13,7 @@ import {
   useChainId,
   useEnsName,
   useReadContract,
+  useVerifyMessage,
   useWaitForTransactionReceipt,
   useWriteContract,
 } from 'wagmi'
@@ -20,6 +21,7 @@ import { z } from 'zod'
 import { getContractByChain } from '~/artifact/contract/attendance'
 import classes from '~/components/description/description.module.css'
 import { env } from '~/config/env'
+import { useStore } from '~/config/zustand'
 import useWebinarLatest from '~/data/query/useWebinarLatest'
 import webinarAttendanceSchema from '~/data/schema/webinar_attendance.schema'
 import { dateToUnixtime } from '~/lib/date'
@@ -30,6 +32,8 @@ export default function Attendance() {
   const account = useAccount()
   const ens = useEnsName({ address: account.address })
 
+  const { evm_wallet } = useStore()
+
   const { data: hash, error, isPending, writeContract } = useWriteContract()
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
@@ -39,6 +43,12 @@ export default function Attendance() {
 
   const { data } = useWebinarLatest()
   const attendanceContract = getContractByChain(chainId)
+
+  const isVerified = useVerifyMessage({
+    address: account.address,
+    message: 'Verify Wallet',
+    signature: evm_wallet?.signature,
+  })
 
   const mutation = useMutation({
     // @ts-expect-error
@@ -59,6 +69,18 @@ export default function Attendance() {
     if (_.isNil(data?.id)) {
       let title = 'Something went wrong!'
       let message = 'Please check your endpoint API.'
+
+      showNotification({
+        title: title,
+        message: message,
+        color: 'red',
+        icon: <IconAlertCircle size={18} stroke={1.5} />,
+      })
+    }
+
+    if (!isVerified) {
+      let title = `Something went wrong!`
+      let message = `Signature doesn't match, please re-connect your wallet.`
 
       showNotification({
         title: title,
