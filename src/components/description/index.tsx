@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { Checkbox, Divider, Group, Text } from "@mantine/core"
-import { formatDate } from "date-fns"
-import { id } from "date-fns/locale"
-import _ from "lodash"
-import Link from "next/link"
-import classes from "./description.module.css"
+import { Checkbox, Divider, Group, Text } from '@mantine/core'
+import { formatDate } from 'date-fns'
+import { id } from 'date-fns/locale'
+import _ from 'lodash'
+import Link from 'next/link'
+import classes from './description.module.css'
 
 interface ItemProps<T> {
   item: T
@@ -37,16 +37,16 @@ export default function Description<T>({ item, content }: ItemProps<T>) {
 
   function renderValue() {
     if (_.isNil(data)) {
-      return <Text size="md">{"-"}</Text>
+      return <Text size="md">{'-'}</Text>
     }
 
     if (type === ItemType.date) {
-      const value = formatDate(new Date(data), "dd MMM yyyy HH:mm", { locale: id })
+      const value = formatDate(new Date(data), 'dd MMM yyyy HH:mm', { locale: id })
       return <Text size="md">{value}</Text>
     }
 
     if (type === ItemType.boolean) {
-      return <Checkbox checked={data} label={data ? "Yes" : "No"} />
+      return <Checkbox checked={data} label={data ? 'Yes' : 'No'} />
     }
 
     if (type === ItemType.link) {

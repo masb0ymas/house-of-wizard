@@ -1,14 +1,15 @@
-import "@mantine/core/styles.css"
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
 
-import { ColorSchemeScript } from "@mantine/core"
-import { PropsWithChildren } from "react"
-import WrapperMantine from "~/lib/WrapperMantine"
-import WrapperReactQuery from "~/lib/WrapperReactQuery"
-import WrapperWagmi from "~/lib/WrapperWagmi"
+import { ColorSchemeScript } from '@mantine/core'
+import { PropsWithChildren } from 'react'
+import WrapperMantine from '~/lib/WrapperMantine'
+import WrapperReactQuery from '~/lib/WrapperReactQuery'
+import WrapperWagmi from '~/lib/WrapperWagmi'
 
 export const metadata = {
-  title: "House of Wizard",
-  description: "Learning Web3 Academy with House of Wizard",
+  title: 'House of Wizard',
+  description: 'Learning Web3 Academy with House of Wizard',
 }
 
 type IProps = PropsWithChildren

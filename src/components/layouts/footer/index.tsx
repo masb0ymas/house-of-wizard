@@ -1,43 +1,42 @@
-"use client"
+'use client'
 
-import { ActionIcon, Anchor, Container, Group, rem, Text } from "@mantine/core"
+import { ActionIcon, Anchor, Container, Group, rem, Text } from '@mantine/core'
 import {
   IconBrandGithub,
   IconBrandTelegram,
   IconBrandTwitter,
   IconBrandYoutube,
-} from "@tabler/icons-react"
-import Link from "next/link"
-import Brand from "~/components/brand"
-import classes from "./partials/footer.module.css"
+} from '@tabler/icons-react'
+import Link from 'next/link'
+import classes from './partials/footer.module.css'
 
 const links = [
-  { link: "#", label: "Blog" },
-  { link: "#", label: "Contact" },
-  { link: "#", label: "Privacy" },
-  { link: "#", label: "Term Conditions" },
+  { link: '#', label: 'Blog' },
+  { link: '#', label: 'Contact' },
+  { link: '#', label: 'Privacy' },
+  { link: '#', label: 'Term Conditions' },
 ]
 
 export default function Footer() {
   const listIcons = [
     {
-      name: "Github",
-      link: "https://github.com/masb0ymas",
+      name: 'Github',
+      link: 'https://github.com/masb0ymas',
       icon: IconBrandGithub,
     },
     {
-      name: "Twitter",
-      link: "https://x.com/pitilanKorek",
+      name: 'Twitter',
+      link: 'https://x.com/pitilanKorek',
       icon: IconBrandTwitter,
     },
     {
-      name: "Youtube",
-      link: "https://www.youtube.com/@gulalijawa5870",
+      name: 'Youtube',
+      link: 'https://www.youtube.com/@gulalijawa5870',
       icon: IconBrandYoutube,
     },
     {
-      name: "Telegram",
-      link: "https://t.me/+qbdfWdi3uYM0ODc1",
+      name: 'Telegram',
+      link: 'https://t.me/+qbdfWdi3uYM0ODc1',
       icon: IconBrandTelegram,
     },
   ]
@@ -56,10 +55,10 @@ export default function Footer() {
       <Container size="lg">
         <div className={classes.inner}>
           <Text component="span" size="sm">
-            &copy; {year} -{" "}
+            &copy; {year} -{' '}
             <Text component="span" size="sm" fw={600}>
               House of Wizard.
-            </Text>{" "}
+            </Text>{' '}
             All rights reserved.
           </Text>
 
@@ -70,7 +69,7 @@ export default function Footer() {
               <ActionIcon
                 size="lg"
                 variant="subtle"
-                c={"#705C53"}
+                c={'#705C53'}
                 radius="xl"
                 key={item.name}
                 component={Link}

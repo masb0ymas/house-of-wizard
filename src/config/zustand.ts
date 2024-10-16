@@ -1,31 +1,33 @@
-import { create } from "zustand"
-import { createJSONStorage, persist } from "zustand/middleware"
+import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
+import { env } from './env'
+
+type AuthProps = {
+  email: string
+  access_token: string
+}
 
 export type StoreProps = {
-  chainId: number | null
+  auth: AuthProps | null
 }
 
 export type ActionProps = {
-  addChainId: (chainId: number) => void
-  removeChainId: () => void
+  setAuthSession: (data: AuthProps) => void
+  removeAuthSession: () => void
 }
 
 export type StateProps = StoreProps & ActionProps
-const keyStorage = `how-state`
+const keyStorage = `${env.APP_PREFIX}-state`
 
-export const useStore = create<StateProps, [["zustand/persist", StateProps]]>(
+export const useStore = create<StateProps, [['zustand/persist', StateProps]]>(
   persist(
     (set) => ({
-      chainId: null,
+      auth: null,
 
-      addChainId: (chainId: number) => {
-        set((state) => ({
-          ...state,
-          chainId: chainId,
-        }))
+      setAuthSession: (data: AuthProps) => {
+        set((state) => ({ ...state, auth: data }))
       },
-
-      removeChainId: () => set({ chainId: null }),
+      removeAuthSession: () => set({ auth: null }),
     }),
     {
       name: keyStorage, // name of the item in the storage (must be unique)

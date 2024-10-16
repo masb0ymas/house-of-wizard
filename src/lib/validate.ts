@@ -1,9 +1,9 @@
-import { isValid } from "date-fns"
-import { validate as uuidValidate } from "uuid"
-import { isNumeric } from "./number"
+import { isValid } from 'date-fns'
+import { validate as uuidValidate } from 'uuid'
+import { isNumeric } from './number'
 
-const emptyValues = [null, undefined, "", "null", "undefined"]
-const invalidValues = [...emptyValues, false, 0, "false", "0"]
+const emptyValues = [null, undefined, '', 'null', 'undefined']
+const invalidValues = [...emptyValues, false, 0, 'false', '0']
 
 export class validate {
   /**
@@ -66,7 +66,7 @@ export class validate {
    */
   public static uuid(value: string) {
     if (!uuidValidate(value)) {
-      const message = "invalid uuid format"
+      const message = 'invalid uuid format'
       throw new Error(message)
     }
 

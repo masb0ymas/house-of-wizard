@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { Box, Collapse, Group, rem, Text, UnstyledButton } from "@mantine/core"
-import { IconCalendarStats, IconChevronRight } from "@tabler/icons-react"
-import { useState } from "react"
-import classes from "./linkGroup.module.css"
+import { Box, Collapse, Group, rem, Text, UnstyledButton } from '@mantine/core'
+import { IconCalendarStats, IconChevronRight } from '@tabler/icons-react'
+import { useState } from 'react'
+import classes from './linkGroup.module.css'
 
 interface LinksGroupProps {
   label: string
@@ -15,7 +15,7 @@ export function LinksGroup({ label, initiallyOpened, links }: LinksGroupProps) {
   const hasLinks = Array.isArray(links)
   const [opened, setOpened] = useState(initiallyOpened || false)
   const items = (hasLinks ? links : []).map((link) => (
-    <Text<"a">
+    <Text<'a'>
       component="a"
       className={classes.link}
       href={link.link}
@@ -30,7 +30,7 @@ export function LinksGroup({ label, initiallyOpened, links }: LinksGroupProps) {
     <>
       <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}>
         <Group justify="space-between" gap={0}>
-          <Box style={{ display: "flex", alignItems: "center" }}>
+          <Box style={{ display: 'flex', alignItems: 'center' }}>
             <Box>{label}</Box>
           </Box>
           {hasLinks && (
@@ -40,7 +40,7 @@ export function LinksGroup({ label, initiallyOpened, links }: LinksGroupProps) {
               style={{
                 width: rem(16),
                 height: rem(16),
-                transform: opened ? "rotate(-90deg)" : "none",
+                transform: opened ? 'rotate(-90deg)' : 'none',
               }}
             />
           )}
@@ -52,12 +52,12 @@ export function LinksGroup({ label, initiallyOpened, links }: LinksGroupProps) {
 }
 
 const mockdata = {
-  label: "Releases",
+  label: 'Releases',
   icon: IconCalendarStats,
   links: [
-    { label: "Upcoming releases", link: "/" },
-    { label: "Previous releases", link: "/" },
-    { label: "Releases schedule", link: "/" },
+    { label: 'Upcoming releases', link: '/' },
+    { label: 'Previous releases', link: '/' },
+    { label: 'Releases schedule', link: '/' },
   ],
 }
 

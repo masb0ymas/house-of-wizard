@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { PropsWithChildren } from "react"
-import { WagmiProvider } from "wagmi"
-import { config } from "~/config/wagmi"
+import { PropsWithChildren } from 'react'
+import { WagmiProvider } from 'wagmi'
+import { config } from '~/config/wagmi'
 
 type IProps = PropsWithChildren
 

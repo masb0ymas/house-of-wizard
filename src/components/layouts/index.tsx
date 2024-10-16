@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { PropsWithChildren } from "react"
-import Footer from "./footer"
-import Header from "./header"
+import { PropsWithChildren } from 'react'
+import Footer from './footer'
+import Header from './header'
 
 type IProps = PropsWithChildren
 

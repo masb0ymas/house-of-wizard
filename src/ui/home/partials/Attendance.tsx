@@ -1,12 +1,13 @@
-"use client"
+'use client'
 
-import { Button, Divider, Group, Stack, Text } from "@mantine/core"
-import { IconReload } from "@tabler/icons-react"
-import { useMutation } from "@tanstack/react-query"
-import axios from "axios"
-import _ from "lodash"
-import Link from "next/link"
-import { type BaseError } from "viem"
+import { Button, Divider, Group, Stack, Text } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { IconAlertCircle, IconReload } from '@tabler/icons-react'
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
+import _ from 'lodash'
+import Link from 'next/link'
+import { type BaseError } from 'viem'
 import {
   useAccount,
   useChainId,
@@ -14,16 +15,16 @@ import {
   useReadContract,
   useWaitForTransactionReceipt,
   useWriteContract,
-} from "wagmi"
-import { z } from "zod"
-import { getContractByChain } from "~/artifact/contract/attendance"
-import classes from "~/components/description/description.module.css"
-import { env } from "~/config/env"
-import useWebinarLatest from "~/data/query/useWebinarLatest"
-import webinarAttendanceSchema from "~/data/schema/webinar_attendance.schema"
-import { dateToUnixtime } from "~/lib/date"
-import { validate } from "~/lib/validate"
-import { queryClient } from "~/lib/WrapperReactQuery"
+} from 'wagmi'
+import { z } from 'zod'
+import { getContractByChain } from '~/artifact/contract/attendance'
+import classes from '~/components/description/description.module.css'
+import { env } from '~/config/env'
+import useWebinarLatest from '~/data/query/useWebinarLatest'
+import webinarAttendanceSchema from '~/data/schema/webinar_attendance.schema'
+import { dateToUnixtime } from '~/lib/date'
+import { validate } from '~/lib/validate'
+import { queryClient } from '~/lib/WrapperReactQuery'
 
 export default function Attendance() {
   const account = useAccount()
@@ -46,14 +47,29 @@ export default function Attendance() {
       return await axios.post(url, values)
     },
     onSuccess: () => {
-      console.log("Data saved successfully")
+      console.log('Data saved successfully')
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["webinar-latest"] })
+      queryClient.invalidateQueries({ queryKey: ['webinar-latest'] })
     },
   })
 
   async function markAttendance() {
     console.log(ens.data, account.address)
+
+    if (_.isNil(data?.id)) {
+      let title = 'Something went wrong!'
+      let message = 'Please check your endpoint API.'
+
+      showNotification({
+        title: title,
+        message: message,
+        color: 'red',
+        icon: <IconAlertCircle size={18} stroke={1.5} />,
+      })
+    }
+
+    const epochTime = data?.start_date && dateToUnixtime(data?.start_date)
+    const ipfs_cid = data?.ipfs_cid
 
     const formData = {
       webinar_id: data?.id,
@@ -70,6 +86,13 @@ export default function Attendance() {
     }
 
     try {
+      writeContract({
+        abi: attendanceContract.abi,
+        address: attendanceContract.address,
+        functionName: 'markAttendance',
+        args: [epochTime, true, ipfs_cid],
+      })
+
       await mutation.mutateAsync(formData)
     } catch (error) {
       console.log(error)
@@ -81,7 +104,7 @@ export default function Attendance() {
   const result = useReadContract({
     abi: attendanceContract.abi,
     address: attendanceContract.address,
-    functionName: "getAttendance",
+    functionName: 'getAttendance',
     args: [account.address, start_date],
   })
 
@@ -129,24 +152,10 @@ export default function Attendance() {
             <Button
               size="lg"
               radius="lg"
-              onClick={() => {
-                const epochTime = data?.start_date && dateToUnixtime(data?.start_date)
-                const ipfs_cid = data?.ipfs_cid
-
-                console.log("Save to DB")
-                markAttendance()
-
-                console.log("Mark Attendance to Contract", epochTime)
-                writeContract({
-                  abi: attendanceContract.abi,
-                  address: attendanceContract.address,
-                  functionName: "markAttendance",
-                  args: [epochTime, true, ipfs_cid],
-                })
-              }}
+              onClick={markAttendance}
               disabled={isPending || isConfirming}
             >
-              {isPending || isConfirming ? "Confirming..." : "Attendance"}
+              {isPending || isConfirming ? 'Confirming...' : 'Attendance'}
             </Button>
 
             <Stack gap={10} mt={16} align="center">

@@ -1,26 +1,26 @@
-"use client"
+'use client'
 
-import { Burger, Center, Container, Group, Menu, Paper } from "@mantine/core"
-import { useDisclosure, useViewportSize } from "@mantine/hooks"
-import { IconChevronDown } from "@tabler/icons-react"
-import Link from "next/link"
-import Brand from "~/components/brand"
-import classes from "./partials/header.module.css"
-import { LinksGroup } from "./partials/LinkGroup"
-import WalletConnect from "./partials/WalletConnect"
+import { Burger, Center, Container, Group, Menu, Paper } from '@mantine/core'
+import { useDisclosure, useViewportSize } from '@mantine/hooks'
+import { IconChevronDown } from '@tabler/icons-react'
+import Link from 'next/link'
+import Brand from '~/components/brand'
+import classes from './partials/header.module.css'
+import { LinksGroup } from './partials/LinkGroup'
+import WalletConnect from './partials/WalletConnect'
 
 const links = [
-  { link: "/", label: "Webinar" },
-  { link: "/", label: "Course" },
-  { link: "/", label: "About" },
+  { link: '/', label: 'Webinar' },
+  { link: '/', label: 'Course' },
+  { link: '/', label: 'About' },
   {
-    link: "#2",
-    label: "Support",
+    link: '#2',
+    label: 'Support',
     links: [
-      { link: "/", label: "FAQ" },
-      { link: "/", label: "Forums" },
-      { link: "/", label: "Term of Condition" },
-      { link: "/", label: "Policy & Privacy" },
+      { link: '/', label: 'FAQ' },
+      { link: '/', label: 'Forums' },
+      { link: '/', label: 'Term of Condition' },
+      { link: '/', label: 'Policy & Privacy' },
     ],
   },
 ]

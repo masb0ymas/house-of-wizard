@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   ActionIcon,
@@ -14,11 +14,11 @@ import {
   Text,
   Tooltip,
   UnstyledButton,
-} from "@mantine/core"
-import { IconCheck, IconCopy, IconUnlink } from "@tabler/icons-react"
-import { useAccount, useDisconnect, useSwitchChain } from "wagmi"
-import { shortText } from "~/lib/string"
-import { mainnets, testnets } from "./chains"
+} from '@mantine/core'
+import { IconCheck, IconCopy, IconUnlink } from '@tabler/icons-react'
+import { useAccount, useDisconnect, useSwitchChain } from 'wagmi'
+import { shortText } from '~/lib/string'
+import { mainnets, testnets } from './chains'
 
 interface WalletProfileProps {
   close: () => void
@@ -106,8 +106,8 @@ export default function WalletProfile(props: WalletProfileProps) {
 
           <CopyButton value={String(account.address)} timeout={2000}>
             {({ copied, copy }) => (
-              <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
-                <ActionIcon color={copied ? "teal" : "gray"} variant="subtle" onClick={copy}>
+              <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
+                <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
                   {copied ? (
                     <IconCheck style={{ width: rem(16) }} />
                   ) : (
