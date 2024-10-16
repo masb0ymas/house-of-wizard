@@ -63,13 +63,13 @@ export default function Attendance() {
     },
   })
 
-  async function markAttendance() {
+  function markAttendance() {
     console.log(ens.data, account.address)
 
-    if (_.isNil(data?.id)) {
-      let title = 'Something went wrong!'
-      let message = 'Please check your endpoint API.'
+    let title = 'Something went wrong!'
+    let message = 'Please check your endpoint API.'
 
+    if (_.isNil(data?.id)) {
       showNotification({
         title: title,
         message: message,
@@ -79,8 +79,8 @@ export default function Attendance() {
     }
 
     if (!isVerified) {
-      let title = `Something went wrong!`
-      let message = `Signature doesn't match, please re-connect your wallet.`
+      title = `Something went wrong!`
+      message = `Signature doesn't match, please re-connect your wallet.`
 
       showNotification({
         title: title,
@@ -108,16 +108,44 @@ export default function Attendance() {
     }
 
     try {
-      writeContract({
-        abi: attendanceContract.abi,
-        address: attendanceContract.address,
-        functionName: 'markAttendance',
-        args: [epochTime, true, ipfs_cid],
-      })
+      writeContract(
+        {
+          abi: attendanceContract.abi,
+          address: attendanceContract.address,
+          functionName: 'markAttendance',
+          args: [epochTime, true, ipfs_cid],
+        },
+        {
+          onSuccess: async () => await mutation.mutateAsync(formData),
+          onError(error, _variables, _context) {
+            if (error instanceof Error) {
+              title = 'Problem write to contract'
+              message = error.message
+            }
 
-      await mutation.mutateAsync(formData)
-    } catch (error) {
+            showNotification({
+              title: title,
+              message: message,
+              color: 'red',
+              icon: <IconAlertCircle size={18} stroke={1.5} />,
+            })
+          },
+        }
+      )
+    } catch (error: any) {
       console.log(error)
+
+      if (error.response?.data?.message) {
+        title = error.response.data.error
+        message = error.response.data.message
+      }
+
+      showNotification({
+        title: title,
+        message: message,
+        color: 'red',
+        icon: <IconAlertCircle size={18} stroke={1.5} />,
+      })
     }
   }
 

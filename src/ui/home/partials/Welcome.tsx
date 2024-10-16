@@ -27,7 +27,7 @@ export default function Welcome() {
     args: [account.address, start_date],
   })
 
-  function gretting() {
+  function greeting() {
     // @ts-expect-error
     const is_attendance = result.data && validate.boolean(result.data[0])
 
@@ -68,5 +68,5 @@ export default function Welcome() {
     return null
   }
 
-  return gretting()
+  return greeting()
 }
