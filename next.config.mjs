@@ -3,12 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
-    optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
+    optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
   },
   env: {
+    APP_PREFIX: process.env.APP_PREFIX,
     API_URL: process.env.API_URL,
   },
-  output: "standalone",
+  output: 'standalone',
 }
 
 export default nextConfig
