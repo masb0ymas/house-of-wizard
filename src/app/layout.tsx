@@ -2,8 +2,6 @@ import "@mantine/core/styles.css"
 
 import { ColorSchemeScript } from "@mantine/core"
 import { PropsWithChildren } from "react"
-import SimpleFooter from "~/components/footer/SimpleFooter"
-import SimpleHeader from "~/components/header/SimpleHeader"
 import WrapperMantine from "~/lib/WrapperMantine"
 import WrapperReactQuery from "~/lib/WrapperReactQuery"
 import WrapperWagmi from "~/lib/WrapperWagmi"
@@ -35,11 +33,7 @@ export default function RootLayout({ children }: IProps) {
       <body>
         <WrapperMantine>
           <WrapperWagmi>
-            <WrapperReactQuery>
-              <SimpleHeader />
-              {children}
-              <SimpleFooter />
-            </WrapperReactQuery>
+            <WrapperReactQuery>{children}</WrapperReactQuery>
           </WrapperWagmi>
         </WrapperMantine>
       </body>

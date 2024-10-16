@@ -4,9 +4,9 @@ import { Burger, Center, Container, Group, Menu, Paper } from "@mantine/core"
 import { useDisclosure, useViewportSize } from "@mantine/hooks"
 import { IconChevronDown } from "@tabler/icons-react"
 import Link from "next/link"
-import Brand from "../brand"
+import Brand from "~/components/brand"
+import classes from "./partials/header.module.css"
 import { LinksGroup } from "./partials/LinkGroup"
-import classes from "./partials/simpleHeader.module.css"
 import WalletConnect from "./partials/WalletConnect"
 
 const links = [
@@ -25,7 +25,7 @@ const links = [
   },
 ]
 
-export default function SimpleHeader() {
+export default function Header() {
   const { width } = useViewportSize()
   const [opened, { toggle }] = useDisclosure(false)
 

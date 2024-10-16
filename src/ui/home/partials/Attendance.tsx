@@ -12,7 +12,6 @@ import {
   useChainId,
   useEnsName,
   useReadContract,
-  useSwitchChain,
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi"

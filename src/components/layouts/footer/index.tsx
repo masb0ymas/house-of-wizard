@@ -1,10 +1,15 @@
 "use client"
 
-import { ActionIcon, Anchor, Container, Group, rem } from "@mantine/core"
-import { IconBrandGithub, IconBrandTelegram, IconBrandTwitter } from "@tabler/icons-react"
+import { ActionIcon, Anchor, Container, Group, rem, Text } from "@mantine/core"
+import {
+  IconBrandGithub,
+  IconBrandTelegram,
+  IconBrandTwitter,
+  IconBrandYoutube,
+} from "@tabler/icons-react"
 import Link from "next/link"
-import Brand from "../brand"
-import classes from "./partials/simpleFooter.module.css"
+import Brand from "~/components/brand"
+import classes from "./partials/footer.module.css"
 
 const links = [
   { link: "#", label: "Blog" },
@@ -13,7 +18,7 @@ const links = [
   { link: "#", label: "Term Conditions" },
 ]
 
-export default function SimpleFooter() {
+export default function Footer() {
   const listIcons = [
     {
       name: "Github",
@@ -24,6 +29,11 @@ export default function SimpleFooter() {
       name: "Twitter",
       link: "https://x.com/pitilanKorek",
       icon: IconBrandTwitter,
+    },
+    {
+      name: "Youtube",
+      link: "https://www.youtube.com/@gulalijawa5870",
+      icon: IconBrandYoutube,
     },
     {
       name: "Telegram",
@@ -38,11 +48,20 @@ export default function SimpleFooter() {
     </Anchor>
   ))
 
+  const dateNow = new Date()
+  const year = dateNow.getFullYear()
+
   return (
     <div className={classes.footer}>
       <Container size="lg">
         <div className={classes.inner}>
-          <Brand />
+          <Text component="span" size="sm">
+            &copy; {year} -{" "}
+            <Text component="span" size="sm" fw={600}>
+              House of Wizard.
+            </Text>{" "}
+            All rights reserved.
+          </Text>
 
           <Group className={classes.links}>{items}</Group>
 

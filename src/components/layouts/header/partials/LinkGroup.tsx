@@ -1,3 +1,5 @@
+"use client"
+
 import { Box, Collapse, Group, rem, Text, UnstyledButton } from "@mantine/core"
 import { IconCalendarStats, IconChevronRight } from "@tabler/icons-react"
 import { useState } from "react"
