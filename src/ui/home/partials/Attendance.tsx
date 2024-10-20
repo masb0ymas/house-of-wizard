@@ -5,6 +5,7 @@ import { showNotification } from '@mantine/notifications'
 import { IconAlertCircle, IconReload } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
+import { subMinutes } from 'date-fns'
 import _ from 'lodash'
 import Link from 'next/link'
 import { type BaseError } from 'viem'
@@ -40,9 +41,9 @@ export default function Attendance() {
   })
 
   const chainId = useChainId()
-
-  const { data } = useWebinarLatest()
   const attendanceContract = getContractByChain(chainId)
+
+  const { data } = useWebinarLatest(chainId)
 
   const isVerified = useVerifyMessage({
     address: account.address,
@@ -175,8 +176,12 @@ export default function Attendance() {
     // @ts-expect-error
     const is_not_attendance = result.data && validate.boolean(result.data[0]) === false
 
+    const sub_30_minutes = subMinutes(new Date(String(data?.start_date)), 30)
+    const is_open_attendance = new Date() > sub_30_minutes
+    const is_close_attendance = new Date() > new Date(String(data?.end_date))
+
     if (account.isConnected) {
-      if (!data) {
+      if (!data || is_close_attendance) {
         return <Text size="lg">There are no webinars at this time</Text>
       }
 
@@ -196,7 +201,7 @@ export default function Attendance() {
         )
       }
 
-      if (is_not_attendance) {
+      if (is_not_attendance && is_open_attendance && !is_close_attendance) {
         return (
           <>
             <Button
