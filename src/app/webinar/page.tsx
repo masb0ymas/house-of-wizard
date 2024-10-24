@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Webinar from '~/ui/webinar'
 
 export default function WebinarPage() {
-  return <Webinar />
+  return (
+    <Suspense>
+      <Webinar />
+    </Suspense>
+  )
 }
