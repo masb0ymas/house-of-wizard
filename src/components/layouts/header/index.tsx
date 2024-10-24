@@ -1,6 +1,6 @@
 'use client'
 
-import { Burger, Center, Container, Group, Menu, Paper } from '@mantine/core'
+import { Anchor, Burger, Center, Container, Group, Menu, Paper } from '@mantine/core'
 import { useDisclosure, useViewportSize } from '@mantine/hooks'
 import { IconChevronDown } from '@tabler/icons-react'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { LinksGroup } from './partials/LinkGroup'
 import WalletConnect from './partials/WalletConnect'
 
 const links = [
-  { link: '/', label: 'Webinar' },
+  { link: '/webinar', label: 'Webinar' },
   { link: '/', label: 'Course' },
   { link: '/', label: 'About' },
   {
@@ -61,7 +61,9 @@ export default function Header() {
     <header className={classes.header}>
       <Container size="lg">
         <div className={classes.inner}>
-          <Brand />
+          <Anchor component={Link} href="/">
+            <Brand />
+          </Anchor>
           <Group gap={5} visibleFrom="sm">
             {desktopNavItems}
 
