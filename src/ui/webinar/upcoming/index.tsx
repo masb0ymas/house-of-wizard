@@ -2,6 +2,7 @@
 
 import { Divider, Grid, Group, Input, Pagination, Select, Stack } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
+import { useViewportSize } from '@mantine/hooks'
 import { IconCalendar, IconLicense, IconSearch } from '@tabler/icons-react'
 import _ from 'lodash'
 import CardWebinar from '../partials/CardWebinar'
@@ -40,10 +41,13 @@ const payable = ['free', 'freemium', 'premium']
 const selectPayable = payable.map((item) => ({ value: item, label: _.capitalize(item) }))
 
 export default function UpcomingTab() {
+  const { width } = useViewportSize()
+  const mobile_device = width < 780
+
   return (
     <Stack>
       <Grid columns={12}>
-        <Grid.Col span={{ base: 6, sm: 4 }}>
+        <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
           <Input
             placeholder="Search webinar..."
             radius="md"
@@ -51,7 +55,7 @@ export default function UpcomingTab() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 6, sm: 4 }}>
+        <Grid.Col span={{ base: 6, sm: 6, md: 4 }}>
           <DateInput
             placeholder="Search by date..."
             radius="md"
@@ -59,7 +63,7 @@ export default function UpcomingTab() {
           />
         </Grid.Col>
 
-        <Grid.Col span={{ base: 6, sm: 4 }}>
+        <Grid.Col span={{ base: 6, sm: 6, md: 4 }}>
           <Select
             placeholder="Choose webinar"
             data={selectPayable}
@@ -75,14 +79,14 @@ export default function UpcomingTab() {
       <Grid columns={12}>
         {data.map((item) => {
           return (
-            <Grid.Col span={{ base: 6, sm: 4 }} key={item.id}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }} key={item.id}>
               <CardWebinar {...item} />
             </Grid.Col>
           )
         })}
       </Grid>
 
-      <Group justify="right" mt={16}>
+      <Group justify={!mobile_device ? 'right' : 'center'} mt={16}>
         <Pagination total={10} radius="md" />
       </Group>
     </Stack>
