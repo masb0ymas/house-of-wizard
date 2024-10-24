@@ -38,8 +38,6 @@ export default function Header() {
     const matchPath = pathname.match(String(item.link))
     const is_active = !_.isEmpty(matchPath) && link_active
 
-    console.log({ matchPath, is_active })
-
     const menuItems = item.links?.map((sub_item) => {
       const sub_link_active = item.links?.find((x) => x.link === pathname)
       const matchPath = pathname.match(String(item.link))
