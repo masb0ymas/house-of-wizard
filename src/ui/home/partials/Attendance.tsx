@@ -193,19 +193,6 @@ export default function Attendance() {
         return <Text size="lg">Contract not available for this chain</Text>
       }
 
-      if (data && (!is_open_attendance || !is_close_attendance)) {
-        const start_date = format(new Date(String(data?.start_date)), 'dd MMM yyyy HH:mm')
-
-        return (
-          <Stack gap={5} align="center">
-            <Text size="lg" component="span">{`Webinar is scheduled for ${start_date} WIB.`}</Text>
-            <Text size="lg" component="span">
-              You can mark attendance <Mark>30 minutes</Mark> before starting the webinar.
-            </Text>
-          </Stack>
-        )
-      }
-
       if (is_attendance) {
         return (
           <Button size="lg" radius="lg" variant="subtle" disabled>
@@ -272,6 +259,19 @@ export default function Attendance() {
               )}
             </Stack>
           </>
+        )
+      }
+
+      if (data && (!is_open_attendance || !is_close_attendance)) {
+        const start_date = format(new Date(String(data?.start_date)), 'dd MMM yyyy HH:mm')
+
+        return (
+          <Stack gap={5} align="center">
+            <Text size="lg" component="span">{`Webinar is scheduled for ${start_date} WIB.`}</Text>
+            <Text size="lg" component="span">
+              You can mark attendance <Mark>30 minutes</Mark> before starting the webinar.
+            </Text>
+          </Stack>
         )
       }
     }
