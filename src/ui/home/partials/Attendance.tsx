@@ -1,11 +1,11 @@
 'use client'
 
-import { Button, Divider, Group, Stack, Text } from '@mantine/core'
+import { Button, Divider, Group, Mark, Stack, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconAlertCircle, IconReload } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
-import { subMinutes } from 'date-fns'
+import { format, subMinutes } from 'date-fns'
 import _ from 'lodash'
 import Link from 'next/link'
 import { type BaseError } from 'viem'
@@ -191,6 +191,19 @@ export default function Attendance() {
 
       if (_.isNil(result.data) && (!result.isLoading || !result.isFetching)) {
         return <Text size="lg">Contract not available for this chain</Text>
+      }
+
+      if (data && (!is_open_attendance || !is_close_attendance)) {
+        const start_date = format(new Date(String(data?.start_date)), 'dd MMM yyyy HH:mm')
+
+        return (
+          <Stack gap={5} align="center">
+            <Text size="lg" component="span">{`Webinar is scheduled for ${start_date} WIB.`}</Text>
+            <Text size="lg" component="span">
+              You can mark attendance <Mark>30 minutes</Mark> before starting the webinar.
+            </Text>
+          </Stack>
+        )
       }
 
       if (is_attendance) {
