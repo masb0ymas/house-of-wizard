@@ -3,7 +3,8 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { env } from './env'
 
 type AuthProps = {
-  email: string
+  email?: string | null
+  wallet_address?: string | null
   access_token: string
 }
 
