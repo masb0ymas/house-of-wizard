@@ -94,6 +94,8 @@ export default function WalletProfile(props: WalletProfileProps) {
   const { disconnect } = useDisconnect()
 
   const removeEvmWallet = useStore((state) => state.removeEvmWallet)
+  const removeAuthSession = useStore((state) => state.removeAuthSession)
+
   const profileAddress = shortText(String(account.address), 22, 6)
 
   return (
@@ -136,6 +138,7 @@ export default function WalletProfile(props: WalletProfileProps) {
         onClick={() => {
           disconnect()
           removeEvmWallet()
+          removeAuthSession()
         }}
         leftSection={<IconUnlink size={18} />}
         fullWidth
