@@ -1,11 +1,11 @@
 'use client'
 
-import { Button, Divider, Group, Mark, Stack, Text } from '@mantine/core'
+import { Button, Divider, Group, Stack, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconAlertCircle, IconReload } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
-import { format, subMinutes } from 'date-fns'
+import { subMinutes } from 'date-fns'
 import _ from 'lodash'
 import Link from 'next/link'
 import { type BaseError } from 'viem'
@@ -159,8 +159,6 @@ export default function Attendance() {
     args: [account.address, start_date],
   })
 
-  // console.log(result.data, result.isLoading, result.isFetching, start_date, data, chains)
-
   function checkingButton() {
     return (
       <Button size="lg" radius="lg" variant="subtle" disabled>
@@ -181,19 +179,11 @@ export default function Attendance() {
     const is_close_attendance = new Date() > new Date(String(data?.end_date))
 
     if (account.isConnected) {
-      if (!data || is_close_attendance) {
-        return <Text size="lg">There are no webinars at this time</Text>
-      }
-
       if (result.isLoading || result.isFetching) {
         return checkingButton()
       }
 
-      if (_.isNil(result.data) && (!result.isLoading || !result.isFetching)) {
-        return <Text size="lg">Contract not available for this chain</Text>
-      }
-
-      if (is_attendance) {
+      if (is_attendance && !is_close_attendance) {
         return (
           <Button size="lg" radius="lg" variant="subtle" disabled>
             You are Attendance
@@ -259,19 +249,6 @@ export default function Attendance() {
               )}
             </Stack>
           </>
-        )
-      }
-
-      if (data && (!is_open_attendance || !is_close_attendance)) {
-        const start_date = format(new Date(String(data?.start_date)), 'dd MMM yyyy HH:mm')
-
-        return (
-          <Stack gap={5} align="center">
-            <Text size="lg" component="span">{`Webinar is scheduled for ${start_date} WIB.`}</Text>
-            <Text size="lg" component="span">
-              You can mark attendance <Mark>30 minutes</Mark> before starting the webinar.
-            </Text>
-          </Stack>
         )
       }
     }

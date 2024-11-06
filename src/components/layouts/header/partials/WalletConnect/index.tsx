@@ -2,13 +2,17 @@
 
 import { Button, Group, Modal, Tooltip, UnstyledButton } from '@mantine/core'
 import { useDisclosure, useViewportSize } from '@mantine/hooks'
-import { IconWallet } from '@tabler/icons-react'
+import { showNotification } from '@mantine/notifications'
+import { IconCheck, IconWallet } from '@tabler/icons-react'
+import { useMutation } from '@tanstack/react-query'
 import _ from 'lodash'
 import { base } from 'viem/chains'
 import { useAccount, useChainId, useConnect, useEnsName, useSignMessage } from 'wagmi'
 import { injected } from 'wagmi/connectors'
 import MyImage from '~/components/image'
 import { useStore } from '~/config/zustand'
+import { LoginEntity } from '~/data/entity/auth'
+import AuthRepository from '~/data/repository/auth'
 import { shortText } from '~/lib/string'
 import { listChains } from './chains'
 import WalletProfile from './WalletProfile'
@@ -22,10 +26,30 @@ export default function WalletConnect() {
   const { width } = useViewportSize()
   const [opened, { open, close }] = useDisclosure(false)
 
+  const setAuthSession = useStore((state) => state.setAuthSession)
   const setEvmWallet = useStore((state) => state.setEvmWallet)
 
   const resultEns = useEnsName({ address: account.address })
   const ens = resultEns.data
+
+  const postLogin = useMutation({
+    mutationFn: (data: LoginEntity) => AuthRepository.signIn(data),
+    onSuccess: (data) => {
+      showNotification({
+        title: 'Success',
+        message: data.message,
+        color: 'green',
+        icon: <IconCheck size={18} stroke={1.5} />,
+      })
+
+      const state = {
+        email: null,
+        wallet_address: account.address,
+        access_token: data.data.access_token,
+      }
+      setAuthSession(state)
+    },
+  })
 
   if (account.isConnected) {
     const shortAddress = shortText(String(account.address), 5, 5)
@@ -113,13 +137,27 @@ export default function WalletConnect() {
     connect(
       { connector: injected(), chainId: base.id },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          const address = data.accounts[0]
+
           // sign wallet address
           signMessage(
-            { account: account.address, message: 'Verify Wallet' },
+            { account: address, message: 'Verify Wallet' },
             {
               onSuccess: (signature) => {
                 setEvmWallet({ signature })
+
+                const formLogin = {
+                  wallet_address: address,
+                  wallet_signature: signature,
+                  email: null,
+                  password: null,
+                  latitude: null,
+                  longitude: null,
+                }
+
+                // post login to api
+                postLogin.mutateAsync(formLogin)
               },
             }
           )
