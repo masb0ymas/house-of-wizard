@@ -3,30 +3,28 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import axios from 'axios'
 import { env } from '~/config/env'
+import { WebinarEntity } from '~/data/entity/webinar'
 
 type UseResult = WebinarEntity
 type TQueryFnData = UseResult
 type TError = any
 
-/**
- *
- * @param options
- * @returns
- */
-export default function useWebinarLatest(
-  chain_id: number,
+export default function useWebinarById(
+  id: string,
   options?: UseQueryOptions<TQueryFnData, TError>
 ) {
-  const endpoint = `${env.API_URL}/v1/webinar/latest?chain_id=${chain_id}`
+  const endpoint = `${env.API_URL}/v1/webinar/${id}`
 
   const query = useQuery<TQueryFnData, TError>({
-    queryKey: ['webinar-latest', endpoint, chain_id],
+    queryKey: ['webinar-by-id', endpoint],
     queryFn: async () => {
-      const res = await axios.get(endpoint)
-      return res.data
+      const result = await axios.get(endpoint)
+      return result.data
     },
-    enabled: !!chain_id,
+    enabled: Boolean(id),
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
     select: (res: any) => res?.data,
     ...options,
   })
