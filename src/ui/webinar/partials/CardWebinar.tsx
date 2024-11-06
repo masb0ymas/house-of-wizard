@@ -1,27 +1,28 @@
 'use client'
 
-import { Button, Divider, Group, Paper, Stack, Text, Title, Tooltip } from '@mantine/core'
+import { Box, Button, Divider, Group, Paper, Stack, Text, Title, Tooltip } from '@mantine/core'
 import { IconBrandZoom, IconClock, IconLock, IconUsers } from '@tabler/icons-react'
+import _ from 'lodash'
+import Link from 'next/link'
+import { WebinarEntity } from '~/data/entity/webinar'
+import { formatDate } from '~/lib/date'
+import { shortText } from '~/lib/string'
 
-type IProps = {
-  title: string
-  start_date: string
-  time: string
+type IProps = WebinarEntity & {
   participant: number
-  is_premium: boolean
 }
 
 export default function CardWebinar(props: IProps) {
-  const { title, start_date, time, participant, is_premium } = props
+  const { id, title, start_date, participant, is_premium, recording_url } = props
 
-  return (
-    <Paper withBorder radius="lg" shadow="lg" p="lg">
-      <Stack gap={10}>
-        <Title size="xl">{title}</Title>
-        <Text size="sm">{start_date}</Text>
+  const base_url = '/webinar'
+  const shortTitle = shortText(title, 47)
 
+  function btnWatch() {
+    if (!_.isNil(recording_url)) {
+      return (
         <Tooltip
-          label={is_premium ? "Subscribe to unlock" : "Watch Recording"}
+          label={is_premium ? 'Subscribe to unlock' : 'Watch Recording'}
           withArrow
           position="bottom"
           transitionProps={{ transition: 'pop', duration: 300 }}
@@ -30,10 +31,38 @@ export default function CardWebinar(props: IProps) {
             variant={is_premium ? 'filled' : 'light'}
             radius="md"
             leftSection={is_premium ? <IconLock size={18} /> : <IconBrandZoom size={18} />}
+            component={Link}
+            href={`${base_url}/watch/${id}`}
           >
             {is_premium ? 'Unlock' : 'Watch'}
           </Button>
         </Tooltip>
+      )
+    }
+
+    return (
+      <Tooltip
+        label={'Recording not available'}
+        withArrow
+        position="bottom"
+        transitionProps={{ transition: 'pop', duration: 300 }}
+      >
+        <Button variant="subtle" radius="md">
+          No Record
+        </Button>
+      </Tooltip>
+    )
+  }
+
+  return (
+    <Paper withBorder radius="lg" shadow="lg" p="lg">
+      <Stack gap={10}>
+        <Title size="xl">{shortTitle}</Title>
+        <Text size="sm" component="span">
+          {formatDate(start_date, 'MMM dd, yyyy')}
+        </Text>
+
+        {btnWatch()}
 
         <Divider variant="dashed" />
         <Group gap={7} justify="space-between">
@@ -48,7 +77,7 @@ export default function CardWebinar(props: IProps) {
               transitionProps={{ transition: 'pop', duration: 300 }}
             >
               <Text component="span" size="sm" c="gray">
-                {time}
+                1:40:00
               </Text>
             </Tooltip>
           </div>
