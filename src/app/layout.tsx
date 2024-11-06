@@ -3,6 +3,10 @@ import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/nprogress/styles.css'
 
+// vidstack css
+import '@vidstack/react/player/styles/base.css'
+import '@vidstack/react/player/styles/plyr/theme.css'
+
 import { ColorSchemeScript } from '@mantine/core'
 import { PropsWithChildren } from 'react'
 import WrapperMantine from '~/lib/WrapperMantine'
