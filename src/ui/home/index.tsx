@@ -7,7 +7,7 @@ import Welcome from './partials/Welcome'
 
 export default function Home() {
   return (
-    <Container size="md" my={100}>
+    <Container size="lg" my={100}>
       <Stack align="center" gap={16}>
         <MyImage src="/static/logo-how.png" alt="logo how" width="150px" height="150px" />
         <Text component="h1" size={rem('32px')} fw={700} c={'#705C53'} my={16}>

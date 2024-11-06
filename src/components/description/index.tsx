@@ -1,10 +1,9 @@
 'use client'
 
 import { Checkbox, Divider, Group, Text } from '@mantine/core'
-import { formatDate } from 'date-fns'
-import { id } from 'date-fns/locale'
 import _ from 'lodash'
 import Link from 'next/link'
+import { formatDate } from '~/lib/date'
 import classes from './description.module.css'
 
 interface ItemProps<T> {
@@ -41,7 +40,7 @@ export default function Description<T>({ item, content }: ItemProps<T>) {
     }
 
     if (type === ItemType.date) {
-      const value = formatDate(new Date(data), 'dd MMM yyyy HH:mm', { locale: id })
+      const value = formatDate(data, 'dd MMM yyyy HH:mm')
       return <Text size="md">{value}</Text>
     }
 

@@ -13,7 +13,7 @@ import MyImage from '~/components/image'
 import { useStore } from '~/config/zustand'
 import { LoginEntity } from '~/data/entity/auth'
 import AuthRepository from '~/data/repository/auth'
-import { shortText } from '~/lib/string'
+import { shortWalletAddress } from '~/lib/string'
 import { listChains } from './chains'
 import WalletProfile from './WalletProfile'
 
@@ -52,7 +52,7 @@ export default function WalletConnect() {
   })
 
   if (account.isConnected) {
-    const shortAddress = shortText(String(account.address), 5, 5)
+    const shortAddress = shortWalletAddress(String(account.address), 5, 5)
     const address = ens || shortAddress
 
     console.log('ENS', ens, shortAddress)

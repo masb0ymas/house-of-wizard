@@ -17,7 +17,7 @@ import {
 } from '@mantine/core'
 import { IconCheck, IconCopy, IconUnlink } from '@tabler/icons-react'
 import { useAccount, useDisconnect, useSwitchChain } from 'wagmi'
-import { shortText } from '~/lib/string'
+import { shortWalletAddress } from '~/lib/string'
 import { mainnets, testnets } from './chains'
 import { useStore } from '~/config/zustand'
 
@@ -96,7 +96,7 @@ export default function WalletProfile(props: WalletProfileProps) {
   const removeEvmWallet = useStore((state) => state.removeEvmWallet)
   const removeAuthSession = useStore((state) => state.removeAuthSession)
 
-  const profileAddress = shortText(String(account.address), 22, 6)
+  const profileAddress = shortWalletAddress(String(account.address), 22, 6)
 
   return (
     <>
