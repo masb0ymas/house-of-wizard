@@ -104,7 +104,7 @@ export default function Attendance() {
         description: data?.description,
         speakers: data?.speakers,
         date: data?.start_date,
-        link: data?.link,
+        webinar_url: data?.webinar_url,
       },
     }
 
