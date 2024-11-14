@@ -16,7 +16,7 @@ export default function CardWebinar(props: IProps) {
   const { id, title, start_date, participant, is_premium, recording_url } = props
 
   const base_url = '/webinar'
-  const shortTitle = shortText(title, 47)
+  const shortTitle = shortText(title, 42)
 
   function btnWatch() {
     if (!_.isNil(recording_url)) {

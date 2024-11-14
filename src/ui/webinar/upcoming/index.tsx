@@ -15,9 +15,10 @@ import { DateInput } from '@mantine/dates'
 import { useViewportSize } from '@mantine/hooks'
 import { IconCalendar, IconLicense, IconSearch } from '@tabler/icons-react'
 import _ from 'lodash'
-import CardWebinar from '../partials/CardWebinar'
-import useWebinar from '~/data/query/webinar/useWebinar'
 import { useState } from 'react'
+import useWebinar from '~/data/query/webinar/useWebinar'
+import { Mapping } from '~/lib/map'
+import CardWebinar from '../partials/CardWebinar'
 
 const payable = ['free', 'freemium', 'premium']
 const selectPayable = payable.map((item) => ({ value: item, label: _.capitalize(item) }))
@@ -86,14 +87,15 @@ export default function UpcomingTab() {
 
       <Divider variant="dashed" />
 
-      <Grid columns={12}>
-        {data.map((item) => {
-          return (
+      <Grid columns={12} justify="center" align="center">
+        <Mapping
+          data={data}
+          render={(item) => (
             <Grid.Col span={{ base: 12, sm: 6, md: 4 }} key={item.id}>
               <CardWebinar participant={0} {...item} />
             </Grid.Col>
-          )
-        })}
+          )}
+        />
       </Grid>
 
       <Group justify={!mobile_device ? 'right' : 'center'} mt={16}>
