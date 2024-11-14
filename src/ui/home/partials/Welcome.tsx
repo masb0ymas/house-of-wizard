@@ -1,8 +1,9 @@
 'use client'
 
-import { Mark, Stack, Text } from '@mantine/core'
+import { Button, Mark, Stack, Text } from '@mantine/core'
 import { format, subMinutes } from 'date-fns'
 import _ from 'lodash'
+import Link from 'next/link'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { getContractByChain } from '~/artifact/contract/attendance'
 import Description, { ItemType } from '~/components/description'
@@ -87,7 +88,15 @@ export default function Welcome() {
     }
 
     if (account.isDisconnected) {
-      return <Text size="lg">To become a great wizard, connect your wallet first.</Text>
+      return (
+        <>
+          <Text size="lg">To become a great wizard, connect your wallet first.</Text>
+
+          <Button component={Link} href="/login" radius="xl">
+            Get Access
+          </Button>
+        </>
+      )
     }
 
     return null
