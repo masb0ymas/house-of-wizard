@@ -1,14 +1,16 @@
 'use client'
 
-import { Anchor, Burger, Center, Container, Group, Menu, Paper } from '@mantine/core'
+import { Anchor, Burger, Button, Center, Container, Group, Menu, Paper } from '@mantine/core'
 import { useDisclosure, useViewportSize } from '@mantine/hooks'
 import { IconChevronDown } from '@tabler/icons-react'
 import _ from 'lodash'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Brand from '~/components/brand'
+import { useStore } from '~/config/zustand'
 import classes from './partials/header.module.css'
 import { LinksGroup } from './partials/LinkGroup'
+import Profile from './partials/Profile'
 import WalletConnect from './partials/WalletConnect'
 
 const links = [
@@ -32,6 +34,8 @@ export default function Header() {
 
   const { width } = useViewportSize()
   const [opened, { toggle }] = useDisclosure(false)
+
+  const { auth } = useStore()
 
   const desktopNavItems = links.map((item) => {
     const link_active = item.link === pathname
@@ -85,6 +89,22 @@ export default function Header() {
 
   const mobileNavItems = links.map((item) => <LinksGroup {...item} key={item.label} />)
 
+  function GetAccess() {
+    if (auth?.provider === 'evm') {
+      return <WalletConnect />
+    }
+
+    if (['email', 'google.com'].includes(String(auth?.provider))) {
+      return <Profile />
+    }
+
+    return (
+      <Button component={Link} href="/login" radius="xl">
+        Get Access
+      </Button>
+    )
+  }
+
   return (
     <header className={classes.header}>
       <Container size="lg">
@@ -95,7 +115,7 @@ export default function Header() {
           <Group gap={5} visibleFrom="sm">
             {desktopNavItems}
 
-            <WalletConnect />
+            <GetAccess />
           </Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
         </div>
@@ -105,7 +125,7 @@ export default function Header() {
           <Paper shadow="lg" className={classes.mobile_link}>
             {mobileNavItems}
 
-            <WalletConnect />
+            <GetAccess />
           </Paper>
         )}
       </Container>
