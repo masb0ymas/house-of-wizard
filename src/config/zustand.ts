@@ -6,6 +6,7 @@ type AuthProps = {
   email?: string | null
   wallet_address?: string | null
   access_token: string
+  provider: string
 }
 
 type Web3WalletProps = {
