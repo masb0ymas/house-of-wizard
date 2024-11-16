@@ -29,10 +29,11 @@ export default function useWebinar(
     },
     ...options,
   })
-
+  
   return {
     ...query,
     data: query.data?.data || [],
     total: query.data?.total || 0,
+    helpers: urlQuery,
   }
 }
