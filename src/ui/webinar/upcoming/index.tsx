@@ -28,9 +28,9 @@ export default function UpcomingTab() {
   const mobile_device = width < 780
 
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(9)
+  const [pageSize] = useState(9)
 
-  const { data, isLoading, isFetching } = useWebinar({
+  const { data, total, isLoading, isFetching, helpers } = useWebinar({
     query: {
       defaultValue: {
         page,
@@ -87,7 +87,7 @@ export default function UpcomingTab() {
 
       <Divider variant="dashed" />
 
-      <Grid columns={12} justify="center" align="center">
+      <Grid columns={12}>
         <Mapping
           data={data}
           render={(item) => (
@@ -99,7 +99,17 @@ export default function UpcomingTab() {
       </Grid>
 
       <Group justify={!mobile_device ? 'right' : 'center'} mt={16}>
-        <Pagination total={10} radius="md" />
+        <Pagination
+          radius="md"
+          value={page}
+          onChange={(newPage) => {
+            setPage(newPage)
+            helpers.setQuery((helper) => {
+              helper.query.set('page', newPage ?? 1)
+            })
+          }}
+          total={Math.ceil(Number(total || 0) / Number(pageSize ?? 10))}
+        />
       </Group>
     </Stack>
   )

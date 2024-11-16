@@ -4,11 +4,14 @@ import { Button, Divider, Group, Stack, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconAlertCircle, IconReload } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import { subMinutes } from 'date-fns'
+import { is } from 'date-fns/locale'
 import _ from 'lodash'
 import Link from 'next/link'
+import { useState } from 'react'
 import { type BaseError } from 'viem'
+import { base } from 'viem/chains'
 import {
   useAccount,
   useChainId,
@@ -23,7 +26,10 @@ import { getContractByChain } from '~/artifact/contract/attendance'
 import classes from '~/components/description/description.module.css'
 import { env } from '~/config/env'
 import { useStore } from '~/config/zustand'
+import useProfile from '~/data/query/useProfile'
+import useWebinarAttendanceByUser from '~/data/query/webinar-attendance/useWebinarAttendanceByUser'
 import useWebinarLatest from '~/data/query/webinar/useWebinarLatest'
+import WebinarAttendanceRepository from '~/data/repository/webinar-attendance'
 import webinarAttendanceSchema from '~/data/schema/webinar_attendance'
 import { dateToUnixtime } from '~/lib/date'
 import { validate } from '~/lib/validate'
@@ -35,15 +41,21 @@ export default function Attendance() {
 
   const { evm_wallet } = useStore()
 
+  const { auth } = useStore()
+  const isWeb3 = auth?.provider === 'evm'
+
+  const queryProfile = useProfile()
+
   const { data: hash, error, isPending, writeContract } = useWriteContract()
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
   })
 
-  const chainId = useChainId()
+  const chainId = useChainId() || base.id
   const attendanceContract = getContractByChain(chainId)
 
   const { data } = useWebinarLatest(chainId)
+  const queryAttendance = useWebinarAttendanceByUser()
 
   const isVerified = useVerifyMessage({
     address: account.address,
@@ -54,17 +66,72 @@ export default function Attendance() {
   const mutation = useMutation({
     // @ts-expect-error
     mutationFn: async (values: z.infer<typeof webinarAttendanceSchema>) => {
-      const url = `${env.API_URL}/v1/webinar-attendance`
-      return await axios.post(url, values)
+      const access_token = _.get(auth, 'access_token', '')
+      const options: AxiosRequestConfig = {
+        headers: { Authorization: `Bearer ${access_token}` },
+      }
+
+      return await WebinarAttendanceRepository.markAttendance(values, options)
     },
-    onSuccess: () => {
-      console.log('Data saved successfully')
+    onSuccess: (data) => {
+      showNotification({
+        title: 'Mark Attendance',
+        message: data.message,
+        color: 'cyan',
+        icon: <IconAlertCircle size={18} stroke={1.5} />,
+      })
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['webinar-latest'] })
+      queryClient.invalidateQueries({ queryKey: ['webinar-latest', 'webinar-attendance-by-user'] })
     },
   })
 
-  function markAttendance() {
+  async function markAttendanceWeb2() {
+    let title = 'Something went wrong!'
+    let message = 'Please check your endpoint API.'
+
+    if (_.isNil(data?.id)) {
+      showNotification({
+        title: title,
+        message: message,
+        color: 'red',
+        icon: <IconAlertCircle size={18} stroke={1.5} />,
+      })
+    }
+
+    const formData = {
+      webinar_id: data?.id,
+      fullname: queryProfile.data?.fullname,
+      check_in: new Date(),
+      wallet_address: validate.empty(queryProfile?.data?.wallet_address),
+      metadata: {
+        title: data?.title,
+        description: data?.description,
+        speakers: data?.speakers,
+        date: data?.start_date,
+        webinar_url: data?.webinar_url,
+      },
+    }
+
+    try {
+      await mutation.mutateAsync(formData)
+    } catch (error: any) {
+      console.log(error)
+
+      if (error.response?.data?.message) {
+        title = error.response.data.error
+        message = error.response.data.message
+      }
+
+      showNotification({
+        title: title,
+        message: message,
+        color: 'red',
+        icon: <IconAlertCircle size={18} stroke={1.5} />,
+      })
+    }
+  }
+
+  function markAttendanceWeb3() {
     console.log(ens.data, account.address)
 
     let title = 'Something went wrong!'
@@ -167,7 +234,60 @@ export default function Attendance() {
     )
   }
 
-  function buttonAction() {
+  function buttonActionWeb2() {
+    const sub_30_minutes = subMinutes(new Date(String(data?.start_date)), 30)
+    const is_open_attendance = new Date() > sub_30_minutes
+    const is_close_attendance = new Date() > new Date(String(data?.end_date))
+
+    const check_attendance = queryAttendance.isLoading || queryAttendance.isFetching
+    const is_attendance = !check_attendance && !_.isEmpty(queryAttendance.data?.id)
+    const is_not_attendance = !check_attendance && _.isEmpty(queryAttendance.data?.id)
+
+    console.log({
+      is_open_attendance,
+      is_close_attendance,
+      check_attendance,
+      is_attendance,
+      is_not_attendance,
+    })
+
+    if (check_attendance) {
+      return checkingButton()
+    }
+
+    if (is_attendance && !is_close_attendance) {
+      return (
+        <Button size="lg" radius="lg" variant="subtle" disabled>
+          You are Attendance
+        </Button>
+      )
+    }
+
+    if (is_not_attendance && is_open_attendance && !is_close_attendance) {
+      return (
+        <>
+          <Button size="lg" radius="lg" onClick={markAttendanceWeb2} disabled={mutation.isPending}>
+            {mutation.isPending ? 'Confirming...' : 'Attendance'}
+          </Button>
+
+          {mutation.isSuccess && (
+            <Button
+              onClick={() => queryAttendance.refetch()}
+              leftSection={<IconReload />}
+              radius="lg"
+              size="md"
+            >
+              Refresh
+            </Button>
+          )}
+        </>
+      )
+    }
+
+    return null
+  }
+
+  function buttonActionWeb3() {
     // @ts-expect-error
     const is_attendance = result.data && validate.boolean(result.data[0])
 
@@ -197,7 +317,7 @@ export default function Attendance() {
             <Button
               size="lg"
               radius="lg"
-              onClick={markAttendance}
+              onClick={markAttendanceWeb3}
               disabled={isPending || isConfirming}
             >
               {isPending || isConfirming ? 'Confirming...' : 'Attendance'}
@@ -256,5 +376,5 @@ export default function Attendance() {
     return null
   }
 
-  return buttonAction()
+  return isWeb3 ? buttonActionWeb3() : buttonActionWeb2()
 }
