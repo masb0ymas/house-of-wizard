@@ -27,6 +27,7 @@ export type ProfileEntity = {
   deleted_at: string | null
   fullname: string
   email: string
+  wallet_address?: string | null
   phone: string | null
   address: string | null
   is_active: boolean
