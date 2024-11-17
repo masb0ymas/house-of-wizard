@@ -47,7 +47,7 @@ export default function WebinarSlugPage() {
         </ShineBorder>
 
         <h1 className="text-4xl font-semibold">Webinar Data Analyst</h1>
-        <h4 className="text-lg text-gray-600 dark:text-gray-300">
+        <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
           To become a greater wizard, learn how to analyze Web3 data and start your career in the
           decentralized future.
         </h4>

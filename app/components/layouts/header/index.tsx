@@ -1,27 +1,27 @@
-import { Link } from "@remix-run/react"
-import { Bell, Menu, User, X } from "lucide-react"
-import { useState } from "react"
-import { RainbowButton } from "~/components/ui/rainbow-button"
+import { Link } from '@remix-run/react'
+import { Bell, Menu, X } from 'lucide-react'
+import { useState } from 'react'
+import { RainbowButton } from '~/components/ui/rainbow-button'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   const menus = [
     {
-      name: "Webinar",
-      link: "/webinar",
+      name: 'Webinar',
+      link: '/webinar',
     },
     {
-      name: "Courses",
-      link: "/",
+      name: 'Courses',
+      link: '/',
     },
     {
-      name: "Resources",
-      link: "/",
+      name: 'Resources',
+      link: '/',
     },
     {
-      name: "Community",
-      link: "/",
+      name: 'Community',
+      link: '/',
     },
   ]
 
@@ -54,11 +54,11 @@ export default function Navbar() {
 
             <div className="h-6 w-px bg-gray-200"></div>
 
-            <RainbowButton className="h-10">
-              <Link to="/login">
+            <Link to="/login">
+              <RainbowButton className="h-10">
                 <span>Get Access</span>
-              </Link>
-            </RainbowButton>
+              </RainbowButton>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -86,12 +86,10 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              <Link
-                to="/profile"
-                className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
-              >
-                <User className="h-5 w-5" />
-                <span>Account</span>
+              <Link to="/login">
+                <RainbowButton className="h-10">
+                  <span>Get Access</span>
+                </RainbowButton>
               </Link>
             </div>
           </div>

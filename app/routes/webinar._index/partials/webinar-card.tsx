@@ -1,8 +1,8 @@
-import { Link } from "@remix-run/react"
-import { ArrowRight, Lock, Video } from "lucide-react"
-import { Button } from "~/components/ui/button"
-import { RainbowButton } from "~/components/ui/rainbow-button"
-import { shortText } from "~/lib/string"
+import { Link } from '@remix-run/react'
+import { ArrowRight, Lock, Video } from 'lucide-react'
+import { Button } from '~/components/ui/button'
+import { RainbowButton } from '~/components/ui/rainbow-button'
+import { shortText } from '~/lib/string'
 
 type WebinarCardProps = {
   title: string
@@ -42,7 +42,7 @@ export default function WebinarCard(props: WebinarCardProps) {
     if (isPremium) {
       return (
         <Link to={`/webinar/watch/${slug}`}>
-          <Button className="w-full h-10" radius={"xl"}>
+          <Button className="w-full h-10" radius={'xl'}>
             <Lock className="h-6 w-6" />
             <span>Buy Now</span>
           </Button>
@@ -52,7 +52,7 @@ export default function WebinarCard(props: WebinarCardProps) {
 
     return (
       <Link to={`/webinar/watch/${slug}`}>
-        <Button className="w-full h-10" variant={"outline"} radius={"xl"}>
+        <Button className="w-full h-10" variant={'outline'} radius={'xl'}>
           <Video className="h-6 w-6" />
           <span>Watch Recording</span>
         </Button>

@@ -16,7 +16,7 @@ export default function Hero() {
               start your career in the decentralized future.
             </p>
           </div>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:justify-center gap-4">
             <RainbowButton className="gap-2">
               <span>Start Learning</span>
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -31,7 +31,7 @@ export default function Hero() {
             </Button>
           </div>
 
-          <div className="flex justify-center gap-8 pt-12">
+          <div className="flex sm:flex-row flex-col md:justify-center gap-8 pt-12">
             <div className="flex items-center gap-2">
               <Database className="h-6 w-6 text-indigo-600" />
               <span className="text-gray-600">Blockchain Data</span>

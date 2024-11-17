@@ -1,24 +1,25 @@
-import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from "lucide-react"
+import { Link } from '@remix-run/react'
+import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
 
 const courseCategories = [
-  { name: "Blockchain Basics", href: "#" },
-  { name: "DeFi Analytics", href: "#" },
-  { name: "Smart Contracts", href: "#" },
-  { name: "NFT Data Analysis", href: "#" },
+  { name: 'Blockchain Basics', href: '#' },
+  { name: 'DeFi Analytics', href: '#' },
+  { name: 'Smart Contracts', href: '#' },
+  { name: 'NFT Data Analysis', href: '#' },
 ]
 
 const quickLinks = [
-  { name: "About Us", href: "#" },
-  { name: "Career Paths", href: "#" },
-  { name: "Success Stories", href: "#" },
-  { name: "Blog", href: "#" },
+  { name: 'About Us', href: '#' },
+  { name: 'Career Paths', href: '#' },
+  { name: 'Success Stories', href: '#' },
+  { name: 'Blog', href: '#' },
 ]
 
 const support = [
-  { name: "Help Center", href: "#" },
-  { name: "Terms of Service", href: "#" },
-  { name: "Privacy Policy", href: "#" },
-  { name: "Contact Us", href: "#" },
+  { name: 'Help Center', href: '#' },
+  { name: 'Terms of Service', href: '#' },
+  { name: 'Privacy Policy', href: '#' },
+  { name: 'Contact Us', href: '#' },
 ]
 
 export default function Footer() {
@@ -96,11 +97,21 @@ export default function Footer() {
             <div className="mt-4 space-y-2">
               <div className="flex items-center gap-2 text-sm">
                 <Mail className="h-4 w-4" />
-                <span>info@house-of-wizard.xyz</span>
+                <Link
+                  to="mailto:info@house-of-wizard.xyz"
+                  className="text-sm hover:text-indigo-500 transition"
+                >
+                  <span>info@house-of-wizard.xyz</span>
+                </Link>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Phone className="h-4 w-4" />
-                <span>+1 (555) 123-4567</span>
+                <Link
+                  to="https://t.me/HouseofWizard"
+                  className="text-sm hover:text-indigo-500 transition"
+                >
+                  <span>https://t.me/HouseofWizard</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -116,10 +127,10 @@ export default function Footer() {
             </div>
             <div className="mt-4 md:mt-0">
               <div className="flex space-x-6 text-sm text-gray-400">
-                <a href="/" className="hover:text-indigo-500 transition">
+                <a href="/terms-of-service" className="hover:text-indigo-500 transition">
                   Terms
                 </a>
-                <a href="/" className="hover:text-indigo-500 transition">
+                <a href="/privacy-policy" className="hover:text-indigo-500 transition">
                   Privacy
                 </a>
                 <a href="/" className="hover:text-indigo-500 transition">

@@ -12,6 +12,7 @@ import {
   PaginationPrevious,
 } from '~/components/ui/pagination'
 import WebinarCard from './partials/webinar-card'
+import ShineBorder from '~/components/ui/shine-border'
 
 export const meta: MetaFunction = () => {
   return [{ title: 'Webinar' }, { name: 'description', content: 'Webinar House of Wizard' }]
@@ -42,15 +43,20 @@ export default function WebinarPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-center justify-center mt-8">
-        <WebinarCard
-          title="Webinar Data Analyst"
-          slug="webinar-data-analyst"
-          description="Learn how to analyze Web3 data and start your career in the decentralized future."
-          participants={10}
-          duration="1:30:00"
-          date="2023-01-01"
-          isLive
-        />
+        <ShineBorder
+          className="relative p-0 flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
+          color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
+        >
+          <WebinarCard
+            title="Webinar Data Analyst"
+            slug="webinar-data-analyst"
+            description="Learn how to analyze Web3 data and start your career in the decentralized future."
+            participants={10}
+            duration="1:30:00"
+            date="2023-01-01"
+            isLive
+          />
+        </ShineBorder>
 
         <WebinarCard
           title="Explore NEAR Blockchain"
