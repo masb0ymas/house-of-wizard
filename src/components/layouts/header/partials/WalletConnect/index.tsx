@@ -11,13 +11,16 @@ import { useAccount, useChainId, useConnect, useEnsName, useSignMessage } from '
 import { injected } from 'wagmi/connectors'
 import MyImage from '~/components/image'
 import { useStore } from '~/config/zustand'
-import { LoginEntity } from '~/data/entity/auth'
+import { WalletLoginAttributes } from '~/data/entity/auth'
 import AuthRepository from '~/data/repository/auth'
 import { shortWalletAddress } from '~/lib/string'
 import { listChains } from './chains'
 import WalletProfile from './WalletProfile'
+import { useState } from 'react'
 
 export default function WalletConnect() {
+  const [visible, setVisible] = useState(false)
+
   const account = useAccount()
   const { connect } = useConnect()
   const chainId = useChainId()
@@ -33,21 +36,22 @@ export default function WalletConnect() {
   const ens = resultEns.data
 
   const postLogin = useMutation({
-    mutationFn: (data: LoginEntity) => AuthRepository.signIn(data),
+    mutationFn: (data: WalletLoginAttributes) => AuthRepository.signIn(data),
     onSuccess: (data) => {
       showNotification({
-        title: 'Success',
+        title: 'Sign in with Wallet',
         message: data.message,
         color: 'green',
         icon: <IconCheck size={18} stroke={1.5} />,
       })
 
-      const state = {
+      // save session
+      setAuthSession({
+        provider: 'evm',
+        access_token: data.data.access_token,
         email: null,
         wallet_address: account.address,
-        access_token: data.data.access_token,
-      }
-      setAuthSession(state)
+      })
     },
   })
 
@@ -133,6 +137,8 @@ export default function WalletConnect() {
   }
 
   function connectWallet() {
+    setVisible(true)
+
     // connect wallet
     connect(
       { connector: injected(), chainId: base.id },
@@ -150,6 +156,7 @@ export default function WalletConnect() {
                 const formLogin = {
                   wallet_address: address,
                   wallet_signature: signature,
+                  provider: 'evm',
                   email: null,
                   password: null,
                   latitude: null,
@@ -165,6 +172,7 @@ export default function WalletConnect() {
       }
     )
 
+    setVisible(false)
     close()
   }
 
@@ -173,11 +181,18 @@ export default function WalletConnect() {
       <Tooltip
         label="Connect Wallet"
         withArrow
-        position="bottom"
+        position="top"
+        radius="md"
         transitionProps={{ transition: 'pop', duration: 300 }}
       >
-        <Button radius="lg" onClick={connectWallet}>
-          Connect Wallet
+        <Button
+          radius="lg"
+          variant="light"
+          leftSection={<IconWallet />}
+          onClick={() => connectWallet()}
+          loading={visible}
+        >
+          Wallet
         </Button>
       </Tooltip>
     </>

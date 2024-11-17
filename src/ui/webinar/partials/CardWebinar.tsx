@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Button, Divider, Group, Paper, Stack, Text, Title, Tooltip } from '@mantine/core'
-import { IconBrandZoom, IconClock, IconLock, IconUsers } from '@tabler/icons-react'
+import { IconBrandZoom, IconClock, IconLock, IconUsers, IconVideo, IconVideoOff } from '@tabler/icons-react'
 import _ from 'lodash'
 import Link from 'next/link'
 import { WebinarEntity } from '~/data/entity/webinar'
@@ -16,7 +16,7 @@ export default function CardWebinar(props: IProps) {
   const { id, title, start_date, participant, is_premium, recording_url } = props
 
   const base_url = '/webinar'
-  const shortTitle = shortText(title, 47)
+  const shortTitle = shortText(title, 42)
 
   function btnWatch() {
     if (!_.isNil(recording_url)) {
@@ -30,7 +30,7 @@ export default function CardWebinar(props: IProps) {
           <Button
             variant={is_premium ? 'filled' : 'light'}
             radius="md"
-            leftSection={is_premium ? <IconLock size={18} /> : <IconBrandZoom size={18} />}
+            leftSection={is_premium ? <IconLock size={18} /> : <IconVideo size={18} />}
             component={Link}
             href={`${base_url}/watch/${id}`}
           >
@@ -47,7 +47,7 @@ export default function CardWebinar(props: IProps) {
         position="bottom"
         transitionProps={{ transition: 'pop', duration: 300 }}
       >
-        <Button variant="subtle" radius="md">
+        <Button variant="subtle" radius="md" leftSection={<IconVideoOff size={18} />}>
           No Record
         </Button>
       </Tooltip>
