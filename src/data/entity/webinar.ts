@@ -4,6 +4,7 @@ export interface WebinarEntity {
   updated_at: string
   deleted_at: string | null
   title: string
+  slug: string
   description?: string | null
   speakers: string
   category_id: string

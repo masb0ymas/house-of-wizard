@@ -31,6 +31,7 @@ export function shortText(text: string, start: number, end?: number) {
   const result = `${firstText}...${lastText}`
   return result
 }
+
 /**
  *
  * @param str

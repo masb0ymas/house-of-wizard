@@ -1,48 +1,49 @@
-import '@mantine/core/styles.css'
-import '@mantine/dates/styles.css'
-import '@mantine/notifications/styles.css'
-import '@mantine/nprogress/styles.css'
+/* eslint-disable @next/next/no-page-custom-font */
+import './globals.css'
 
-// vidstack css
 import '@vidstack/react/player/styles/base.css'
 import '@vidstack/react/player/styles/plyr/theme.css'
 
-import { ColorSchemeScript } from '@mantine/core'
-import { PropsWithChildren } from 'react'
-import WrapperMantine from '~/lib/WrapperMantine'
-import WrapperReactQuery from '~/lib/WrapperReactQuery'
-import WrapperWagmi from '~/lib/WrapperWagmi'
+import type { Metadata } from 'next'
+import { Toaster } from '~/components/ui/toaster'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'House of Wizard',
-  description: 'Learning Web3 Academy with House of Wizard',
+  description: 'To become a greater wizard, join with us',
 }
 
-type IProps = PropsWithChildren
-
-export default function RootLayout({ children }: IProps) {
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript />
-        <link rel="shortcut icon" href="/static/logo-how.png" />
-        <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+        <link
+          rel="apple-touch-icon"
+          href="/apple-touch-icon.png"
+          type="image/png"
+          sizes="180x180"
         />
+        <link rel="manifest" href="/site.webmanifest" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body>
-        <WrapperMantine>
-          <WrapperWagmi>
-            <WrapperReactQuery>{children}</WrapperReactQuery>
-          </WrapperWagmi>
-        </WrapperMantine>
+      <body className={`antialiased`}>
+        {children}
+        <Toaster />
       </body>
     </html>
   )

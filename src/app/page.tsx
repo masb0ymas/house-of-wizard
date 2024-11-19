@@ -1,10 +1,24 @@
-import Layout from '~/components/layouts'
-import Home from '~/ui/home'
+import Layout from "~/components/layout";
+import About from "./home/about";
+import FAQ from "./home/faq";
+import Hero from "./home/hero";
+import Pricing from "./home/pricing";
+import Testimonials from "./home/testimonial";
+import { Metadata } from "next";
 
-export default function page() {
+export const metadata: Metadata = {
+  title: "House of Wizard",
+  description: "To become a greater wizard, join with us",
+};
+
+export default function Home() {
   return (
     <Layout>
-      <Home />
+      <Hero />
+      <About />
+      <Testimonials />
+      <Pricing />
+      <FAQ />
     </Layout>
-  )
+  );
 }

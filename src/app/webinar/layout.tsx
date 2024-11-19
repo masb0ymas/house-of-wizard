@@ -1,15 +1,14 @@
-import { Container } from '@mantine/core'
-import React, { PropsWithChildren } from 'react'
-import Layout from '~/components/layouts'
+import React, { PropsWithChildren } from "react";
+import Layout from "~/components/layout";
 
-type IProps = PropsWithChildren
+type IProps = PropsWithChildren;
 
-export default function WebinarLayout({ children }: IProps) {
+export default function WebinarLayout(props: IProps) {
   return (
     <Layout>
-      <Container size="lg" my={100}>
-        {children}
-      </Container>
+      <div className="flex flex-col justify-center items-center bg-gradient-to-br from-indigo-100 via-white to-purple-100 pt-36">
+        {props.children}
+      </div>
     </Layout>
-  )
+  );
 }
