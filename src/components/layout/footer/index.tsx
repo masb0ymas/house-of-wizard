@@ -39,18 +39,18 @@ export default function Footer() {
               education.
             </p>
             <div className="flex space-x-4">
-              <a href="/" className="hover:text-indigo-500 transition">
+              <Link href="/" className="hover:text-indigo-500 transition">
                 <Facebook className="h-5 w-5" />
-              </a>
-              <a href="/" className="hover:text-indigo-500 transition">
+              </Link>
+              <Link href="/" className="hover:text-indigo-500 transition">
                 <Twitter className="h-5 w-5" />
-              </a>
-              <a href="/" className="hover:text-indigo-500 transition">
+              </Link>
+              <Link href="/" className="hover:text-indigo-500 transition">
                 <Linkedin className="h-5 w-5" />
-              </a>
-              <a href="/" className="hover:text-indigo-500 transition">
+              </Link>
+              <Link href="/" className="hover:text-indigo-500 transition">
                 <Instagram className="h-5 w-5" />
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -60,9 +60,9 @@ export default function Footer() {
             <ul className="space-y-2">
               {courseCategories.map((category) => (
                 <li key={category.name}>
-                  <a href={category.href} className="text-sm hover:text-indigo-500 transition">
+                  <Link href={category.href} className="text-sm hover:text-indigo-500 transition">
                     {category.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -74,9 +74,9 @@ export default function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm hover:text-indigo-500 transition">
+                  <Link href={link.href} className="text-sm hover:text-indigo-500 transition">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -88,9 +88,9 @@ export default function Footer() {
             <ul className="space-y-2">
               {support.map((item) => (
                 <li key={item.name}>
-                  <a href={item.href} className="text-sm hover:text-indigo-500 transition">
+                  <Link href={item.href} className="text-sm hover:text-indigo-500 transition">
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -127,15 +127,15 @@ export default function Footer() {
             </div>
             <div className="mt-4 md:mt-0">
               <div className="flex space-x-6 text-sm text-gray-400">
-                <a href="/terms-of-service" className="hover:text-indigo-500 transition">
+                <Link href="/terms-of-service" className="hover:text-indigo-500 transition">
                   Terms
-                </a>
-                <a href="/privacy-policy" className="hover:text-indigo-500 transition">
+                </Link>
+                <Link href="/privacy-policy" className="hover:text-indigo-500 transition">
                   Privacy
-                </a>
-                <a href="/" className="hover:text-indigo-500 transition">
+                </Link>
+                <Link href="/" className="hover:text-indigo-500 transition">
                   Cookies
-                </a>
+                </Link>
               </div>
             </div>
           </div>
