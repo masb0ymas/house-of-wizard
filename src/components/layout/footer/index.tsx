@@ -1,4 +1,11 @@
-import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react'
+import {
+  IconBrandFacebook,
+  IconBrandInstagram,
+  IconBrandLinkedin,
+  IconBrandTwitter,
+} from '@tabler/icons-react'
+import { Mail, Phone } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const courseCategories = [
@@ -31,8 +38,14 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <img src="/logo-how.png" alt="House of Wizard" className="h-10 w-10" />
-              <span className="font-bold text-xl text-white">House of Wizard</span>
+              <Image
+                src="/logo-how.png"
+                alt="House of Wizard"
+                className="h-10 w-10"
+                width={40}
+                height={40}
+              />
+              <span className="font-bold font-serif text-xl text-white">House of Wizard</span>
             </div>
             <p className="text-sm">
               Empowering the next generation of Web3 data analysts through comprehensive online
@@ -40,23 +53,23 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <Link href="/" className="hover:text-indigo-500 transition">
-                <Facebook className="h-5 w-5" />
+                <IconBrandFacebook className="h-5 w-5" />
               </Link>
               <Link href="/" className="hover:text-indigo-500 transition">
-                <Twitter className="h-5 w-5" />
+                <IconBrandTwitter className="h-5 w-5" />
               </Link>
               <Link href="/" className="hover:text-indigo-500 transition">
-                <Linkedin className="h-5 w-5" />
+                <IconBrandLinkedin className="h-5 w-5" />
               </Link>
               <Link href="/" className="hover:text-indigo-500 transition">
-                <Instagram className="h-5 w-5" />
+                <IconBrandInstagram className="h-5 w-5" />
               </Link>
             </div>
           </div>
 
           {/* Course Categories */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Course Categories</h3>
+            <h3 className="text-lg font-semibold font-serif text-white mb-4">Course Categories</h3>
             <ul className="space-y-2">
               {courseCategories.map((category) => (
                 <li key={category.name}>
@@ -70,7 +83,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold font-serif text-white mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -84,7 +97,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Support</h3>
+            <h3 className="text-lg font-semibold font-serif text-white mb-4">Support</h3>
             <ul className="space-y-2">
               {support.map((item) => (
                 <li key={item.name}>

@@ -20,7 +20,7 @@ export default async function SignInPage() {
   const session = await auth()
 
   if (session?.user) {
-    // redirect("/");
+    redirect("/");
   }
 
   return (
@@ -50,7 +50,7 @@ export default async function SignInPage() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500 font-serif">Or continue with</span>
             </div>
           </div>
 
