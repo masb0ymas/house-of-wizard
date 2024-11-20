@@ -1,6 +1,7 @@
 'use client'
 
 import { Bell, Menu, X } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { RainbowButton } from '~/components/ui/rainbow-button'
@@ -33,7 +34,13 @@ export default function Header() {
         <div className="flex justify-between items-center h-14">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <img src="/logo-how.png" alt="House of Wizard" className="h-10 w-10" />
+            <Image
+              src="/logo-how.png"
+              alt="House of Wizard"
+              className="h-10 w-10"
+              width={40}
+              height={40}
+            />
             <span className="font-bold font-serif text-xl">House of Wizard</span>
           </Link>
 
@@ -57,7 +64,7 @@ export default function Header() {
             <div className="h-6 w-px bg-gray-200"></div>
 
             <Link href="/sign-in">
-              <RainbowButton className="h-10 font-serif">
+              <RainbowButton className="h-10 font-serif font-semibold">
                 <span>Get Access</span>
               </RainbowButton>
             </Link>
@@ -89,7 +96,7 @@ export default function Header() {
               ))}
 
               <Link href="/sign-in">
-                <RainbowButton className="h-10">
+                <RainbowButton className="h-10 font-serif font-semibold">
                   <span>Get Access</span>
                 </RainbowButton>
               </Link>

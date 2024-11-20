@@ -39,7 +39,12 @@ export default function SignInForm() {
           )}
         </div>
 
-        <Button variant={'secondary'} className="w-full" radius={'lg'} type="submit">
+        <Button
+          variant={'secondary'}
+          className="w-full font-medium font-serif"
+          radius={'lg'}
+          type="submit"
+        >
           Continue with Email
         </Button>
       </form>
