@@ -5,7 +5,7 @@ export interface WebinarEntity {
   deleted_at: string | null
   title: string
   slug: string
-  description?: string | null
+  description: string
   speakers: string
   category_id: string
   start_date: string
@@ -16,4 +16,5 @@ export interface WebinarEntity {
   is_active: boolean
   is_premium: boolean
   chain_id: string
+  total_participant: number
 }

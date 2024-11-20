@@ -1,4 +1,5 @@
 import { Filter, Search } from 'lucide-react'
+import { Metadata } from 'next'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import {
@@ -11,8 +12,8 @@ import {
   PaginationPrevious,
 } from '~/components/ui/pagination'
 import ShineBorder from '~/components/ui/shine-border'
+import { getWebinarLiveSession, getWebinars } from './action'
 import WebinarCard from './partials/webinar-card'
-import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Webinar -House of Wizard',
@@ -20,6 +21,9 @@ export const metadata: Metadata = {
 }
 
 export default async function WebinarPage() {
+  const webinarLiveSession = await getWebinarLiveSession()
+  const webinars = await getWebinars()
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
       <div className="flex flex-col">
@@ -46,41 +50,35 @@ export default async function WebinarPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
-        <ShineBorder
-          className="relative p-0 flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
-          color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
-        >
-          <WebinarCard
-            title="Webinar Data Analyst"
-            slug="webinar-data-analyst"
-            description="Learn how to analyze Web3 data and start your career in the decentralized future."
-            participants={10}
-            duration="1:30:00"
-            date="2024-11-20 18:30:00"
-            isLive
-          />
-        </ShineBorder>
+        {webinarLiveSession && (
+          <ShineBorder
+            className="p-0 w-full h-full flex flex-col items-center justify-center overflow-hidden rounded-lg bg-background md:shadow-xl"
+            color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
+          >
+            <WebinarCard
+              title={webinarLiveSession.title}
+              slug={webinarLiveSession.slug}
+              description={webinarLiveSession.description}
+              participants={webinarLiveSession.total_participant || 0}
+              date={webinarLiveSession.start_date}
+              isLive
+            />
+          </ShineBorder>
+        )}
 
-        <WebinarCard
-          title="Explore NEAR Blockchain"
-          slug="explore-near-blockchain"
-          description="Learn how to analyze Web3 data and start your career in the decentralized future."
-          participants={10}
-          duration="1:30:00"
-          date="2023-01-01"
-          isLive={false}
-        />
-
-        <WebinarCard
-          title="Make a Dashboard Analysis for Sui Blockchain"
-          slug="make-a-dashboard-analysis-for-sui-blockchain"
-          description="Learn how to analyze Web3 data and start your career in the decentralized future."
-          participants={10}
-          duration="1:30:00"
-          date="2023-01-01"
-          isLive={false}
-          isPremium
-        />
+        {webinars.map((webinar) => {
+          return (
+            <WebinarCard
+              key={webinar.id}
+              title={webinar.title}
+              slug={webinar.slug}
+              description={webinar.description}
+              participants={webinar.total_participant}
+              date={webinar.start_date}
+              isLive={false}
+            />
+          )
+        })}
       </div>
 
       <Pagination className="my-8">
