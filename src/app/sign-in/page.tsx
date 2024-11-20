@@ -1,11 +1,10 @@
 import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 import { BorderBeam } from '~/components/ui/border-beam'
 import { auth } from '~/lib/auth'
 import SignInForm from './partials/sign-in-form'
 import SignInGoogle from './partials/sign-in-google'
 import SignInWeb3 from './partials/sign-in-web3'
-import { redirect } from 'next/navigation'
-import SparklesText from '~/components/ui/sparkles-text'
 
 export const metadata: Metadata = {
   title: 'Sign In - House of Wizard',
@@ -20,7 +19,7 @@ export default async function SignInPage() {
   const session = await auth()
 
   if (session?.user) {
-    redirect("/");
+    redirect('/')
   }
 
   return (
