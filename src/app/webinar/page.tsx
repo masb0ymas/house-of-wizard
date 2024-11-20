@@ -1,4 +1,5 @@
 import { Filter, Search } from 'lucide-react'
+import { Metadata } from 'next'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import {
@@ -10,16 +11,14 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '~/components/ui/pagination'
-import ShineBorder from '~/components/ui/shine-border'
-import WebinarCard from './partials/webinar-card'
-import { Metadata } from 'next'
+import WebinarList from './partials/webinar-list'
 
 export const metadata: Metadata = {
   title: 'Webinar -House of Wizard',
   description: 'Webinar House of Wizard',
 }
 
-export default async function WebinarPage() {
+export default function WebinarPage() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
       <div className="flex flex-col">
@@ -45,43 +44,7 @@ export default async function WebinarPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
-        <ShineBorder
-          className="relative p-0 flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
-          color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
-        >
-          <WebinarCard
-            title="Webinar Data Analyst"
-            slug="webinar-data-analyst"
-            description="Learn how to analyze Web3 data and start your career in the decentralized future."
-            participants={10}
-            duration="1:30:00"
-            date="2024-11-20 18:30:00"
-            isLive
-          />
-        </ShineBorder>
-
-        <WebinarCard
-          title="Explore NEAR Blockchain"
-          slug="explore-near-blockchain"
-          description="Learn how to analyze Web3 data and start your career in the decentralized future."
-          participants={10}
-          duration="1:30:00"
-          date="2023-01-01"
-          isLive={false}
-        />
-
-        <WebinarCard
-          title="Make a Dashboard Analysis for Sui Blockchain"
-          slug="make-a-dashboard-analysis-for-sui-blockchain"
-          description="Learn how to analyze Web3 data and start your career in the decentralized future."
-          participants={10}
-          duration="1:30:00"
-          date="2023-01-01"
-          isLive={false}
-          isPremium
-        />
-      </div>
+      <WebinarList />
 
       <Pagination className="my-8">
         <PaginationContent>
