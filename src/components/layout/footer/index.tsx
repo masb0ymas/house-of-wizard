@@ -1,8 +1,9 @@
 import {
   IconBrandFacebook,
   IconBrandInstagram,
-  IconBrandLinkedin,
+  IconBrandTelegram,
   IconBrandTwitter,
+  IconBrandYoutube,
 } from '@tabler/icons-react'
 import { Mail, Phone } from 'lucide-react'
 import Image from 'next/image'
@@ -29,6 +30,14 @@ const support = [
   { name: 'Contact Us', href: '#' },
 ]
 
+const socialMedia = [
+  { name: 'facebook', icon: IconBrandFacebook, href: '/' },
+  { name: 'twitter', icon: IconBrandTwitter, href: '/' },
+  { name: 'youtube', icon: IconBrandYoutube, href: 'https://www.youtube.com/@gulalijawa5870' },
+  { name: 'instagram', icon: IconBrandInstagram, href: '/' },
+  { name: 'telegram', icon: IconBrandTelegram, href: 'https://t.me/HouseofWizard' },
+]
+
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -52,18 +61,11 @@ export default function Footer() {
               education.
             </p>
             <div className="flex space-x-4">
-              <Link href="/" className="hover:text-indigo-500 transition">
-                <IconBrandFacebook className="h-5 w-5" />
-              </Link>
-              <Link href="/" className="hover:text-indigo-500 transition">
-                <IconBrandTwitter className="h-5 w-5" />
-              </Link>
-              <Link href="/" className="hover:text-indigo-500 transition">
-                <IconBrandLinkedin className="h-5 w-5" />
-              </Link>
-              <Link href="/" className="hover:text-indigo-500 transition">
-                <IconBrandInstagram className="h-5 w-5" />
-              </Link>
+              {socialMedia.map((item) => (
+                <Link key={item.name} href={item.href} className="hover:text-indigo-500 transition">
+                  <item.icon className="h-5 w-5" />
+                </Link>
+              ))}
             </div>
           </div>
 
