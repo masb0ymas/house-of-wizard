@@ -17,7 +17,7 @@ export default function SignInGoogle({ callbackUrl }: IProps) {
     >
       <Button variant={'outline'} className="w-full" radius={'lg'} type="submit">
         <GoogleIcon />
-        <span className="font-medium font-serif">Google</span>
+        <span className="font-medium font-serif tracking-wider">Google</span>
       </Button>
     </form>
   )

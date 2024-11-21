@@ -25,7 +25,7 @@ export default async function WebinarPage() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
       <div className="flex flex-col">
-        <h1 className="text-center text-4xl font-bold font-serif text-gray-800 dark:text-gray-100">
+        <h1 className="text-center text-4xl font-bold font-serif tracking-wide text-gray-800 dark:text-gray-100">
           Webinar
         </h1>
         <h4 className="text-center text-lg text-gray-600 dark:text-gray-300">

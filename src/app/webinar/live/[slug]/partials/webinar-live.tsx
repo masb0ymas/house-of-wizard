@@ -1,34 +1,70 @@
 'use client'
 
-import { IconLoader } from '@tabler/icons-react'
+import { IconArrowRight, IconLoader } from '@tabler/icons-react'
 import _ from 'lodash'
+import { Session } from 'next-auth'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { getWebinarLiveSession } from '~/app/webinar/action'
 import { Description, ItemType } from '~/components/custom/description'
+import { RainbowButton } from '~/components/ui/rainbow-button'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
+import { WebinarAttendanceEntity } from '~/data/entity/webinar_attendance'
+import { toast } from '~/lib/hooks/use-toast'
+import { getAttendanceBySlug, markAttendance } from '../action'
 
 type IProps = {
   slug: string
+  session: Session | null
 }
 
 export default function WebinarLiveSection(props: IProps) {
-  const { slug } = props
+  const { slug, session } = props
 
   const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
+  const [webinarAttendance, setWebinarAttendance] = useState<WebinarAttendanceEntity | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [visible, setVisible] = useState(false)
 
   const getLiveWebinar = useCallback(async () => {
     setIsLoading(true)
     const { data } = await getWebinarLiveSession()
     setWebinarLive(data)
     setIsLoading(false)
-  }, [])
+
+    console.log(visible)
+  }, [visible])
+
+  const getAttendance = useCallback(async () => {
+    setIsLoading(true)
+    const { data } = await getAttendanceBySlug(slug)
+    setWebinarAttendance(data)
+    setIsLoading(false)
+  }, [slug])
+
+  const postAttendance = useCallback(
+    async (webinar: WebinarEntity | null) => {
+      setIsLoading(true)
+
+      const { message } = await markAttendance(webinar)
+      setVisible(!visible)
+
+      toast({
+        title: 'Mark Attendance',
+        description: message,
+        duration: 5000,
+      })
+      setIsLoading(false)
+    },
+    [visible]
+  )
 
   useEffect(() => {
     getLiveWebinar()
-  }, [getLiveWebinar])
+    getAttendance()
+  }, [getLiveWebinar, getAttendance])
 
   const details = [
     { key: 'title', title: 'Webinar', type: ItemType.string },
@@ -47,23 +83,63 @@ export default function WebinarLiveSection(props: IProps) {
       )
     }
 
+    if (!session?.user) {
+      const callbackUrl = encodeURIComponent(`/webinar/live/${slug}`)
+
+      return (
+        <>
+          <h1 className="text-4xl font-semibold font-serif tracking-wide">Webinar Live Session</h1>
+          <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
+            To enhance your skills and expertise, please log in first.
+          </h4>
+
+          <Link href={`/sign-in?callbackUrl=${callbackUrl}`}>
+            <RainbowButton className="gap-2">
+              <span className="font-serif font-semibold tracking-wider">Get Access</span>
+              <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </RainbowButton>
+          </Link>
+        </>
+      )
+    }
+
     if (!isLoading && !_.isEmpty(webinarLive?.slug) && slug !== webinarLive?.slug) {
       return (
         <>
-          <h1 className="text-4xl font-semibold font-serif">Webinar Live Session</h1>
+          <h1 className="text-4xl font-semibold font-serif tracking-wide">Webinar Live Session</h1>
           <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-            There are no webinars at this time
+            Currently, there are no webinars available.
           </h4>
+        </>
+      )
+    }
+
+    if (_.isEmpty(webinarAttendance?.id)) {
+      return (
+        <>
+          <h1 className="text-4xl font-semibold font-serif tracking-wide">Webinar Live Session</h1>
+          <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
+            To get access to the webinar, please mark attendance first.
+          </h4>
+
+          <RainbowButton
+            className="gap-2"
+            disabled={isLoading}
+            onClick={() => postAttendance(webinarLive)}
+          >
+            <span className="font-serif font-semibold tracking-wider">Mark Attendance</span>
+            <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </RainbowButton>
         </>
       )
     }
 
     return (
       <>
-        <h1 className="text-4xl font-semibold font-serif">{webinarLive?.title}</h1>
+        <h1 className="text-4xl font-semibold font-serif tracking-wide">{webinarLive?.title}</h1>
         <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-          To become a greater wizard, learn how to analyze Web3 data and start your career in the
-          decentralized future.
+          Elevate your expertise by learning how to analyze Web3 data and take the first step toward
+          a career in the decentralized future.
         </h4>
 
         <div className="flex flex-col gap-2 text-center w-full mt-8">

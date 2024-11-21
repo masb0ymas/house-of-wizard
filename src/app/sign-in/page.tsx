@@ -39,7 +39,7 @@ export default async function SignInPage({ searchParams }: IProps) {
         <div className="bg-white rounded-2xl shadow-xl p-8 space-y-8">
           {/* Header */}
           <div className="text-center">
-            <h1 className="text-3xl font-bold font-serif text-gray-900">House of Wizard</h1>
+            <h1 className="text-3xl font-bold font-serif tracking-wide text-gray-900">House of Wizard</h1>
             <h3 className="mt-2 text-gray-500">
               To become a great wizard, you need to login with your account first.
             </h3>
@@ -58,7 +58,7 @@ export default async function SignInPage({ searchParams }: IProps) {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500 font-serif">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500 font-serif tracking-wider">Or continue with</span>
             </div>
           </div>
 

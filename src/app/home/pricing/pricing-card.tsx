@@ -31,14 +31,14 @@ export default function PricingCard({ tier }: PricingCardProps) {
       <div className="p-8 flex flex-col flex-grow">
         {/* Header */}
         <div className="mb-6">
-          <h3 className="text-xl font-bold font-serif text-gray-900 mb-2">{tier.name}</h3>
+          <h3 className="text-xl font-bold font-serif tracking-wide text-gray-900 mb-2">{tier.name}</h3>
           <p className="text-gray-600 text-sm">{tier.description}</p>
         </div>
 
         {/* Pricing */}
         <div className="mb-6">
           <div className="flex items-baseline">
-            <span className="text-4xl font-bold font-serif text-gray-900">
+            <span className="text-4xl font-bold font-serif tracking-wide text-gray-900">
               ${tier.price}
             </span>
             <span className="text-gray-600 ml-2">/month</span>

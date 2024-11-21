@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { auth } from '~/lib/auth'
 import { capitalizeFirstLetter } from '~/lib/string'
 import WebinarLiveSection from './partials/webinar-live'
 
@@ -23,14 +24,15 @@ export const generateMetadata = async ({ params }: IProps): Promise<Metadata> =>
 
 export default async function WebinarLivePage({ params }: IProps) {
   const { slug } = await params
+  const session = await auth()
 
   if (!slug) {
     return notFound()
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-      <WebinarLiveSection slug={slug} />
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <WebinarLiveSection slug={slug} session={session} />
     </section>
   )
 }

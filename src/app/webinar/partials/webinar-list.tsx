@@ -50,6 +50,10 @@ export default function WebinarList(props: IProps) {
         redirectUrl = `/sign-in?callbackUrl=${encodeURIComponent(baseUrl)}`
       }
 
+      if (new Date(webinarLive?.end_date) < new Date()) {
+        return null
+      }
+
       return (
         <ShineBorder
           className="p-0 w-full h-full flex flex-col items-center justify-center overflow-hidden rounded-lg bg-background md:shadow-xl"
@@ -57,7 +61,7 @@ export default function WebinarList(props: IProps) {
         >
           <WebinarCard
             title={webinarLive.title}
-            slug={baseUrl}
+            slug={redirectUrl}
             description={webinarLive.description}
             participants={webinarLive.total_participant || 0}
             date={webinarLive.start_date}
