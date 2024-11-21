@@ -41,7 +41,7 @@ export default function Header() {
               width={40}
               height={40}
             />
-            <span className="font-bold font-serif text-xl">House of Wizard</span>
+            <span className="font-bold font-serif tracking-wide text-xl">House of Wizard</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -64,7 +64,7 @@ export default function Header() {
             <div className="h-6 w-px bg-gray-200"></div>
 
             <Link href="/sign-in">
-              <RainbowButton className="h-10 font-serif font-semibold">
+              <RainbowButton className="h-10 font-serif font-semibold tracking-wider">
                 <span>Get Access</span>
               </RainbowButton>
             </Link>
@@ -96,7 +96,7 @@ export default function Header() {
               ))}
 
               <Link href="/sign-in">
-                <RainbowButton className="h-10 font-serif font-semibold">
+                <RainbowButton className="h-10 font-serif font-semibold tracking-wider">
                   <span>Get Access</span>
                 </RainbowButton>
               </Link>

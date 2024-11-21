@@ -41,7 +41,7 @@ export default function SignInForm() {
 
         <Button
           variant={'secondary'}
-          className="w-full font-medium font-serif"
+          className="w-full font-medium font-serif tracking-wider"
           radius={'lg'}
           type="submit"
         >
