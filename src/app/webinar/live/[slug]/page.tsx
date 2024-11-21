@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
-import NotFound from '~/components/custom/not-found'
-import WebinarLiveSection from './partials/webinar-live'
+import { notFound } from 'next/navigation'
 import { capitalizeFirstLetter } from '~/lib/string'
+import WebinarLiveSection from './partials/webinar-live'
 
 type IParams = {
   slug: string
@@ -25,7 +25,7 @@ export default async function WebinarLivePage({ params }: IProps) {
   const { slug } = await params
 
   if (!slug) {
-    return <NotFound />
+    return notFound()
   }
 
   return (
