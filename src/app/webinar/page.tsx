@@ -23,7 +23,7 @@ export default async function WebinarPage() {
   const session = await auth()
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col">
         <h1 className="text-center text-4xl font-bold font-serif tracking-wide text-gray-800 dark:text-gray-100">
           Webinar
