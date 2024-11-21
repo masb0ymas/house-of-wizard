@@ -2,12 +2,16 @@ import { GoogleIcon } from '~/components/icon/google'
 import { Button } from '~/components/ui/button'
 import { signIn } from '~/lib/auth'
 
-export default function SignInGoogle() {
+type IProps = {
+  callbackUrl: string | undefined
+}
+
+export default function SignInGoogle({ callbackUrl }: IProps) {
   return (
     <form
       action={async () => {
         'use server'
-        await signIn('google', { redirectTo: '/webinar' })
+        await signIn('google', { redirectTo: callbackUrl || '/webinar' })
       }}
       className="w-full"
     >

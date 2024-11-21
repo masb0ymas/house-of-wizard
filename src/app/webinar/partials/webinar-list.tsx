@@ -1,13 +1,20 @@
 'use client'
 
+import { IconLoader } from '@tabler/icons-react'
+import { Session } from 'next-auth'
 import { useCallback, useEffect, useState } from 'react'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { getWebinarLiveSession, getWebinars } from '../action'
 import WebinarCard from './webinar-card'
-import { IconLoader } from '@tabler/icons-react'
 
-export default function WebinarList() {
+type IProps = {
+  session: Session | null
+}
+
+export default function WebinarList(props: IProps) {
+  const { session } = props
+
   const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])
   const [total, setTotal] = useState(0)
@@ -16,15 +23,15 @@ export default function WebinarList() {
 
   const getLiveWebinar = useCallback(async () => {
     setIsLoading(true)
-    const webinarLiveSession = await getWebinarLiveSession()
-    setWebinarLive(webinarLiveSession)
+    const { data } = await getWebinarLiveSession()
+    setWebinarLive(data)
     setIsLoading(false)
   }, [])
 
   const getListWebinars = useCallback(async () => {
     setIsLoading(true)
-    const { result: webinars, total } = await getWebinars()
-    setWebinars(webinars)
+    const { data, total } = await getWebinars()
+    setWebinars(data)
     setTotal(total)
     setIsLoading(false)
   }, [])
@@ -33,6 +40,35 @@ export default function WebinarList() {
     getListWebinars()
     getLiveWebinar()
   }, [getListWebinars, getLiveWebinar])
+
+  function renderLiveButton() {
+    if (webinarLive) {
+      const baseUrl = `/webinar/live/${webinarLive.slug}`
+      let redirectUrl = baseUrl
+
+      if (!session?.user) {
+        redirectUrl = `/sign-in?callbackUrl=${encodeURIComponent(baseUrl)}`
+      }
+
+      return (
+        <ShineBorder
+          className="p-0 w-full h-full flex flex-col items-center justify-center overflow-hidden rounded-lg bg-background md:shadow-xl"
+          color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
+        >
+          <WebinarCard
+            title={webinarLive.title}
+            slug={baseUrl}
+            description={webinarLive.description}
+            participants={webinarLive.total_participant || 0}
+            date={webinarLive.start_date}
+            isLive
+          />
+        </ShineBorder>
+      )
+    }
+
+    return null
+  }
 
   return (
     <>
@@ -44,21 +80,7 @@ export default function WebinarList() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
-        {webinarLive && (
-          <ShineBorder
-            className="p-0 w-full h-full flex flex-col items-center justify-center overflow-hidden rounded-lg bg-background md:shadow-xl"
-            color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
-          >
-            <WebinarCard
-              title={webinarLive.title}
-              slug={webinarLive.slug}
-              description={webinarLive.description}
-              participants={webinarLive.total_participant || 0}
-              date={webinarLive.start_date}
-              isLive
-            />
-          </ShineBorder>
-        )}
+        {renderLiveButton()}
 
         {webinars.map((webinar) => {
           return (
