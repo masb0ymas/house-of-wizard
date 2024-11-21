@@ -37,7 +37,7 @@ export default function WebinarCard(props: WebinarCardProps) {
       return (
         <Link href={slug}>
           <RainbowButton className="w-full h-10 rounded-xl gap-2">
-            <span className="font-serif font-semibold">Join Now</span>
+            <span className="font-serif font-semibold tracking-wider">Join Now</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </RainbowButton>
         </Link>
@@ -49,7 +49,7 @@ export default function WebinarCard(props: WebinarCardProps) {
         <Link href={`/webinar/watch/${slug}`}>
           <Button className="w-full h-10" radius={'xl'}>
             <Lock className="h-6 w-6" />
-            <span className="font-serif font-semibold">Buy Now</span>
+            <span className="font-serif font-semibold tracking-wider">Buy Now</span>
           </Button>
         </Link>
       )
@@ -59,7 +59,7 @@ export default function WebinarCard(props: WebinarCardProps) {
       <Link href={`/webinar/watch/${slug}`}>
         <Button className="w-full h-10" variant={'outline'} radius={'xl'}>
           <Video className="h-6 w-6" />
-          <span className="font-serif font-semibold">Watch Recording</span>
+          <span className="font-serif font-semibold tracking-wider">Watch Recording</span>
         </Button>
       </Link>
     )
@@ -94,7 +94,7 @@ export default function WebinarCard(props: WebinarCardProps) {
       )}
     >
       <div className="flex flex-col flex-grow">
-        <h2 className="text-xl font-semibold font-serif">{shortTitle}</h2>
+        <h2 className="text-xl font-semibold font-serif tracking-wide">{shortTitle}</h2>
         <p className="text-gray-600 text-sm font-medium dark:text-gray-300 flex-grow">
           {shortDescription}
         </p>
@@ -104,9 +104,9 @@ export default function WebinarCard(props: WebinarCardProps) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <div className="flex flex-row gap-2">
-                  <span className="text-gray-600 text-sm font-medium dark:text-gray-300">{`${participants}`}</span>
-                  <IconUsers className="h-[1.2rem] w-[1.2rem] text-gray-400" />
+                <div className="flex flex-row items-center gap-2">
+                  <span className="text-gray-500 text-sm font-medium font-serif tracking-wider dark:text-gray-300">{`${participants}`}</span>
+                  <IconUsers className="h-4 w-4 text-gray-500" />
                 </div>
               </TooltipTrigger>
               <TooltipContent>
