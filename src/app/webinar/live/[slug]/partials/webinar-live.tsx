@@ -1,6 +1,7 @@
 'use client'
 
 import { IconArrowRight, IconLoader } from '@tabler/icons-react'
+import { subMinutes } from 'date-fns'
 import _ from 'lodash'
 import { Session } from 'next-auth'
 import Image from 'next/image'
@@ -88,7 +89,9 @@ export default function WebinarLiveSection(props: IProps) {
 
       return (
         <>
-          <h1 className="text-4xl font-semibold font-serif tracking-wide">Webinar Live Session</h1>
+          <h1 className="text-4xl font-semibold font-serif tracking-wide">
+            Webinar - Live Session
+          </h1>
           <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
             To enhance your skills and expertise, please log in first.
           </h4>
@@ -106,7 +109,9 @@ export default function WebinarLiveSection(props: IProps) {
     if (!isLoading && !_.isEmpty(webinarLive?.slug) && slug !== webinarLive?.slug) {
       return (
         <>
-          <h1 className="text-4xl font-semibold font-serif tracking-wide">Webinar Live Session</h1>
+          <h1 className="text-4xl font-semibold font-serif tracking-wide">
+            Webinar - Live Session
+          </h1>
           <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
             Currently, there are no webinars available.
           </h4>
@@ -115,21 +120,47 @@ export default function WebinarLiveSection(props: IProps) {
     }
 
     if (_.isEmpty(webinarAttendance?.id)) {
+      const start_date = subMinutes(new Date(String(webinarLive?.start_date)), 30) // 30 minutes early
+      const end_date = new Date(String(webinarLive?.end_date))
+
+      const is_start_attendance = start_date < new Date() && end_date > new Date()
+      const is_end_attendance = end_date < new Date()
+
       return (
         <>
-          <h1 className="text-4xl font-semibold font-serif tracking-wide">Webinar Live Session</h1>
+          <h1 className="text-4xl font-semibold font-serif tracking-wide">
+            Webinar - Live Session
+          </h1>
           <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-            To get access to the webinar, please mark attendance first.
+            {is_end_attendance
+              ? 'Currently, there are no webinars available.'
+              : 'To get access to the webinar, please mark attendance first.'}
           </h4>
 
-          <RainbowButton
-            className="gap-2"
-            disabled={isLoading}
-            onClick={() => postAttendance(webinarLive)}
-          >
-            <span className="font-serif font-semibold tracking-wider">Mark Attendance</span>
-            <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </RainbowButton>
+          {is_start_attendance && (
+            <RainbowButton
+              className="gap-2"
+              disabled={isLoading}
+              onClick={() => postAttendance(webinarLive)}
+            >
+              <span className="font-serif font-semibold tracking-wider">Mark Attendance</span>
+              <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </RainbowButton>
+          )}
+
+          {is_end_attendance && (
+            <Link href="/webinar">
+              <RainbowButton className="gap-2">
+                <span className="font-serif font-semibold tracking-wider">Webinar Ended</span>
+              </RainbowButton>
+            </Link>
+          )}
+
+          {!is_start_attendance && !is_end_attendance && (
+            <RainbowButton className="gap-2">
+              <span className="font-serif font-semibold tracking-wider">Upcoming Session</span>
+            </RainbowButton>
+          )}
         </>
       )
     }
