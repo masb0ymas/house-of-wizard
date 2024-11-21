@@ -15,7 +15,16 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function SignInPage() {
+type ISearchParams = {
+  callbackUrl: string
+}
+
+type IProps = {
+  searchParams: Promise<ISearchParams>
+}
+
+export default async function SignInPage({ searchParams }: IProps) {
+  const { callbackUrl } = await searchParams
   const session = await auth()
 
   if (session?.user) {
@@ -38,7 +47,7 @@ export default async function SignInPage() {
 
           {/* Social Login Buttons */}
           <div className="flex flex-row gap-2">
-            <SignInGoogle />
+            <SignInGoogle callbackUrl={callbackUrl} />
 
             <SignInWeb3 />
           </div>
