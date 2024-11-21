@@ -16,15 +16,15 @@ export default function WebinarList() {
 
   const getLiveWebinar = useCallback(async () => {
     setIsLoading(true)
-    const webinarLiveSession = await getWebinarLiveSession()
-    setWebinarLive(webinarLiveSession)
+    const { data } = await getWebinarLiveSession()
+    setWebinarLive(data)
     setIsLoading(false)
   }, [])
 
   const getListWebinars = useCallback(async () => {
     setIsLoading(true)
-    const { result: webinars, total } = await getWebinars()
-    setWebinars(webinars)
+    const { data, total } = await getWebinars()
+    setWebinars(data)
     setTotal(total)
     setIsLoading(false)
   }, [])
