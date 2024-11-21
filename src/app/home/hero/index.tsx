@@ -7,7 +7,7 @@ import SparklesText from '~/components/ui/sparkles-text'
 
 export default function Hero() {
   return (
-    <div className="pt-24 pb-16 h-screen flex justify-center items-center bg-gradient-to-br from-indigo-100 via-white to-purple-100">
+    <div className="pt-24 pb-16 mt-8 sm:h-screen flex justify-center items-center bg-gradient-to-br from-indigo-100 via-white to-purple-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-8">
           <div className="space-y-4">
