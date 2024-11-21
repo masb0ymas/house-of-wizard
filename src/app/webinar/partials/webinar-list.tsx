@@ -43,10 +43,11 @@ export default function WebinarList(props: IProps) {
 
   function renderLiveButton() {
     if (webinarLive) {
-      let baseUrl = webinarLive.slug
+      const baseUrl = `/webinar/live/${webinarLive.slug}`
+      let redirectUrl = baseUrl
 
       if (!session?.user) {
-        baseUrl = `/sign-in?callbackUrl=${encodeURIComponent(`/webinar/live/${webinarLive.slug}`)}`
+        redirectUrl = `/sign-in?callbackUrl=${encodeURIComponent(baseUrl)}`
       }
 
       return (
