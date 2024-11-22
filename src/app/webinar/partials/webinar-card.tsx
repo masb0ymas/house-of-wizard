@@ -1,12 +1,10 @@
-import { IconUsers } from '@tabler/icons-react'
+import { IconArrowRight, IconLock, IconUsers, IconVideo, IconVideoOff } from '@tabler/icons-react'
 import clsx from 'clsx'
-import { formatDate } from 'date-fns'
-import { id } from 'date-fns/locale'
-import { ArrowRight, Lock, Video } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { RainbowButton } from '~/components/ui/rainbow-button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip'
+import { formatLocalDate } from '~/lib/date'
 import { shortText } from '~/lib/string'
 
 type WebinarCardProps = {
@@ -18,6 +16,7 @@ type WebinarCardProps = {
   date: string
   isLive: boolean
   isPremium?: boolean
+  isRecording?: boolean
 }
 
 export default function WebinarCard(props: WebinarCardProps) {
@@ -30,6 +29,7 @@ export default function WebinarCard(props: WebinarCardProps) {
     date,
     isLive,
     isPremium = false,
+    isRecording = true,
   } = props
 
   function renderButton() {
@@ -38,7 +38,7 @@ export default function WebinarCard(props: WebinarCardProps) {
         <Link href={slug}>
           <RainbowButton className="w-full h-10 rounded-xl gap-2">
             <span className="font-serif font-semibold tracking-wider">Join Now</span>
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </RainbowButton>
         </Link>
       )
@@ -48,18 +48,29 @@ export default function WebinarCard(props: WebinarCardProps) {
       return (
         <Link href={`/webinar/watch/${slug}`}>
           <Button className="w-full h-10" radius={'xl'}>
-            <Lock className="h-6 w-6" />
-            <span className="font-serif font-semibold tracking-wider">Buy Now</span>
+            <IconLock className="h-6 w-6" />
+            <span className="font-serif font-semibold text-gray-600 tracking-wider">Buy Now</span>
           </Button>
         </Link>
+      )
+    }
+
+    if (!isRecording) {
+      return (
+        <Button className="w-full h-10" variant={'outline'} radius={'xl'}>
+          <IconVideoOff className="h-6 w-6" />
+          <span className="font-serif font-medium text-gray-600 tracking-wider">No Recording</span>
+        </Button>
       )
     }
 
     return (
       <Link href={`/webinar/watch/${slug}`}>
         <Button className="w-full h-10" variant={'outline'} radius={'xl'}>
-          <Video className="h-6 w-6" />
-          <span className="font-serif font-semibold tracking-wider">Watch Recording</span>
+          <IconVideo className="h-6 w-6" />
+          <span className="font-serif font-medium text-gray-600 tracking-wider">
+            Watch Recording
+          </span>
         </Button>
       </Link>
     )
@@ -72,7 +83,7 @@ export default function WebinarCard(props: WebinarCardProps) {
     if (isLive || date) {
       return (
         <span className="text-gray-600 text-sm font-medium dark:text-gray-300">
-          {formatDate(date, 'dd MMM yyyy HH:mm', { locale: id })} WIB
+          {formatLocalDate(date)} WIB
         </span>
       )
     }

@@ -1,8 +1,7 @@
-import { formatDate } from 'date-fns'
-import { id } from 'date-fns/locale'
 import _ from 'lodash'
 import Link from 'next/link'
 import React from 'react'
+import { formatLocalDate } from '~/lib/date'
 import { Checkbox } from '../ui/checkbox'
 import { Separator } from '../ui/separator'
 
@@ -44,7 +43,7 @@ export function Description<T>({ item, content }: ItemProps<T>) {
     }
 
     if (type === ItemType.date) {
-      const value = formatDate(data, 'dd MMM yyyy HH:mm', { locale: id })
+      const value = formatLocalDate(data)
       return <span>{`${value} WIB`}</span>
     }
 

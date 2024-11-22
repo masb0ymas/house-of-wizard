@@ -30,7 +30,7 @@ export default function WebinarList(props: IProps) {
 
   const getListWebinars = useCallback(async () => {
     setIsLoading(true)
-    const { data, total } = await getWebinars()
+    const { data, total } = await getWebinars({ pageSize: 11 })
     setWebinars(data)
     setTotal(total)
     setIsLoading(false)
@@ -96,6 +96,7 @@ export default function WebinarList(props: IProps) {
               participants={webinar.total_participant}
               date={webinar.start_date}
               isLive={false}
+              isRecording={Boolean(webinar.recording_url)}
             />
           )
         })}

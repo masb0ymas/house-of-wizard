@@ -13,6 +13,7 @@ import { RainbowButton } from '~/components/ui/rainbow-button'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { WebinarAttendanceEntity } from '~/data/entity/webinar_attendance'
+import { formatLocalDate } from '~/lib/date'
 import { toast } from '~/lib/hooks/use-toast'
 import { getAttendanceBySlug, markAttendance } from '../action'
 
@@ -126,16 +127,21 @@ export default function WebinarLiveSection(props: IProps) {
       const is_start_attendance = start_date < new Date() && end_date > new Date()
       const is_end_attendance = end_date < new Date()
 
+      const live_at = webinarLive?.start_date && formatLocalDate(String(webinarLive?.start_date))
+
+      let subtitle = 'To get access to the webinar, please mark attendance first.'
+      if (is_end_attendance) {
+        subtitle = 'Currently, there are no webinars available.'
+      } else if (!is_start_attendance && !is_end_attendance) {
+        subtitle = `Please stay tuned for the webinar, which will be streamed live on ${live_at} WIB`
+      }
+
       return (
         <>
           <h1 className="text-4xl font-semibold font-serif tracking-wide">
             Webinar - Live Session
           </h1>
-          <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-            {is_end_attendance
-              ? 'Currently, there are no webinars available.'
-              : 'To get access to the webinar, please mark attendance first.'}
-          </h4>
+          <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">{subtitle}</h4>
 
           {is_start_attendance && (
             <RainbowButton

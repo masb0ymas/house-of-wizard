@@ -43,7 +43,7 @@ export default function Hero() {
               className="px-8 py-2 font-medium h-11 shadow-sm hover:shadow-xl transition ease-in-out duration-300 gap-2"
               radius={'xl'}
             >
-              <span className="font-serif font-semibold tracking-wider">View Courses</span>
+              <span className="text-base font-serif font-semibold tracking-wider">View Courses</span>
             </Button>
           </div>
 
