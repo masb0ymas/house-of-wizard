@@ -5,7 +5,7 @@ import '@vidstack/react/player/styles/base.css'
 import '@vidstack/react/player/styles/plyr/theme.css'
 
 import type { Metadata } from 'next'
-import { Toaster } from '~/components/ui/toaster'
+import Provider from '~/lib/provider'
 
 export const metadata: Metadata = {
   title: 'House of Wizard',
@@ -42,8 +42,7 @@ export default async function RootLayout({
         />
       </head>
       <body className={`antialiased`}>
-        {children}
-        <Toaster />
+        <Provider>{children}</Provider>
       </body>
     </html>
   )
