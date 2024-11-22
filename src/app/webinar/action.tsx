@@ -6,16 +6,20 @@ import qs from 'qs'
 import { env } from '~/config/env'
 import { WebinarEntity } from '~/data/entity/webinar'
 
+type RequestGetWebinars = {
+  pageSize: number
+}
+
 type ResponseWebinars = {
   data: WebinarEntity[]
   total: number
   error: string | null
 }
 
-export async function getWebinars(): Promise<ResponseWebinars> {
+export async function getWebinars({ pageSize }: RequestGetWebinars): Promise<ResponseWebinars> {
   const query = qs.stringify({
     page: 1,
-    pageSize: 11,
+    pageSize,
     status: 'archive',
   })
 
