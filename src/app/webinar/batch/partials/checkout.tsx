@@ -1,4 +1,5 @@
-import { IconArrowRight } from '@tabler/icons-react'
+import { IconArrowRight, IconMail } from '@tabler/icons-react'
+import { Mail } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { RainbowButton } from '~/components/ui/rainbow-button'
 
@@ -57,13 +58,18 @@ export default function Checkout({ email }: IProps) {
 
         <div>
           <label className="block mb-2 font-serif tracking-wide">Email</label>
-          <input
-            type="text"
-            className="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-900/30 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            placeholder="Enter your email"
-            {...register('email')}
-            required
-          />
+          <div className='relative'>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+              <IconMail className="h-5 w-5 text-gray-400" stroke={1.5} />
+            </div>
+            <input
+              type="text"
+              className="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-900/30 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              placeholder="Enter your email"
+              {...register('email')}
+              required
+            />
+          </div>
           {errors.email && <span className="text-red-500">{errors.email?.message}</span>}
         </div>
 
