@@ -1,35 +1,73 @@
 /**
- *
- * @param text
- * @param start
- * @param end
- * @returns
+ * Shortens an Ethereum wallet address or any hex string by showing only the beginning and end parts
+ * @param address - The wallet address or hex string to shorten (must start with '0x')
+ * @param startLength - Number of characters to show from the start
+ * @param endLength - Number of characters to show from the end
+ * @returns Shortened address with ellipsis in the middle
+ * @throws Error if address is invalid or lengths are negative
  */
-export function shortWalletAddress(text: `0x${string}` | string, start: number, end: number) {
-  const firstText = text?.slice(0, start)
-  const lastText = text?.slice(-end)
+export function shortWalletAddress(
+  address: `0x${string}` | string,
+  startLength: number = 6,
+  endLength: number = 4
+): string {
+  // Input validation
+  if (!address?.startsWith('0x')) {
+    throw new Error('Invalid address format: must start with 0x')
+  }
 
-  const result = `${firstText}...${lastText}`
-  return result
+  if (startLength < 0 || endLength < 0) {
+    throw new Error('Length parameters must be non-negative')
+  }
+
+  // If address is shorter than or equal to the combined length, return full address
+  if (address.length <= startLength + endLength) {
+    return address
+  }
+
+  const start = address.slice(0, startLength)
+  const end = address.slice(-endLength)
+
+  return `${start}...${end}`
 }
 
 /**
- *
- * @param text
- * @param start
- * @param end
- * @returns
+ * Shortens any text by showing only the beginning and optionally the end parts
+ * @param text - The text to shorten
+ * @param startLength - Number of characters to show from the start
+ * @param endLength - Optional number of characters to show from the end
+ * @returns Shortened text with ellipsis in the middle
+ * @throws Error if text is empty or lengths are negative
  */
-export function shortText(text: string, start: number, end?: number) {
-  const firstText = text.slice(0, start)
-  const lastText = end ? text.slice(-end) : ''
+export function shortText(text: string, startLength: number, endLength?: number): string {
+  // Input validation
+  if (!text) {
+    throw new Error('Text cannot be empty')
+  }
 
-  if (text.length <= start) {
+  if (startLength < 0 || (endLength != null && endLength < 0)) {
+    throw new Error('Length parameters must be non-negative')
+  }
+
+  // If text is shorter than or equal to startLength, return full text
+  if (text.length <= startLength) {
     return text
   }
 
-  const result = `${firstText}...${lastText}`
-  return result
+  const start = text.slice(0, startLength)
+
+  // Handle case when endLength is not provided
+  if (endLength == null) {
+    return `${start}...`
+  }
+
+  // If text is shorter than combined length, return full text
+  if (text.length <= startLength + endLength) {
+    return text
+  }
+
+  const end = text.slice(-endLength)
+  return `${start}...${end}`
 }
 
 /**
