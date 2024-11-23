@@ -25,8 +25,8 @@ const quickLinks = [
 
 const support = [
   { name: 'Help Center', href: '#' },
-  { name: 'Terms of Service', href: '#' },
-  { name: 'Privacy Policy', href: '#' },
+  { name: 'Terms of Service', href: '/terms-of-service' },
+  { name: 'Privacy Policy', href: '/privacy-policy' },
   { name: 'Contact Us', href: '#' },
 ]
 
