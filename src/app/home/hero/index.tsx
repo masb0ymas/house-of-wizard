@@ -1,5 +1,6 @@
 import { IconArrowRight, IconBinary, IconChartLine, IconDatabase } from '@tabler/icons-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { RainbowButton } from '~/components/ui/rainbow-button'
 import ShineBorder from '~/components/ui/shine-border'
@@ -25,7 +26,7 @@ export default function Hero() {
                 />
               </ShineBorder>
             </div>
-            <SparklesText text="House of Wizard" className='tracking-wide' />
+            <SparklesText text="House of Wizard" className="tracking-wide" />
 
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Transform blockchain data into actionable insights. Learn how to analyze Web3 data and
@@ -33,17 +34,21 @@ export default function Hero() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row sm:justify-center gap-4">
-            <RainbowButton className="gap-2">
-              <span className="font-serif font-semibold tracking-wider">Start Learning</span>
-              <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </RainbowButton>
+            <Link href="/webinar/batch">
+              <RainbowButton className="gap-2">
+                <span className="font-serif font-semibold tracking-wider">Join Private</span>
+                <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </RainbowButton>
+            </Link>
 
             <Button
               variant={'outline'}
               className="px-8 py-2 font-medium h-11 shadow-sm hover:shadow-xl transition ease-in-out duration-300 gap-2"
               radius={'xl'}
             >
-              <span className="text-base font-serif font-semibold tracking-wider">View Courses</span>
+              <span className="text-base font-serif font-semibold tracking-wider">
+                View Courses
+              </span>
             </Button>
           </div>
 
