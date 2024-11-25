@@ -29,7 +29,7 @@ export default function ChoosePlan({ email }: IProps) {
             subtitle="Limited time offer for first 20 students"
             price={7}
             features={[
-              { text: '12 weeks live training' },
+              { text: '16 weeks live training' },
               { text: 'Personal mentorship' },
               { text: 'Project portfolio' },
               { text: 'Career support' },
@@ -44,7 +44,7 @@ export default function ChoosePlan({ email }: IProps) {
             price={12}
             disabled
             features={[
-              { text: '12 weeks live training' },
+              { text: '16 weeks live training' },
               { text: 'Personal mentorship' },
               { text: 'Project portfolio' },
               { text: 'Career support' },

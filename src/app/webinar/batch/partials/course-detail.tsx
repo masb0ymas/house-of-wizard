@@ -34,7 +34,7 @@ export default function CourseDetails() {
     },
     {
       icon: <Clock className="h-6 w-6" />,
-      title: '12 Weeks Program',
+      title: '16 Weeks Program',
       description: '3 live sessions per week, 2 hours each with recorded sessions',
     },
     {
