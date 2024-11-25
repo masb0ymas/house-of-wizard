@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Check } from 'lucide-react'
-import React from 'react'
+import { Button } from '~/components/ui/button'
 
 interface PricingFeature {
   text: string
@@ -34,28 +34,28 @@ export default function PricingCard({
 
       <div className="mb-6">
         <span className="text-2xl sm:text-4xl font-bold text-gray-900">Rp {price}.000.000</span>
-        <span className="text-gray-500 font-serif tracking-wide ml-2">,-</span>
+        <span className="text-gray-500 text-2xl tracking-wide ml-2">,-</span>
       </div>
 
       <ul className="space-y-4 mb-8">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start gap-3">
             <Check className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
-            <span className="text-gray-600">{feature.text}</span>
+            <span className="text-gray-600 font-medium">{feature.text}</span>
           </li>
         ))}
       </ul>
 
-      <button
+      <Button
         onClick={onSelect}
         disabled={disabled}
         className={clsx(
-          'w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold font-serif tracking-wide hover:bg-purple-700 transition-colors',
+          'w-full rounded-xl h-11 font-semibold font-serif tracking-wide',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
       >
-        {disabled ? 'Not Available' : 'Select Plan'}
-      </button>
+        {disabled ? 'Coming Soon' : 'Select Plan'}
+      </Button>
     </div>
   )
 }

@@ -31,19 +31,19 @@ export default function ProfilePage() {
           </TabsList>
           <div className="flex-1 ml-4">
             <TabsContent value="account">
-              <h2 className="text-2xl font-bold mb-4">Account</h2>
+              <h2 className="text-2xl font-bold mb-4 font-serif tracking-wider">Account</h2>
               <p>Manage your account settings and preferences here.</p>
             </TabsContent>
             <TabsContent value="password">
-              <h2 className="text-2xl font-bold mb-4">Password</h2>
+              <h2 className="text-2xl font-bold mb-4 font-serif tracking-wider">Password</h2>
               <p>Change your password and manage security settings.</p>
             </TabsContent>
             <TabsContent value="settings">
-              <h2 className="text-2xl font-bold mb-4">Settings</h2>
+              <h2 className="text-2xl font-bold mb-4 font-serif tracking-wider">Settings</h2>
               <p>Customize your application settings and preferences.</p>
             </TabsContent>
             <TabsContent value="logout">
-              <h2 className="text-2xl font-bold mb-4">Logout</h2>
+              <h2 className="text-2xl font-bold mb-4 font-serif tracking-wider">Logout</h2>
               <p>Are you sure you want to log out?</p>
               <Button
                 variant={'destructive'}

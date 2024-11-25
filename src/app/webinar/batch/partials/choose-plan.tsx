@@ -40,14 +40,14 @@ export default function ChoosePlan({ email }: IProps) {
           />
           <PricingCard
             title="Regular"
-            subtitle="Standard enrollment"
-            price={12}
+            subtitle="For serious analysts ready to level up"
+            price={15}
             disabled
             features={[
-              { text: '16 weeks live training' },
-              { text: 'Personal mentorship' },
+              { text: '24 weeks live training' },
+              { text: 'Personal mentorship ( 1:1 session )' },
               { text: 'Project portfolio' },
-              { text: 'Career support' },
+              { text: 'Career support ( Partner )' },
               { text: 'Lifetime community access' },
               { text: 'Certificate of completion' },
             ]}
