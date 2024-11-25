@@ -51,7 +51,7 @@ export default function PricingCard({ tier }: PricingCardProps) {
             {tier.features.map((feature, index) => (
               <li key={index} className="flex items-start gap-3">
                 <Check className="h-5 w-5 text-indigo-600 shrink-0 mt-0.5" />
-                <span className="text-gray-600 text-sm">{feature}</span>
+                <span className="text-gray-600 text-sm font-medium">{feature}</span>
               </li>
             ))}
           </ul>
