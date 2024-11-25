@@ -1,12 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Mail } from 'lucide-react'
+import { IconMail } from '@tabler/icons-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import authSchema from '~/data/schema/auth'
+import { toast } from '~/lib/hooks/use-toast'
 
 export default function SignInForm() {
   const {
@@ -21,7 +22,16 @@ export default function SignInForm() {
   return (
     <>
       {/* Email Form */}
-      <form onSubmit={handleSubmit((data) => console.log(data))} className="space-y-4">
+      <form
+        onSubmit={handleSubmit((data) => {
+          toast({
+            title: 'Login with Email',
+            description: 'This feature is coming soon',
+            className: 'rounded-xl',
+          })
+        })}
+        className="space-y-4"
+      >
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email address
@@ -30,7 +40,7 @@ export default function SignInForm() {
           <div className="mt-1 relative">
             <Input id="email" type="email" placeholder="Enter your email" {...register('email')} />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-              <Mail className="h-5 w-5 text-gray-400" />
+              <IconMail className="h-5 w-5 text-gray-400" stroke={1.5} />
             </div>
           </div>
 
