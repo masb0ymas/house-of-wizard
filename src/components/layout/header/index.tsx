@@ -95,11 +95,13 @@ export default function Header() {
                 </Link>
               ))}
 
-              <Link href="/sign-in">
-                <RainbowButton className="h-10 font-serif font-semibold tracking-wider">
-                  <span>Get Access</span>
-                </RainbowButton>
-              </Link>
+              <div className="pt-2">
+                <Link href="/sign-in">
+                  <RainbowButton className="w-full h-10 font-serif font-semibold tracking-wider">
+                    <span>Get Access</span>
+                  </RainbowButton>
+                </Link>
+              </div>
             </div>
           </div>
         )}
