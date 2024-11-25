@@ -1,5 +1,7 @@
 import Image from 'next/image'
+import GridPattern from '~/components/ui/grid-pattern'
 import { auth } from '~/lib/auth'
+import { cn } from '~/lib/utils'
 import ChoosePlan from './partials/choose-plan'
 import CourseDetails from './partials/course-detail'
 import Curriculum from './partials/curriculum'
@@ -39,15 +41,36 @@ export default async function WebinarBatchPage() {
       </div>
 
       {/* Course Details */}
-      <section className="mb-20">
+      <section className="mb-20 relative">
         <h2 className="text-xl sm:text-3xl font-bold font-serif tracking-wide text-center mb-10">
           {"What You'll Get"}
         </h2>
         <CourseDetails />
+
+        <GridPattern
+          squares={[
+            [4, 4],
+            [5, 1],
+            [8, 2],
+            [5, 3],
+            [5, 5],
+            [10, 10],
+            [12, 15],
+            [15, 6],
+            [10, 15],
+            [16, 11],
+            [14, 8],
+            [17, 9],
+          ]}
+          className={cn(
+            '[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]',
+            'inset-x-0 inset-y-[-30%] h-[200%] skew-y-12'
+          )}
+        />
       </section>
 
       {/* Curriculum */}
-      <section className="mb-20">
+      <section className="mb-20 relative">
         <h2 className="text-xl sm:text-3xl font-bold font-serif tracking-wide text-center mb-10">
           Course Curriculum
         </h2>

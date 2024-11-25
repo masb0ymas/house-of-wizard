@@ -39,7 +39,7 @@ export default function Curriculum() {
       {modules.map((module, index) => (
         <div
           key={index}
-          className="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300"
+          className="bg-background rounded-xl p-6 hover:shadow-lg transition-all duration-300 z-10"
         >
           <div className="flex justify-between items-start mb-4">
             <h3 className="text-lg sm:text-xl font-semibold font-serif tracking-wide">{module.title}</h3>

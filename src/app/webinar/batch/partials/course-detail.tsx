@@ -9,7 +9,7 @@ interface FeatureProps {
 
 function Feature({ icon, title, description }: FeatureProps) {
   return (
-    <div className="flex flex-row items-center gap-4 p-6 bg-white rounded-xl hover:shadow-lg transition-all duration-300">
+    <div className="flex flex-row items-center gap-4 p-6 bg-background rounded-xl hover:shadow-lg transition-all duration-300 z-10">
       <div className="flex-shrink-0 text-gray-900">{icon}</div>
       <div>
         <h3 className="font-semibold font-serif tracking-wide text-gray-900 mb-1">{title}</h3>
