@@ -18,22 +18,24 @@ export default async function WebinarBatchPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <Image
-        src="/static/wizard-learn-new-spell.webp"
-        alt="Hero"
-        className="w-full h-auto rounded-3xl mb-8"
-        width={1200}
-        height={800}
-      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-center gap-4 mb-16">
+        <Image
+          src="/static/wizard-learn-new-spell.webp"
+          alt="Hero"
+          className="w-full h-auto rounded-3xl"
+          width={1200}
+          height={800}
+        />
 
-      <div className="text-center mb-16">
-        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold font-serif tracking-wide mb-6">
-          Become a Web3 Data Analyst
-        </h1>
-        <p className="text-lg sm:text-xl max-w-2xl mx-auto font-serif tracking-wide">
-          Join our exclusive live private course and master the art of blockchain analytics. Limited
-          spots available for <u>Batch 1.</u>
-        </p>
+        <div className="text-center lg:text-right">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold font-serif tracking-wide mb-6">
+            Become a Web3 Data Analyst
+          </h1>
+          <p className="text-lg sm:text-xl max-w-2xl mx-auto font-serif tracking-wide">
+            Join our exclusive live private course and master the art of blockchain analytics.
+            Limited spots available for <u>Batch 1.</u>
+          </p>
+        </div>
       </div>
 
       {/* Course Details */}

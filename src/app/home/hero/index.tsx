@@ -34,8 +34,8 @@ export default function Hero() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row sm:justify-center gap-4">
-            <Link href="/webinar/batch">
-              <RainbowButton className="gap-2">
+            <Link href="/webinar/batch" className="inline-flex items-center justify-center">
+              <RainbowButton className="gap-2 w-full">
                 <span className="font-serif font-semibold tracking-wider">Join Private</span>
                 <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </RainbowButton>

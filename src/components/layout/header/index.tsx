@@ -4,9 +4,14 @@ import { Bell, Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { RainbowButton } from '~/components/ui/rainbow-button'
+import GetAccess from './partials/get-access'
+import { Session } from 'next-auth'
 
-export default function Header() {
+type IProps = {
+  session?: Session | null
+}
+
+export default function Header({ session }: IProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const menus = [
@@ -63,11 +68,7 @@ export default function Header() {
 
             <div className="h-6 w-px bg-gray-200"></div>
 
-            <Link href="/sign-in">
-              <RainbowButton className="h-10 font-serif font-semibold tracking-wider">
-                <span>Get Access</span>
-              </RainbowButton>
-            </Link>
+            <GetAccess session={session} />
           </div>
 
           {/* Mobile Menu Button */}
@@ -95,11 +96,9 @@ export default function Header() {
                 </Link>
               ))}
 
-              <Link href="/sign-in">
-                <RainbowButton className="h-10 font-serif font-semibold tracking-wider">
-                  <span>Get Access</span>
-                </RainbowButton>
-              </Link>
+              <div className="pt-2">
+                <GetAccess session={session} isMobile />
+              </div>
             </div>
           </div>
         )}
