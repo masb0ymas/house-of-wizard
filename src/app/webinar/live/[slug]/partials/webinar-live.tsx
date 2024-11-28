@@ -3,7 +3,7 @@
 import { IconArrowRight, IconLoader } from '@tabler/icons-react'
 import { subMinutes } from 'date-fns'
 import _ from 'lodash'
-import { Session } from 'next-auth'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
@@ -19,11 +19,11 @@ import { getAttendanceBySlug, markAttendance } from '../action'
 
 type IProps = {
   slug: string
-  session: Session | null
 }
 
 export default function WebinarLiveSection(props: IProps) {
-  const { slug, session } = props
+  const { slug } = props
+  const { data: session } = useSession()
 
   const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
   const [webinarAttendance, setWebinarAttendance] = useState<WebinarAttendanceEntity | null>(null)

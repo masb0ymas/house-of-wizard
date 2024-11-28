@@ -5,13 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import GetAccess from './partials/get-access'
-import { Session } from 'next-auth'
 
-type IProps = {
-  session?: Session | null
-}
-
-export default function Header({ session }: IProps) {
+export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
   const menus = [
@@ -68,7 +63,7 @@ export default function Header({ session }: IProps) {
 
             <div className="h-6 w-px bg-gray-200"></div>
 
-            <GetAccess session={session} />
+            <GetAccess />
           </div>
 
           {/* Mobile Menu Button */}
@@ -97,7 +92,7 @@ export default function Header({ session }: IProps) {
               ))}
 
               <div className="pt-2">
-                <GetAccess session={session} isMobile />
+                <GetAccess isMobile />
               </div>
             </div>
           </div>

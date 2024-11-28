@@ -1,22 +1,20 @@
 import { IconArrowRight, IconMail } from '@tabler/icons-react'
-import { Mail } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { RainbowButton } from '~/components/ui/rainbow-button'
 
-type IProps = {
-  email?: string | null
-}
+export default function Checkout() {
+  const { data: session } = useSession()
 
-export default function Checkout({ email }: IProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      first_name: '',
+      first_name: session?.user?.name || '',
       last_name: '',
-      email: email || '',
+      email: session?.user?.email || '',
     },
     mode: 'onChange',
   })
@@ -58,7 +56,7 @@ export default function Checkout({ email }: IProps) {
 
         <div>
           <label className="block mb-2 font-serif tracking-wide">Email</label>
-          <div className='relative'>
+          <div className="relative">
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
               <IconMail className="h-5 w-5 text-gray-400" stroke={1.5} />
             </div>

@@ -1,19 +1,15 @@
 'use client'
 
 import { IconLoader } from '@tabler/icons-react'
-import { Session } from 'next-auth'
+import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { getWebinarLiveSession, getWebinars } from '../action'
 import WebinarCard from './webinar-card'
 
-type IProps = {
-  session: Session | null
-}
-
-export default function WebinarList(props: IProps) {
-  const { session } = props
+export default function WebinarList() {
+  const { data: session } = useSession()
 
   const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])

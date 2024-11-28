@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import GridPattern from '~/components/ui/grid-pattern'
-import { auth } from '~/lib/auth'
 import { cn } from '~/lib/utils'
 import ChoosePlan from './partials/choose-plan'
 import CourseDetails from './partials/course-detail'
@@ -16,8 +15,6 @@ export const metadata = {
 }
 
 export default async function WebinarBatchPage() {
-  const session = await auth()
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-center gap-4 mb-16">
@@ -78,7 +75,7 @@ export default async function WebinarBatchPage() {
       </section>
 
       {/* Pricing */}
-      <ChoosePlan email={session?.user?.email} />
+      <ChoosePlan />
     </div>
   )
 }
