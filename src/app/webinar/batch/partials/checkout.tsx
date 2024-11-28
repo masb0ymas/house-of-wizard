@@ -19,13 +19,18 @@ export default function Checkout() {
     mode: 'onChange',
   })
 
+  const handleCheckout = () => {
+    const trx_id = '2dd35797-f9fd-4103-94cb-aef072db790d'
+    return window.open(`/webinar/batch/payment/${trx_id}`, '_self')
+  }
+
   return (
     <section
       id="checkout"
       className="max-w-2xl mx-auto bg-white border-purple-100 shadow-sm hover:shadow-lg transition-all duration-300 rounded-2xl p-8"
     >
       <h2 className="text-2xl font-bold font-serif tracking-wide mb-6">Complete Your Enrollment</h2>
-      <form className="space-y-6" onSubmit={handleSubmit((data) => console.log(data))}>
+      <form className="space-y-6" onSubmit={handleSubmit(() => handleCheckout())}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block mb-2 font-serif tracking-wide">First Name</label>

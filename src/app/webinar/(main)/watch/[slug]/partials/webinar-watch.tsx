@@ -2,8 +2,8 @@
 
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
-import { getWebinars } from '~/app/webinar/action'
-import WebinarCard from '~/app/webinar/partials/webinar-card'
+import { getWebinars } from '~/app/webinar/(main)/action'
+import WebinarCard from '~/app/webinar/(main)/partials/webinar-card'
 import Loader from '~/components/custom/loader'
 import YoutubePlyr from '~/components/custom/plyr'
 import {
