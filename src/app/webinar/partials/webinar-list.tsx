@@ -1,8 +1,8 @@
 'use client'
 
-import { IconLoader } from '@tabler/icons-react'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
+import Loader from '~/components/custom/loader'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { getWebinarLiveSession, getWebinars } from '../action'
@@ -72,12 +72,7 @@ export default function WebinarList() {
 
   return (
     <>
-      {isLoading && (
-        <div className="flex items-center justify-center gap-2 mt-10">
-          <IconLoader className="h-6 w-6 animate-spin" />
-          <span>Loading...</span>
-        </div>
-      )}
+      {isLoading && <Loader />}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
         {renderLiveButton()}

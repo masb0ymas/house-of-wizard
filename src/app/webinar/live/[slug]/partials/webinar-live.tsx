@@ -1,6 +1,6 @@
 'use client'
 
-import { IconArrowRight, IconLoader } from '@tabler/icons-react'
+import { IconArrowRight } from '@tabler/icons-react'
 import { subMinutes } from 'date-fns'
 import _ from 'lodash'
 import { useSession } from 'next-auth/react'
@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { getWebinarLiveSession } from '~/app/webinar/action'
 import { Description, ItemType } from '~/components/custom/description'
+import Loader from '~/components/custom/loader'
 import { RainbowButton } from '~/components/ui/rainbow-button'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
@@ -77,12 +78,7 @@ export default function WebinarLiveSection(props: IProps) {
 
   function renderContent() {
     if (isLoading) {
-      return (
-        <div className="flex items-center justify-center gap-2 mt-10">
-          <IconLoader className="h-6 w-6 animate-spin" />
-          <span>Loading...</span>
-        </div>
-      )
+      return <Loader />
     }
 
     if (!session?.user) {

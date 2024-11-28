@@ -1,9 +1,10 @@
 'use client'
 
-import { IconLoader } from '@tabler/icons-react'
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
+import { getWebinars } from '~/app/webinar/action'
 import WebinarCard from '~/app/webinar/partials/webinar-card'
+import Loader from '~/components/custom/loader'
 import YoutubePlyr from '~/components/custom/plyr'
 import {
   Pagination,
@@ -17,7 +18,6 @@ import {
 import { Separator } from '~/components/ui/separator'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { getWebinarBySlug } from '../action'
-import { getWebinars } from '~/app/webinar/action'
 
 type IProps = {
   slug: string
@@ -52,12 +52,7 @@ export default function WebinarWatchSection({ slug }: IProps) {
 
   function renderContent() {
     if (isLoading) {
-      return (
-        <div className="flex items-center justify-center gap-2 mt-10">
-          <IconLoader className="h-6 w-6 animate-spin" />
-          <span>Loading...</span>
-        </div>
-      )
+      return <Loader />
     }
 
     return (
