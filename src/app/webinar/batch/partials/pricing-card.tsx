@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { Check } from 'lucide-react'
 import { Button } from '~/components/ui/button'
+import { formatCurrencyIDR } from '~/lib/number'
 
 interface PricingFeature {
   text: string
@@ -23,6 +24,8 @@ export default function PricingCard({
   onSelect,
   disabled = false,
 }: PricingCardProps) {
+  const formattedPrice = formatCurrencyIDR(price)
+
   return (
     <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-purple-100">
       <div className="mb-6">
@@ -33,7 +36,7 @@ export default function PricingCard({
       </div>
 
       <div className="mb-6">
-        <span className="text-2xl sm:text-4xl font-bold text-gray-900">Rp {price}.000.000</span>
+        <span className="text-2xl sm:text-4xl font-bold text-gray-900">{formattedPrice}</span>
         <span className="text-gray-500 text-2xl tracking-wide ml-2">,-</span>
       </div>
 

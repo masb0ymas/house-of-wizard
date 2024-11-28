@@ -1,20 +1,64 @@
 'use client'
 
-import { useState } from 'react'
+import _ from 'lodash'
+import { useCallback, useEffect, useState } from 'react'
+import Loader from '~/components/custom/loader'
+import { WebinarPrivatePlanEntity } from '~/data/entity/webinar_private_plan'
+import { getWebinarPrivatePlans } from '../action'
 import Checkout from './checkout'
 import PricingCard from './pricing-card'
 
-type IProps = {
-  email?: string | null
-}
+export default function ChoosePlan() {
+  const [webinarPlans, setWebinarPlans] = useState<WebinarPrivatePlanEntity[]>([])
 
-export default function ChoosePlan({ email }: IProps) {
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
+
+  const getWebinarPlans = useCallback(async () => {
+    setIsLoading(true)
+    const { data } = await getWebinarPrivatePlans({ pageSize: 2 })
+    setWebinarPlans(data)
+    setIsLoading(false)
+  }, [])
+
+  useEffect(() => {
+    getWebinarPlans()
+  }, [getWebinarPlans])
 
   const handlePlanSelect = (plan: string) => {
     setSelectedPlan(plan)
     // Scroll to checkout section
     document.getElementById('checkout')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  function renderContent() {
+    if (isLoading) {
+      return <Loader />
+    }
+
+    if (!isLoading && !_.isEmpty(webinarPlans)) {
+      return (
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {webinarPlans.map((plan) => (
+            <PricingCard
+              key={plan.id}
+              title={plan.title}
+              subtitle={plan.description}
+              price={plan.price}
+              features={plan.features}
+              onSelect={() => handlePlanSelect(plan.id)}
+              disabled={!plan.is_active}
+            />
+          ))}
+        </div>
+      )
+    }
+
+    return (
+      <div className="flex items-center justify-center gap-2 mt-10">
+        <span>No plans available</span>
+      </div>
+    )
   }
 
   return (
@@ -23,41 +67,11 @@ export default function ChoosePlan({ email }: IProps) {
         <h2 className="text-xl sm:text-3xl font-bold font-serif tracking-wide text-center mb-10">
           Choose Your Plan
         </h2>
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <PricingCard
-            title="Early Bird"
-            subtitle="Limited time offer for first 20 students"
-            price={7}
-            features={[
-              { text: '16 weeks live training' },
-              { text: 'Personal mentorship' },
-              { text: 'Project portfolio' },
-              { text: 'Career support' },
-              { text: 'Lifetime community access' },
-              { text: 'Certificate of completion' },
-            ]}
-            onSelect={() => handlePlanSelect('early-bird')}
-          />
-          <PricingCard
-            title="Regular"
-            subtitle="For serious analysts ready to level up"
-            price={15}
-            disabled
-            features={[
-              { text: '24 weeks live training' },
-              { text: 'Personal mentorship ( 1:1 session )' },
-              { text: 'Project portfolio' },
-              { text: 'Career support ( Partner )' },
-              { text: 'Lifetime community access' },
-              { text: 'Certificate of completion' },
-            ]}
-            onSelect={() => handlePlanSelect('regular')}
-          />
-        </div>
+        {renderContent()}
       </section>
 
       {/* Checkout Section */}
-      {selectedPlan && <Checkout email={email} />}
+      {selectedPlan && <Checkout />}
     </>
   )
 }
