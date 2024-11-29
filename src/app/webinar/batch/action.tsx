@@ -16,6 +16,10 @@ type DtoWebinarPrivatePlan = {
   error: string | null
 }
 
+/**
+ * Get Webinar Private Plans
+ * @returns
+ */
 export async function getWebinarPrivatePlans({
   pageSize,
 }: RequestFindAll): Promise<DtoWebinarPrivatePlan> {
