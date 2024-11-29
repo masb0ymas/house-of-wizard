@@ -10,12 +10,12 @@ export const metadata = {
   },
 }
 
-type SearchParams = {
+type ISearchParams = {
   txID: string
 }
 
 type IProps = {
-  searchParams: Promise<SearchParams>
+  searchParams: Promise<ISearchParams>
 }
 
 export default async function PaymentFinishPage({ searchParams }: IProps) {

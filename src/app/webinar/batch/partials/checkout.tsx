@@ -2,9 +2,11 @@ import { IconArrowRight, IconMail } from '@tabler/icons-react'
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { RainbowButton } from '~/components/ui/rainbow-button'
+import { getSplitName } from '~/lib/string'
 
 export default function Checkout() {
   const { data: session } = useSession()
+  const { firstName, lastName } = getSplitName(session?.user?.name || '')
 
   const {
     register,
@@ -12,8 +14,8 @@ export default function Checkout() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      first_name: session?.user?.name || '',
-      last_name: '',
+      first_name: firstName || '',
+      last_name: lastName || '',
       email: session?.user?.email || '',
     },
     mode: 'onChange',

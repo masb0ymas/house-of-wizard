@@ -12,12 +12,12 @@ export const metadata = {
   },
 }
 
-type Params = {
+type IParams = {
   id: string
 }
 
 type IProps = {
-  params: Params
+  params: Promise<IParams>
 }
 
 export default async function WebinarBatchPaymentPage({ params }: IProps) {
