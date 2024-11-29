@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 interface NumberFormatOptions extends Intl.NumberFormatOptions {
   locale: string
 }
@@ -103,4 +105,13 @@ export function currencyParser(value: string | number | any): any {
   } catch (error) {
     console.error(error)
   }
+}
+
+/**
+ *
+ * @param value
+ * @returns
+ */
+export function isNumeric(value: any): boolean {
+  return !_.isNaN(parseFloat(value)) && _.isFinite(value)
 }
