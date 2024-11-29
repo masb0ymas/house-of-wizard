@@ -5,10 +5,11 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import { Skeleton } from '~/components/ui/skeleton'
+import { TransactionEntity } from '~/data/entity/transaction'
 import { WebinarPrivatePlanEntity } from '~/data/entity/webinar_private_plan'
 import { formatCurrencyIDR } from '~/lib/number'
 import { validate } from '~/lib/validate'
-import { getWebinarPrivatePlanByTrxId } from '../action'
+import { getTransactionById, getWebinarPrivatePlanByTrxId } from '../action'
 
 type IProps = {
   id: string
@@ -16,6 +17,7 @@ type IProps = {
 
 export default function PriceDetail({ id }: IProps) {
   const [webinarPlan, setWebinarPlan] = useState<WebinarPrivatePlanEntity | null>(null)
+  const [transaction, setTransaction] = useState<TransactionEntity | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   const getWebinarPlan = useCallback(async () => {
@@ -24,19 +26,27 @@ export default function PriceDetail({ id }: IProps) {
     setIsLoading(false)
   }, [id])
 
+  const getTransaction = useCallback(async () => {
+    const { data } = await getTransactionById(id)
+    setTransaction(data)
+    setIsLoading(false)
+  }, [id])
+
   useEffect(() => {
     getWebinarPlan()
-  }, [getWebinarPlan])
+    getTransaction()
+  }, [getWebinarPlan, getTransaction])
 
   const description = _.get(webinarPlan, 'description', '')
   const features = _.get(webinarPlan, 'features', [])
   const price = _.get(webinarPlan, 'price', 0)
+  const uniq_code = _.get(transaction, 'uniq_code', 0)
 
   const new_price = formatCurrencyIDR(price)
   const admin_fee = formatCurrencyIDR(5000)
   const platform_fee = formatCurrencyIDR(10000)
-  const uniq_code = formatCurrencyIDR(123)
-  const total = validate.number(price) + 0 + 123
+  const new_uniq_code = formatCurrencyIDR(uniq_code)
+  const total = validate.number(price) + validate.number(uniq_code)
 
   const checkFeatures = features && features?.length > 0
 
@@ -61,7 +71,7 @@ export default function PriceDetail({ id }: IProps) {
     },
     {
       label: 'Unique Code',
-      value: uniq_code,
+      value: new_uniq_code,
       skeleton: 'h-4 w-[90px]',
       is_strike: false,
     },

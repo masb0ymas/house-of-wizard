@@ -71,7 +71,7 @@ export default function ChoosePlan() {
       </section>
 
       {/* Checkout Section */}
-      {selectedPlan && <Checkout />}
+      {selectedPlan && <Checkout id={selectedPlan} />}
     </>
   )
 }

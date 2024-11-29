@@ -43,3 +43,36 @@ export async function getWebinarPrivatePlans({
 
   return { data, total, error }
 }
+
+/**
+ *
+ * @param values
+ * @returns
+ */
+export async function createTransaction(values: any) {
+  let data = null
+  let error = null
+
+  const formValue = {
+    provider: 'midtrans',
+    first_name: values.first_name,
+    last_name: values.last_name,
+    email: values.email,
+    details: [
+      {
+        webinar_private_plan_id: values.webinar_private_plan_id,
+        webinar_private_id: null,
+      },
+    ],
+  }
+
+  try {
+    const res = await axios.post(`${env.API_URL}/v1/transaction`, formValue)
+    data = res.data.data
+  } catch (err) {
+    console.log(err)
+    error = _.get(err, 'response.data.message', 'Something went wrong')
+  }
+
+  return { data, error }
+}
