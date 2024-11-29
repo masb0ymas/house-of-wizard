@@ -1,3 +1,5 @@
+import { WebinarBatchEntity } from "./webinar_batch"
+
 export type WebinarPrivatePlanEntity = {
   id: string
   created_at: string
@@ -10,4 +12,5 @@ export type WebinarPrivatePlanEntity = {
   price: number
   features: any[]
   is_active: boolean
+  webinar_batch: WebinarBatchEntity | null
 }
