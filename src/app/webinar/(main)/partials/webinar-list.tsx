@@ -2,11 +2,10 @@
 
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
-import Loader from '~/components/custom/loader'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { getWebinarLiveSession, getWebinars } from '../action'
-import WebinarCard from './webinar-card'
+import WebinarCard, { WebinarCardSkeleton } from './webinar-card'
 
 export default function WebinarList() {
   const { data: session } = useSession()
@@ -15,17 +14,15 @@ export default function WebinarList() {
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])
   const [total, setTotal] = useState(0)
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const getLiveWebinar = useCallback(async () => {
-    setIsLoading(true)
     const { data } = await getWebinarLiveSession()
     setWebinarLive(data)
     setIsLoading(false)
   }, [])
 
   const getListWebinars = useCallback(async () => {
-    setIsLoading(true)
     const { data, total } = await getWebinars({ pageSize: 11 })
     setWebinars(data)
     setTotal(total)
@@ -70,11 +67,13 @@ export default function WebinarList() {
     return null
   }
 
-  return (
-    <>
-      {isLoading && <Loader />}
+  function renderContent() {
+    if (isLoading) {
+      return [1, 2, 3, 4].map((index) => <WebinarCardSkeleton key={index} />)
+    }
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
+    return (
+      <>
         {renderLiveButton()}
 
         {webinars.map((webinar) => {
@@ -91,7 +90,13 @@ export default function WebinarList() {
             />
           )
         })}
-      </div>
-    </>
+      </>
+    )
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
+      {renderContent()}
+    </div>
   )
 }

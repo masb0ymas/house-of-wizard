@@ -3,7 +3,7 @@
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import { getWebinars } from '~/app/webinar/(main)/action'
-import WebinarCard from '~/app/webinar/(main)/partials/webinar-card'
+import WebinarCard, { WebinarCardSkeleton } from '~/app/webinar/(main)/partials/webinar-card'
 import Loader from '~/components/custom/loader'
 import YoutubePlyr from '~/components/custom/plyr'
 import {
@@ -28,17 +28,15 @@ export default function WebinarWatchSection({ slug }: IProps) {
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])
   const [total, setTotal] = useState(0)
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const getWebinar = useCallback(async () => {
-    setIsLoading(true)
     const { data } = await getWebinarBySlug(slug)
     setWebinarBySlug(data)
     setIsLoading(false)
   }, [slug])
 
   const getListWebinars = useCallback(async () => {
-    setIsLoading(true)
     const { data, total } = await getWebinars({ pageSize: 4 })
     setWebinars(data)
     setTotal(total)
@@ -95,20 +93,30 @@ export default function WebinarWatchSection({ slug }: IProps) {
       <Separator className="my-2" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
-        {webinars.map((webinar) => {
-          return (
-            <WebinarCard
-              key={webinar.id}
-              title={webinar.title}
-              slug={webinar.slug}
-              description={webinar.description}
-              participants={webinar.total_participant}
-              date={webinar.start_date}
-              isLive={false}
-              isRecording={Boolean(webinar.recording_url)}
-            />
-          )
-        })}
+        {isLoading ? (
+          <>
+            {[1, 2, 3, 4].map((index) => (
+              <WebinarCardSkeleton key={index} />
+            ))}
+          </>
+        ) : (
+          <>
+            {webinars.map((webinar) => {
+              return (
+                <WebinarCard
+                  key={webinar.id}
+                  title={webinar.title}
+                  slug={webinar.slug}
+                  description={webinar.description}
+                  participants={webinar.total_participant}
+                  date={webinar.start_date}
+                  isLive={false}
+                  isRecording={Boolean(webinar.recording_url)}
+                />
+              )
+            })}
+          </>
+        )}
       </div>
 
       <Pagination className="mt-8">
