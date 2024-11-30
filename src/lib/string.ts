@@ -85,3 +85,17 @@ export function capitalizeFirstLetter(str: string): string {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ')
 }
+
+/**
+ *
+ * @param value
+ * @returns
+ */
+export function getSplitName(value: string): { firstName: string; lastName: string } {
+  const splitValue = value.trim().split(/\s+/)
+
+  return {
+    firstName: splitValue[0],
+    lastName: splitValue.length > 1 ? splitValue.slice(1).join(' ') : '',
+  }
+}

@@ -1,25 +1,44 @@
 import { IconArrowRight, IconMail } from '@tabler/icons-react'
-import { Mail } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { RainbowButton } from '~/components/ui/rainbow-button'
+import { toast } from '~/lib/hooks/use-toast'
+import { getSplitName } from '~/lib/string'
+import { createTransaction } from '../action'
 
 type IProps = {
-  email?: string | null
+  id: string
 }
 
-export default function Checkout({ email }: IProps) {
+export default function Checkout({ id }: IProps) {
+  const { data: session } = useSession()
+  const { firstName, lastName } = getSplitName(session?.user?.name || '')
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      first_name: '',
-      last_name: '',
-      email: email || '',
+      first_name: firstName || '',
+      last_name: lastName || '',
+      email: session?.user?.email || '',
+      webinar_private_plan_id: id,
     },
-    mode: 'onChange',
+    mode: 'onSubmit',
   })
+
+  const onSubmit = useCallback(async (values: any) => {
+    const { data: trx, error } = await createTransaction(values)
+
+    if (error) {
+      toast({ title: error, variant: 'destructive' })
+      return
+    }
+
+    return window.open(`/webinar/batch/payment/${trx.trx_id}`, '_self')
+  }, [])
 
   return (
     <section
@@ -27,7 +46,7 @@ export default function Checkout({ email }: IProps) {
       className="max-w-2xl mx-auto bg-white border-purple-100 shadow-sm hover:shadow-lg transition-all duration-300 rounded-2xl p-8"
     >
       <h2 className="text-2xl font-bold font-serif tracking-wide mb-6">Complete Your Enrollment</h2>
-      <form className="space-y-6" onSubmit={handleSubmit((data) => console.log(data))}>
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block mb-2 font-serif tracking-wide">First Name</label>
@@ -58,7 +77,7 @@ export default function Checkout({ email }: IProps) {
 
         <div>
           <label className="block mb-2 font-serif tracking-wide">Email</label>
-          <div className='relative'>
+          <div className="relative">
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
               <IconMail className="h-5 w-5 text-gray-400" stroke={1.5} />
             </div>

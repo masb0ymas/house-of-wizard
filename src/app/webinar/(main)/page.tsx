@@ -11,7 +11,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '~/components/ui/pagination'
-import { auth } from '~/lib/auth'
 import WebinarList from './partials/webinar-list'
 
 export const metadata: Metadata = {
@@ -19,9 +18,7 @@ export const metadata: Metadata = {
   description: 'Webinar House of Wizard',
 }
 
-export default async function WebinarPage() {
-  const session = await auth()
-
+export default function WebinarPage() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col">
@@ -47,7 +44,7 @@ export default async function WebinarPage() {
         </div>
       </div>
 
-      <WebinarList session={session} />
+      <WebinarList />
 
       <Pagination className="my-8">
         <PaginationContent>

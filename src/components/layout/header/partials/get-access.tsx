@@ -2,17 +2,18 @@
 
 import clsx from 'clsx'
 import _ from 'lodash'
-import { Session } from 'next-auth'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { RainbowButton } from '~/components/ui/rainbow-button'
 
 type IProps = {
-  session?: Session | null
   isMobile?: boolean
 }
 
-export default function GetAccess({ session, isMobile }: IProps) {
+export default function GetAccess({ isMobile }: IProps) {
+  const { data: session } = useSession()
+
   if (!_.isEmpty(session?.user?.email)) {
     return (
       <Link href="/profile">

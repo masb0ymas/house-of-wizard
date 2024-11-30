@@ -31,7 +31,6 @@ export default function WebinarCard(props: WebinarCardProps) {
     isPremium = false,
     isRecording = true,
   } = props
-
   function renderButton() {
     if (isLive) {
       return (
@@ -43,7 +42,6 @@ export default function WebinarCard(props: WebinarCardProps) {
         </Link>
       )
     }
-
     if (isPremium) {
       return (
         <Link href={`/webinar/watch/${slug}`}>
@@ -54,7 +52,6 @@ export default function WebinarCard(props: WebinarCardProps) {
         </Link>
       )
     }
-
     if (!isRecording) {
       return (
         <Button className="w-full h-10" variant={'outline'} radius={'xl'}>
@@ -63,7 +60,6 @@ export default function WebinarCard(props: WebinarCardProps) {
         </Button>
       )
     }
-
     return (
       <Link href={`/webinar/watch/${slug}`}>
         <Button className="w-full h-10" variant={'outline'} radius={'xl'}>
@@ -75,10 +71,8 @@ export default function WebinarCard(props: WebinarCardProps) {
       </Link>
     )
   }
-
   const shortTitle = shortText(title, 20)
   const shortDescription = shortText(description, 100)
-
   function renderDays() {
     if (isLive || date) {
       return (
@@ -87,16 +81,13 @@ export default function WebinarCard(props: WebinarCardProps) {
         </span>
       )
     }
-
     if (duration) {
       return (
         <span className="text-gray-600 text-sm font-medium dark:text-gray-300">{duration}</span>
       )
     }
-
     return null
   }
-
   return (
     <div
       className={clsx(
@@ -111,7 +102,6 @@ export default function WebinarCard(props: WebinarCardProps) {
         </p>
         <div className="flex flex-row justify-between my-4">
           {renderDays()}
-
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -126,7 +116,6 @@ export default function WebinarCard(props: WebinarCardProps) {
             </Tooltip>
           </TooltipProvider>
         </div>
-
         {renderButton()}
       </div>
     </div>
