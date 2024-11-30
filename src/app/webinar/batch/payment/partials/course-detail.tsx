@@ -93,7 +93,7 @@ export default function CourseDetail({ id }: IProps) {
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm">
+    <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-200">
       <div className="flex gap-6">
         {isLoading ? (
           <Skeleton className="w-36 h-36" />

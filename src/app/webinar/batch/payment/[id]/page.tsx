@@ -26,18 +26,18 @@ export default async function WebinarBatchPaymentPage({ params }: IProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="lg:mt-5">
+        <div className="2xl:mt-5">
           <BackButton />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:mt-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-5">
           {/* Left Column - Course Details & Payment Form */}
           <div className="space-y-6">
             <CheckoutMidtrans id={trx_id} />
           </div>
 
           {/* Right Column - Price Details */}
-          <div>
+          <div className='flex flex-col gap-2 md:gap-4'>
             <CourseDetail id={trx_id} />
             <PriceDetail id={trx_id} />
           </div>

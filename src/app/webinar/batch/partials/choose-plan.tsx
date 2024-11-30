@@ -2,20 +2,18 @@
 
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
-import Loader from '~/components/custom/loader'
 import { WebinarPrivatePlanEntity } from '~/data/entity/webinar_private_plan'
 import { getWebinarPrivatePlans } from '../action'
 import Checkout from './checkout'
-import PricingCard from './pricing-card'
+import PricingCard, { PricingCardSkeleton } from './pricing-card'
 
 export default function ChoosePlan() {
   const [webinarPlans, setWebinarPlans] = useState<WebinarPrivatePlanEntity[]>([])
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
 
   const getWebinarPlans = useCallback(async () => {
-    setIsLoading(true)
     const { data } = await getWebinarPrivatePlans({ pageSize: 2 })
     setWebinarPlans(data)
     setIsLoading(false)
@@ -33,7 +31,13 @@ export default function ChoosePlan() {
 
   function renderContent() {
     if (isLoading) {
-      return <Loader />
+      return (
+        <div className="flex flex-row gap-4 items-center justify-center">
+          {[1, 2].map((index) => (
+            <PricingCardSkeleton key={index} />
+          ))}
+        </div>
+      )
     }
 
     if (!isLoading && !_.isEmpty(webinarPlans)) {
