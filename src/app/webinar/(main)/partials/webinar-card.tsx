@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { RainbowButton } from '~/components/ui/rainbow-button'
+import { Skeleton } from '~/components/ui/skeleton'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip'
 import { formatLocalDate } from '~/lib/date'
 import { shortText } from '~/lib/string'
@@ -117,6 +118,26 @@ export default function WebinarCard(props: WebinarCardProps) {
           </TooltipProvider>
         </div>
         {renderButton()}
+      </div>
+    </div>
+  )
+}
+
+export function WebinarCardSkeleton() {
+  return (
+    <div className="p-4 h-full w-full flex flex-col border-gray-200 rounded-xl bg-white shadow-sm hover:shadow-lg transition-all duration-300">
+      <div className="flex flex-col flex-grow gap-2">
+        <Skeleton className="h-6 w-[200px] mb-4" />
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[250px]" />
+
+        <div className="flex flex-row justify-between my-4">
+          <Skeleton className="h-4 w-[120px]" />
+          <Skeleton className="h-4 w-[50px]" />
+        </div>
+
+        <Skeleton className="h-10 w-full" />
       </div>
     </div>
   )

@@ -1,3 +1,5 @@
+'use client'
+
 import { IconArrowRight, IconMail } from '@tabler/icons-react'
 import { useSession } from 'next-auth/react'
 import { useCallback } from 'react'
@@ -30,10 +32,14 @@ export default function Checkout({ id }: IProps) {
   })
 
   const onSubmit = useCallback(async (values: any) => {
-    const { data: trx, error } = await createTransaction(values)
+    const { data: trx, message, isError } = await createTransaction(values)
 
-    if (error) {
-      toast({ title: error, variant: 'destructive' })
+    if (message) {
+      toast({
+        title: message,
+        variant: isError ? 'destructive' : 'default',
+        className: 'rounded-xl',
+      })
       return
     }
 

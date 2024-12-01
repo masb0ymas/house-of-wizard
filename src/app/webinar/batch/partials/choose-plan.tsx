@@ -1,6 +1,7 @@
 'use client'
 
 import _ from 'lodash'
+import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
 import { WebinarPrivatePlanEntity } from '~/data/entity/webinar_private_plan'
 import { getWebinarPrivatePlans } from '../action'
@@ -8,6 +9,8 @@ import Checkout from './checkout'
 import PricingCard, { PricingCardSkeleton } from './pricing-card'
 
 export default function ChoosePlan() {
+  const { data: session } = useSession()
+
   const [webinarPlans, setWebinarPlans] = useState<WebinarPrivatePlanEntity[]>([])
 
   const [isLoading, setIsLoading] = useState(true)
@@ -24,6 +27,13 @@ export default function ChoosePlan() {
   }, [getWebinarPlans])
 
   const handlePlanSelect = (plan: string) => {
+    const callbackUrl = encodeURIComponent(`/webinar/batch`)
+
+    if (!session?.user) {
+      window.open(`/sign-in?callbackUrl=${callbackUrl}`, '_self')
+      return
+    }
+
     setSelectedPlan(plan)
     // Scroll to checkout section
     document.getElementById('checkout')?.scrollIntoView({ behavior: 'smooth' })
