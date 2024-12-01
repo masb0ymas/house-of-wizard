@@ -116,7 +116,7 @@ export default function PriceDetail({ id }: IProps) {
             {checkFeatures &&
               features?.map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <IconCheck className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <IconCheck className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
                   <span className="text-sm text-gray-600">{item.text}</span>
                 </div>
               ))}
@@ -139,11 +139,11 @@ export default function PriceDetail({ id }: IProps) {
         ))}
 
         <div className="flex justify-between text-base font-medium mt-4 pt-4 border-t border-gray-200">
-          <span>Total</span>
+          <span className="font-semibold">Total</span>
           {isLoading ? (
             <Skeleton className="h-4 w-[170px]" />
           ) : (
-            <span>{total && formatCurrencyIDR(total)}</span>
+            <span className="font-semibold">{total && formatCurrencyIDR(total)}</span>
           )}
         </div>
       </div>
