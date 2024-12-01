@@ -51,7 +51,8 @@ export async function getWebinarPrivatePlans({
  */
 export async function createTransaction(values: any) {
   let data = null
-  let error = null
+  let message = null
+  let isError = false
 
   const formValue = {
     provider: 'midtrans',
@@ -71,8 +72,12 @@ export async function createTransaction(values: any) {
     data = res.data.data
   } catch (err) {
     console.log(err)
-    error = _.get(err, 'response.data.message', 'Something went wrong')
+    message = _.get(err, 'response.data.message', 'Something went wrong')
+
+    if (!message.includes('already completed the payment')) {
+      isError = true
+    }
   }
 
-  return { data, error }
+  return { data, message, isError }
 }
