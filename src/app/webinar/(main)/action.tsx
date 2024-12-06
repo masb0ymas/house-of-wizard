@@ -1,10 +1,10 @@
 'use server'
 
-import axios from 'axios'
 import _ from 'lodash'
 import qs from 'qs'
 import { env } from '~/config/env'
 import { WebinarEntity } from '~/data/entity/webinar'
+import createFetchApi from '~/lib/fetcher'
 
 type RequestGetWebinars = {
   pageSize: number
@@ -13,48 +13,66 @@ type RequestGetWebinars = {
 type ResponseWebinars = {
   data: WebinarEntity[]
   total: number
-  error: string | null
+  message: string | null
+  isError: boolean
+}
+
+async function _axios() {
+  const fetch = await createFetchApi(env.API_URL)
+  return fetch.default
 }
 
 export async function getWebinars({ pageSize }: RequestGetWebinars): Promise<ResponseWebinars> {
+  const api = await _axios()
+
   const query = qs.stringify({
     page: 1,
     pageSize,
     status: 'archive',
   })
 
-  let result = []
+  let data = []
   let total = 0
-  let error = null
+  let message = null
+  let isError = false
 
   try {
-    const res = await axios.get(`${env.API_URL}/v1/webinar?${query}`)
-    result = res.data.data
+    const res = await api.get(`/v1/webinar?${query}`)
+    data = res.data.data
     total = res.data.total
   } catch (err) {
     console.log(err)
-    error = _.get(err, 'response.data.message', 'Something went wrong')
+    message = _.get(err, 'response.data.message', 'Something went wrong')
+    isError = true
   }
 
-  return { data: result, total, error }
+  return { data, total, message, isError }
 }
 
 type ResponseWebinarLive = {
   data: WebinarEntity | null
-  error: string | null
+  total: number
+  message: string | null
+  isError: boolean
 }
 
 export async function getWebinarLiveSession(): Promise<ResponseWebinarLive> {
-  let result = null
-  let error = null
+  const api = await _axios()
+
+  let data = null
+  let total = 0
+  let message = null
+  let isError = false
 
   try {
-    const res = await axios.get(`${env.API_URL}/v1/webinar/live`)
-    result = res.data.data
+    const res = await api.get(`/v1/webinar/live`)
+    data = res.data.data
+    total = res.data.total
   } catch (err) {
     console.log(err)
-    error = _.get(err, 'response.data.message', 'Something went wrong')
+    message = _.get(err, 'response.data.message', 'Something went wrong')
+    isError = true
   }
 
-  return { data: result, error }
+  return { data, total, message, isError }
 }

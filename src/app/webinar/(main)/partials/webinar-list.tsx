@@ -12,20 +12,23 @@ export default function WebinarList() {
 
   const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])
-  const [total, setTotal] = useState(0)
+
+  const [totalAttendance, setTotalAttendance] = useState(0)
+  const [totalAttendanceLive, setTotalAttendanceLive] = useState(0)
 
   const [isLoading, setIsLoading] = useState(true)
 
   const getLiveWebinar = useCallback(async () => {
-    const { data } = await getWebinarLiveSession()
+    const { data, total } = await getWebinarLiveSession()
     setWebinarLive(data)
+    setTotalAttendanceLive(total)
     setIsLoading(false)
   }, [])
 
   const getListWebinars = useCallback(async () => {
     const { data, total } = await getWebinars({ pageSize: 11 })
     setWebinars(data)
-    setTotal(total)
+    setTotalAttendance(total)
     setIsLoading(false)
   }, [])
 
@@ -56,7 +59,7 @@ export default function WebinarList() {
             title={webinarLive.title}
             slug={redirectUrl}
             description={webinarLive.description}
-            participants={webinarLive.total_participant || 0}
+            participants={totalAttendanceLive || 0}
             date={webinarLive.start_date}
             isLive
           />

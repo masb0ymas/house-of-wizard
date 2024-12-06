@@ -1,3 +1,5 @@
+'use client'
+
 import { IconArrowRight, IconLock, IconUsers, IconVideo, IconVideoOff } from '@tabler/icons-react'
 import clsx from 'clsx'
 import Link from 'next/link'
