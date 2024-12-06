@@ -1,15 +1,21 @@
 'use server'
 
-import axios from 'axios'
 import _ from 'lodash'
 import { env } from '~/config/env'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { WebinarAttendanceEntity } from '~/data/entity/webinar_attendance'
 import { auth } from '~/lib/auth'
+import createFetchApi from '~/lib/fetcher'
 
 type ResponseAttendance = {
   data: WebinarAttendanceEntity | null
-  error: string | null
+  message: string | null
+  isError: boolean
+}
+
+async function _axios() {
+  const fetch = await createFetchApi(env.API_URL)
+  return fetch.default
 }
 
 /**
@@ -18,20 +24,22 @@ type ResponseAttendance = {
  * @returns
  */
 export async function getAttendanceBySlug(slug: string): Promise<ResponseAttendance> {
-  let result = null
-  let error = null
+  const api = await _axios()
+
+  let data = null
+  let message = null
+  let isError = false
 
   try {
-    const res = await axios.get(
-      `${env.API_URL}/v1/webinar-attendance/check/by-webinar-slug/${slug}`
-    )
-    result = res.data.data
+    const res = await api.get(`/v1/webinar-attendance/check/by-webinar-slug/${slug}`)
+    data = res.data.data
   } catch (err) {
     console.log(err)
-    error = _.get(err, 'response.data.message', 'Something went wrong')
+    message = _.get(err, 'response.data.message', 'Something went wrong')
+    isError = true
   }
 
-  return { data: result, error }
+  return { data, message, isError }
 }
 
 /**
@@ -41,6 +49,7 @@ export async function getAttendanceBySlug(slug: string): Promise<ResponseAttenda
  */
 export async function markAttendance(webinar: WebinarEntity | null) {
   const session = await auth()
+  const api = await _axios()
 
   const formValue = {
     user_id: session?.user?.id,
@@ -57,16 +66,18 @@ export async function markAttendance(webinar: WebinarEntity | null) {
     },
   }
 
-  let result = null
+  let data = null
   let message = null
+  let isError = false
 
   try {
-    const res = await axios.post(`${env.API_URL}/v1/webinar-attendance`, formValue)
-    result = res.data.data
+    const res = await api.post(`/v1/webinar-attendance`, formValue)
+    data = res.data.data
     message = 'Attendance marked successfully'
   } catch (err) {
     message = _.get(err, 'response.data.message', 'Something went wrong')
+    isError = true
   }
 
-  return { data: result, message }
+  return { data, message, isError }
 }
