@@ -1,10 +1,10 @@
 'use server'
 
-import axios from 'axios'
 import _ from 'lodash'
 import qs from 'qs'
 import { env } from '~/config/env'
 import { WebinarPrivatePlanEntity } from '~/data/entity/webinar_private_plan'
+import createFetchApi from '~/lib/fetcher'
 
 type RequestFindAll = {
   pageSize: number
@@ -13,7 +13,13 @@ type RequestFindAll = {
 type DtoWebinarPrivatePlan = {
   data: WebinarPrivatePlanEntity[]
   total: number
-  error: string | null
+  message: string | null
+  isError: boolean
+}
+
+async function _axios() {
+  const fetch = await createFetchApi(env.API_URL)
+  return fetch.default
 }
 
 /**
@@ -23,6 +29,8 @@ type DtoWebinarPrivatePlan = {
 export async function getWebinarPrivatePlans({
   pageSize,
 }: RequestFindAll): Promise<DtoWebinarPrivatePlan> {
+  const api = await _axios()
+
   const query = qs.stringify({
     page: 1,
     pageSize,
@@ -30,18 +38,20 @@ export async function getWebinarPrivatePlans({
 
   let data = []
   let total = 0
-  let error = null
+  let message = null
+  let isError = false
 
   try {
-    const res = await axios.get(`${env.API_URL}/v1/webinar-private-plan/by-active-batch?${query}`)
+    const res = await api.get(`/v1/webinar-private-plan/by-active-batch?${query}`)
     data = res.data.data
     total = res.data.total
   } catch (err) {
     console.log(err)
-    error = _.get(err, 'response.data.message', 'Something went wrong')
+    message = _.get(err, 'response.data.message', 'Something went wrong')
+    isError = true
   }
 
-  return { data, total, error }
+  return { data, total, message, isError }
 }
 
 /**
@@ -50,6 +60,8 @@ export async function getWebinarPrivatePlans({
  * @returns
  */
 export async function createTransaction(values: any) {
+  const api = await _axios()
+
   let data = null
   let message = null
   let isError = false
@@ -68,7 +80,7 @@ export async function createTransaction(values: any) {
   }
 
   try {
-    const res = await axios.post(`${env.API_URL}/v1/transaction`, formValue)
+    const res = await api.post(`/v1/transaction`, formValue)
     data = res.data.data
   } catch (err) {
     console.log(err)
