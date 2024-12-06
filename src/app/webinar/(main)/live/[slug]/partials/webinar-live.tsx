@@ -75,17 +75,16 @@ export default function WebinarLiveSection(props: IProps) {
       return <Loader />
     }
 
+    // user not login
     if (!session?.user) {
       const callbackUrl = encodeURIComponent(`/webinar/live/${slug}`)
 
       return (
         <>
-          <h1 className="text-4xl font-semibold font-serif tracking-wide">
-            Webinar - Live Session
-          </h1>
-          <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-            To enhance your skills and expertise, please log in first.
-          </h4>
+          <WebinarHeader
+            title="Webinar - Live Session"
+            subtitle="To enhance your skills and expertise, please log in first."
+          />
 
           <Link href={`/sign-in?callbackUrl=${callbackUrl}`}>
             <RainbowButton className="gap-2">
@@ -97,91 +96,120 @@ export default function WebinarLiveSection(props: IProps) {
       )
     }
 
-    if (!isLoading && !_.isEmpty(webinarLive?.slug) && slug !== webinarLive?.slug) {
-      return (
-        <>
-          <h1 className="text-4xl font-semibold font-serif tracking-wide">
-            Webinar - Live Session
-          </h1>
-          <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-            Currently, there are no webinars available.
-          </h4>
-        </>
-      )
-    }
-
-    if (_.isEmpty(webinarAttendance?.id)) {
-      const start_date = subMinutes(new Date(String(webinarLive?.start_date)), 30) // 30 minutes early
-      const end_date = new Date(String(webinarLive?.end_date))
-
-      const is_start_attendance = start_date < new Date() && end_date > new Date()
-      const is_end_attendance = end_date < new Date()
-
-      const live_at = webinarLive?.start_date && formatLocalDate(String(webinarLive?.start_date))
-
-      let subtitle = 'To get access to the webinar, please mark attendance first.'
-      if (is_end_attendance) {
-        subtitle = 'Currently, there are no webinars available.'
-      } else if (!is_start_attendance && !is_end_attendance) {
-        subtitle = `Please stay tuned for the webinar, which will be streamed live on ${live_at} WIB`
+    // webinar live exists
+    if (webinarLive?.id) {
+      // slug not match
+      if (slug !== webinarLive?.slug) {
+        return (
+          <WebinarHeader
+            title="Webinar - Live Session"
+            subtitle="Currently, there are no webinars available."
+          />
+        )
       }
 
-      return (
-        <>
-          <h1 className="text-4xl font-semibold font-serif tracking-wide">
-            Webinar - Live Session
-          </h1>
-          <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">{subtitle}</h4>
+      // no attendance
+      if (_.isEmpty(webinarAttendance?.id)) {
+        const start_date = subMinutes(new Date(String(webinarLive?.start_date)), 30) // 30 minutes early
+        const end_date = new Date(String(webinarLive?.end_date))
 
-          {is_start_attendance && (
-            <RainbowButton
-              className="gap-2"
-              disabled={visible}
-              onClick={() => postAttendance(webinarLive)}
-            >
-              {visible && (
-                <IconLoader className="h-4 w-4 animate-spin transition-transform duration-300 group-hover:translate-x-1" />
-              )}
+        const is_start_attendance = start_date < new Date() && end_date > new Date()
+        const is_end_attendance = end_date < new Date()
 
-              <span className="font-serif font-semibold tracking-wider">
-                {visible ? 'Loading...' : 'Mark Attendance'}
-              </span>
+        const live_at = webinarLive?.start_date && formatLocalDate(String(webinarLive?.start_date))
 
-              {!visible && (
-                <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              )}
-            </RainbowButton>
-          )}
+        let subtitle = 'To get access to the webinar, please mark attendance first.'
+        if (is_end_attendance) {
+          subtitle = 'Currently, there are no webinars available.'
+        } else if (!is_start_attendance && !is_end_attendance) {
+          subtitle = `Please stay tuned for the webinar, which will be streamed live on`
+        }
 
-          {is_end_attendance && (
-            <Link href="/webinar">
-              <RainbowButton className="gap-2">
-                <span className="font-serif font-semibold tracking-wider">Webinar Ended</span>
+        return (
+          <>
+            <WebinarHeader title="Webinar - Live Session" subtitle={subtitle} />
+
+            {!is_start_attendance && !is_end_attendance && (
+              <h4 className="text-lg sm:text-xl text-gray-500 font-semibold font-serif tracking-wide">
+                {live_at} WIB
+              </h4>
+            )}
+
+            {is_start_attendance && (
+              <RainbowButton
+                className="gap-2"
+                disabled={visible}
+                onClick={() => postAttendance(webinarLive)}
+              >
+                {visible && (
+                  <IconLoader className="h-4 w-4 animate-spin transition-transform duration-300 group-hover:translate-x-1" />
+                )}
+
+                <span className="font-serif font-semibold tracking-wider">
+                  {visible ? 'Loading...' : 'Mark Attendance'}
+                </span>
+
+                {!visible && (
+                  <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                )}
               </RainbowButton>
-            </Link>
-          )}
+            )}
 
-          {!is_start_attendance && !is_end_attendance && (
-            <RainbowButton className="gap-2">
-              <span className="font-serif font-semibold tracking-wider">Upcoming Session</span>
-            </RainbowButton>
-          )}
-        </>
-      )
+            {is_end_attendance && (
+              <Link href="/webinar">
+                <RainbowButton className="gap-2">
+                  <span className="font-serif font-semibold tracking-wider">Webinar Ended</span>
+                </RainbowButton>
+              </Link>
+            )}
+
+            {!is_start_attendance && !is_end_attendance && (
+              <RainbowButton className="gap-2">
+                <span className="font-serif font-semibold tracking-wider">Upcoming Session</span>
+              </RainbowButton>
+            )}
+          </>
+        )
+      }
+
+      // attendance exists
+      if (webinarAttendance?.id) {
+        const start_date = subMinutes(new Date(String(webinarLive?.start_date)), 30) // 30 minutes early
+        const end_date = new Date(String(webinarLive?.end_date))
+
+        const is_start_attendance = start_date < new Date() && end_date > new Date()
+        const is_end_attendance = end_date < new Date()
+
+        return (
+          <>
+            <WebinarHeader
+              title={webinarLive?.title}
+              subtitle="Elevate your expertise by learning how to analyze Web3 data and take the first step toward a career in the decentralized future."
+            />
+
+            {is_start_attendance && !is_end_attendance && (
+              <div className="flex flex-col gap-2 text-center w-full mt-8">
+                {details.map((content) => Description<any>({ item: webinarLive, content }))}
+              </div>
+            )}
+
+            {is_end_attendance && (
+              <Link href="/webinar">
+                <RainbowButton className="gap-2">
+                  <span className="font-serif font-semibold tracking-wider">Webinar Ended</span>
+                </RainbowButton>
+              </Link>
+            )}
+          </>
+        )
+      }
     }
 
     return (
-      <>
-        <h1 className="text-4xl font-semibold font-serif tracking-wide">{webinarLive?.title}</h1>
-        <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-          Elevate your expertise by learning how to analyze Web3 data and take the first step toward
-          a career in the decentralized future.
-        </h4>
-
-        <div className="flex flex-col gap-2 text-center w-full mt-8">
-          {details.map((content) => Description<any>({ item: webinarLive, content }))}
-        </div>
-      </>
+      <WebinarHeader
+        title="Webinar - Live Session"
+        subtitle="Currently, there are no webinars available."
+      />
     )
   }
 
@@ -202,5 +230,19 @@ export default function WebinarLiveSection(props: IProps) {
 
       {renderContent()}
     </div>
+  )
+}
+
+type WebinarHeaderProps = {
+  title: string
+  subtitle: string
+}
+
+function WebinarHeader({ title, subtitle }: WebinarHeaderProps) {
+  return (
+    <>
+      <h1 className="text-4xl font-semibold font-serif tracking-wide">{title}</h1>
+      <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">{subtitle}</h4>
+    </>
   )
 }
