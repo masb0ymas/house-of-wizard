@@ -78,6 +78,31 @@ export default function WebinarWatchSection({ slug }: IProps) {
     )
   }
 
+  function renderWebinarContent() {
+    if (isLoading) {
+      return [1, 2, 3, 4].map((index) => <WebinarCardSkeleton key={index} />)
+    }
+
+    return (
+      <>
+        {webinars.map((webinar) => {
+          return (
+            <WebinarCard
+              key={webinar.id}
+              title={webinar.title}
+              slug={webinar.slug}
+              description={webinar.description}
+              participants={webinar.total_participant}
+              date={webinar.start_date}
+              isLive={false}
+              isRecording={Boolean(webinar.recording_url)}
+            />
+          )
+        })}
+      </>
+    )
+  }
+
   return (
     <div className="flex flex-col justify-center items-center gap-4">
       {renderContent()}
@@ -93,30 +118,7 @@ export default function WebinarWatchSection({ slug }: IProps) {
       <Separator className="my-2" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
-        {isLoading ? (
-          <>
-            {[1, 2, 3, 4].map((index) => (
-              <WebinarCardSkeleton key={index} />
-            ))}
-          </>
-        ) : (
-          <>
-            {webinars.map((webinar) => {
-              return (
-                <WebinarCard
-                  key={webinar.id}
-                  title={webinar.title}
-                  slug={webinar.slug}
-                  description={webinar.description}
-                  participants={webinar.total_participant}
-                  date={webinar.start_date}
-                  isLive={false}
-                  isRecording={Boolean(webinar.recording_url)}
-                />
-              )
-            })}
-          </>
-        )}
+        {renderWebinarContent()}
       </div>
 
       <Pagination className="mt-8">
