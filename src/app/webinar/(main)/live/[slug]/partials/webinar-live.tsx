@@ -1,6 +1,6 @@
 'use client'
 
-import { IconArrowRight } from '@tabler/icons-react'
+import { IconArrowRight, IconLoader } from '@tabler/icons-react'
 import { subMinutes } from 'date-fns'
 import _ from 'lodash'
 import { useSession } from 'next-auth/react'
@@ -28,11 +28,10 @@ export default function WebinarLiveSection(props: IProps) {
 
   const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
   const [webinarAttendance, setWebinarAttendance] = useState<WebinarAttendanceEntity | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [visible, setVisible] = useState(false)
 
   const getLiveWebinar = useCallback(async () => {
-    setIsLoading(true)
     const { data } = await getWebinarLiveSession()
     setWebinarLive(data)
     setIsLoading(false)
@@ -41,28 +40,23 @@ export default function WebinarLiveSection(props: IProps) {
   }, [visible])
 
   const getAttendance = useCallback(async () => {
-    setIsLoading(true)
     const { data } = await getAttendanceBySlug(slug)
     setWebinarAttendance(data)
     setIsLoading(false)
   }, [slug])
 
-  const postAttendance = useCallback(
-    async (webinar: WebinarEntity | null) => {
-      setIsLoading(true)
+  const postAttendance = useCallback(async (webinar: WebinarEntity | null) => {
+    setVisible(true)
+    const { message } = await markAttendance(webinar)
 
-      const { message } = await markAttendance(webinar)
-      setVisible(!visible)
+    toast({
+      title: 'Mark Attendance',
+      description: message,
+      duration: 5000,
+    })
 
-      toast({
-        title: 'Mark Attendance',
-        description: message,
-        duration: 5000,
-      })
-      setIsLoading(false)
-    },
-    [visible]
-  )
+    setVisible(false)
+  }, [])
 
   useEffect(() => {
     getLiveWebinar()
@@ -142,11 +136,20 @@ export default function WebinarLiveSection(props: IProps) {
           {is_start_attendance && (
             <RainbowButton
               className="gap-2"
-              disabled={isLoading}
+              disabled={visible}
               onClick={() => postAttendance(webinarLive)}
             >
-              <span className="font-serif font-semibold tracking-wider">Mark Attendance</span>
-              <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              {visible && (
+                <IconLoader className="h-4 w-4 animate-spin transition-transform duration-300 group-hover:translate-x-1" />
+              )}
+
+              <span className="font-serif font-semibold tracking-wider">
+                {visible ? 'Loading...' : 'Mark Attendance'}
+              </span>
+
+              {!visible && (
+                <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              )}
             </RainbowButton>
           )}
 
