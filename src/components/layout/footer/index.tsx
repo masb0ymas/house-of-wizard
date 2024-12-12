@@ -32,7 +32,7 @@ const support = [
 
 const socialMedia = [
   { name: 'facebook', icon: IconBrandFacebook, href: '/' },
-  { name: 'twitter', icon: IconBrandTwitter, href: '/' },
+  { name: 'twitter', icon: IconBrandTwitter, href: 'https://x.com/House_of_Wizard' },
   { name: 'youtube', icon: IconBrandYoutube, href: 'https://www.youtube.com/@gulalijawa5870' },
   { name: 'instagram', icon: IconBrandInstagram, href: '/' },
   { name: 'telegram', icon: IconBrandTelegram, href: 'https://t.me/HouseofWizard' },
@@ -54,7 +54,9 @@ export default function Footer() {
                 width={40}
                 height={40}
               />
-              <span className="font-bold font-serif tracking-wide text-xl text-white">House of Wizard</span>
+              <span className="font-bold font-serif tracking-wide text-xl text-white">
+                House of Wizard
+              </span>
             </div>
             <p className="text-sm">
               Empowering the next generation of Web3 data analysts through comprehensive online
@@ -71,7 +73,9 @@ export default function Footer() {
 
           {/* Course Categories */}
           <div>
-            <h3 className="text-lg font-semibold font-serif tracking-wide text-white mb-4">Course Categories</h3>
+            <h3 className="text-lg font-semibold font-serif tracking-wide text-white mb-4">
+              Course Categories
+            </h3>
             <ul className="space-y-2">
               {courseCategories.map((category) => (
                 <li key={category.name}>
@@ -85,7 +89,9 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold font-serif tracking-wide text-white mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold font-serif tracking-wide text-white mb-4">
+              Quick Links
+            </h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -99,7 +105,9 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold font-serif tracking-wide text-white mb-4">Support</h3>
+            <h3 className="text-lg font-semibold font-serif tracking-wide text-white mb-4">
+              Support
+            </h3>
             <ul className="space-y-2">
               {support.map((item) => (
                 <li key={item.name}>
