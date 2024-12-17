@@ -50,26 +50,22 @@ export default function WebinarCard(props: WebinarCardProps) {
         <Link href={`/webinar/watch/${slug}`}>
           <Button className="w-full h-10" radius={'xl'}>
             <IconLock className="h-6 w-6" />
-            <span className="font-serif font-semibold text-gray-600 tracking-wider">Buy Now</span>
+            <span className="font-semibold tracking-wide">Buy Now</span>
           </Button>
         </Link>
       )
     }
     if (!isRecording) {
       return (
-        <Button className="w-full h-10" variant={'outline'} radius={'xl'}>
-          <IconVideoOff className="h-6 w-6" />
-          <span className="font-serif font-medium text-gray-600 tracking-wider">No Recording</span>
+        <Button className="w-full h-10" variant={'secondary'} radius={'xl'}>
+          <span className="font-medium tracking-wide">No Recording</span>
         </Button>
       )
     }
     return (
       <Link href={`/webinar/watch/${slug}`}>
-        <Button className="w-full h-10" variant={'outline'} radius={'xl'}>
-          <IconVideo className="h-6 w-6" />
-          <span className="font-serif font-medium text-gray-600 tracking-wider">
-            Watch Recording
-          </span>
+        <Button className="w-full h-10" variant={'default'} radius={'xl'}>
+          <span className="font-medium tracking-wide">Watch Recording</span>
         </Button>
       </Link>
     )

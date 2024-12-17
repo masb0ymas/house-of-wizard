@@ -14,7 +14,7 @@ import {
 import WebinarList from './partials/webinar-list'
 
 export const metadata: Metadata = {
-  title: 'Webinar -House of Wizard',
+  title: 'Webinar - House of Wizard',
   description: 'Webinar House of Wizard',
 }
 
