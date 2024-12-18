@@ -15,6 +15,29 @@ type IProps = {
 }
 
 export default function MyPagination({ currentPage, totalPage, onPageChange }: IProps) {
+  const renderPageNumbers = () => {
+    const pages = new Set<number>();
+    
+    // Always add current page
+    pages.add(currentPage);
+    
+    // Add previous and next page if they exist
+    if (currentPage > 1) pages.add(currentPage - 1);
+    if (currentPage < totalPage) pages.add(currentPage + 1);
+    
+    return Array.from(pages).sort((a, b) => a - b).map(pageNumber => (
+      <PaginationItem key={pageNumber}>
+        <PaginationLink
+          onClick={() => onPageChange(pageNumber)}
+          className="rounded-xl"
+          isActive={pageNumber === currentPage}
+        >
+          {pageNumber}
+        </PaginationLink>
+      </PaginationItem>
+    ));
+  };
+
   return (
     <Pagination className="my-8">
       <PaginationContent>
@@ -39,20 +62,7 @@ export default function MyPagination({ currentPage, totalPage, onPageChange }: I
         {currentPage > 3 && <PaginationEllipsis />}
 
         {/* Current page and neighbors */}
-        {Array.from({ length: Math.min(3, totalPage) }, (_, i) => {
-          const pageNumber = Math.min(Math.max(currentPage - 1 + i, 1), totalPage)
-          return (
-            <PaginationItem key={pageNumber}>
-              <PaginationLink
-                onClick={() => onPageChange(pageNumber)}
-                className="rounded-xl"
-                isActive={pageNumber === currentPage}
-              >
-                {pageNumber}
-              </PaginationLink>
-            </PaginationItem>
-          )
-        })}
+        {renderPageNumbers()}
 
         {/* Ellipsis if needed */}
         {currentPage < totalPage - 2 && <PaginationEllipsis />}
