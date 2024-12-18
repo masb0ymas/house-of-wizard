@@ -37,7 +37,7 @@ export default function WebinarWatchSection({ slug }: IProps) {
   }, [slug])
 
   const getListWebinars = useCallback(async () => {
-    const { data, total } = await getWebinars({ pageSize: 8 })
+    const { data, total } = await getWebinars({ page: 1, pageSize: 8 })
     setWebinars(data)
     setTotal(total)
     setIsLoading(false)
