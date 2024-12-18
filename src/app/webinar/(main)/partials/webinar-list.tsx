@@ -2,6 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
+import MyPagination from '~/components/custom/pagination'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { getWebinarLiveSession, getWebinars } from '../action'
@@ -9,6 +10,9 @@ import WebinarCard, { WebinarCardSkeleton } from './webinar-card'
 
 export default function WebinarList() {
   const { data: session } = useSession()
+
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(12)
 
   const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])
@@ -22,15 +26,16 @@ export default function WebinarList() {
     const { data, total } = await getWebinarLiveSession()
     setWebinarLive(data)
     setTotalAttendanceLive(total)
+    setPageSize(11)
     setIsLoading(false)
   }, [])
 
   const getListWebinars = useCallback(async () => {
-    const { data, total } = await getWebinars({ pageSize: 11 })
+    const { data, total } = await getWebinars({ page, pageSize })
     setWebinars(data)
     setTotalAttendance(total)
     setIsLoading(false)
-  }, [])
+  }, [page, pageSize])
 
   useEffect(() => {
     getListWebinars()
@@ -98,8 +103,16 @@ export default function WebinarList() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
-      {renderContent()}
-    </div>
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
+        {renderContent()}
+      </div>
+
+      <MyPagination
+        currentPage={page}
+        totalPage={Math.ceil(totalAttendance / pageSize)}
+        onPageChange={setPage}
+      />
+    </>
   )
 }
