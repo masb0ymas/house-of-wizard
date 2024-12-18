@@ -12,7 +12,7 @@ export default function WebinarList() {
   const { data: session } = useSession()
 
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(12)
+  const pageSize = 12
 
   const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])
@@ -27,7 +27,6 @@ export default function WebinarList() {
     const { data, total } = await getWebinarLiveSession()
     setWebinarLive(data)
     setTotalAttendanceLive(total)
-    setPageSize(11)
     setIsLoading(false)
   }, [])
 
@@ -40,9 +39,9 @@ export default function WebinarList() {
   }, [page, pageSize])
 
   useEffect(() => {
-    getListWebinars()
     getLiveWebinar()
-  }, [getListWebinars, getLiveWebinar])
+    getListWebinars()
+  }, [getLiveWebinar, getListWebinars])
 
   function renderLiveButton() {
     if (webinarLive) {
