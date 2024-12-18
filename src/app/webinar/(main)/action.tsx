@@ -7,6 +7,7 @@ import { WebinarEntity } from '~/data/entity/webinar'
 import createFetchApi from '~/lib/fetcher'
 
 type RequestGetWebinars = {
+  page: number
   pageSize: number
 }
 
@@ -22,11 +23,14 @@ async function _axios() {
   return fetch.default
 }
 
-export async function getWebinars({ pageSize }: RequestGetWebinars): Promise<ResponseWebinars> {
+export async function getWebinars({
+  page,
+  pageSize,
+}: RequestGetWebinars): Promise<ResponseWebinars> {
   const api = await _axios()
 
   const query = qs.stringify({
-    page: 1,
+    page,
     pageSize,
     status: 'archive',
   })

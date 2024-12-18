@@ -2,15 +2,6 @@ import { Filter, Search } from 'lucide-react'
 import { Metadata } from 'next'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '~/components/ui/pagination'
 import WebinarList from './partials/webinar-list'
 
 export const metadata: Metadata = {
@@ -45,35 +36,6 @@ export default function WebinarPage() {
       </div>
 
       <WebinarList />
-
-      <Pagination className="my-8">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" className="rounded-xl" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" className="rounded-xl">
-              1
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" className="rounded-xl" isActive>
-              2
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" className="rounded-xl">
-              3
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" className="rounded-xl" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
     </section>
   )
 }

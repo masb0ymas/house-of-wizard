@@ -28,17 +28,26 @@ PaginationItem.displayName = 'PaginationItem'
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>
 
-const PaginationLink = ({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) => (
+const PaginationLink = ({
+  className,
+  isActive,
+  disabled,
+  size = 'icon',
+  ...props
+}: PaginationLinkProps) => (
   <a
     aria-current={isActive ? 'page' : undefined}
+    aria-disabled={disabled}
     className={cn(
       buttonVariants({
         variant: isActive ? 'outline' : 'ghost',
         size,
       }),
+      disabled && 'pointer-events-none opacity-50',
       className
     )}
     {...props}
@@ -54,6 +63,7 @@ const PaginationPrevious = ({
     aria-label="Go to previous page"
     size="default"
     className={cn('gap-1 pl-2.5', className)}
+    disabled={props.disabled}
     {...props}
   >
     <ChevronLeft className="h-4 w-4" />
@@ -67,6 +77,7 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
     aria-label="Go to next page"
     size="default"
     className={cn('gap-1 pr-2.5', className)}
+    disabled={props.disabled}
     {...props}
   >
     <span>Next</span>
