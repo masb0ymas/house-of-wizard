@@ -20,6 +20,7 @@ export default function WebinarList() {
   const [totalAttendance, setTotalAttendance] = useState(0)
   const [totalAttendanceLive, setTotalAttendanceLive] = useState(0)
 
+  const [isFetching, setIsFetching] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   const getLiveWebinar = useCallback(async () => {
@@ -31,10 +32,11 @@ export default function WebinarList() {
   }, [])
 
   const getListWebinars = useCallback(async () => {
+    setIsFetching(true)
     const { data, total } = await getWebinars({ page, pageSize })
     setWebinars(data)
     setTotalAttendance(total)
-    setIsLoading(false)
+    setIsFetching(false)
   }, [page, pageSize])
 
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function WebinarList() {
   }
 
   function renderContent() {
-    if (isLoading) {
+    if (isLoading || isFetching) {
       return [1, 2, 3, 4].map((index) => <WebinarCardSkeleton key={index} />)
     }
 
