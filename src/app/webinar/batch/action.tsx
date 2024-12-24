@@ -26,7 +26,7 @@ async function _axios() {
  * Get Webinar Private Plans
  * @returns
  */
-export async function getWebinarPrivatePlans({
+export async function findPrivatePlanWebinars({
   pageSize,
 }: RequestFindAll): Promise<DtoWebinarPrivatePlan> {
   const api = await _axios()

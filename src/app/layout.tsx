@@ -4,6 +4,8 @@ import './globals.css'
 import '@vidstack/react/player/styles/base.css'
 import '@vidstack/react/player/styles/plyr/theme.css'
 
+import '@rainbow-me/rainbowkit/styles.css'
+
 import type { Metadata } from 'next'
 import Provider from '~/lib/provider'
 

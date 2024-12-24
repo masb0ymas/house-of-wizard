@@ -14,7 +14,7 @@ async function _axios() {
  * @param trx_id
  * @returns
  */
-export async function getWebinarPrivatePlanByTrxId(trx_id: string) {
+export async function findPrivatePlanWebinarByTrxId(trx_id: string) {
   const api = await _axios()
 
   let data = null
@@ -38,7 +38,7 @@ export async function getWebinarPrivatePlanByTrxId(trx_id: string) {
  * @param trx_id
  * @returns
  */
-export async function getTransactionById(trx_id: string) {
+export async function findTransactionById(trx_id: string) {
   const api = await _axios()
 
   let data = null

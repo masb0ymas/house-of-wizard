@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import Loader from '~/components/custom/loader'
 import { TransactionEntity } from '~/data/entity/transaction'
-import { getTransactionById } from '../action'
+import { findTransactionById } from '../action'
 
 type IProps = {
   id: string
@@ -15,7 +15,7 @@ export default function CheckoutMidtrans({ id }: IProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const getTransaction = useCallback(async () => {
-    const { data } = await getTransactionById(id)
+    const { data } = await findTransactionById(id)
     setTransaction(data)
     setIsLoading(false)
   }, [id])

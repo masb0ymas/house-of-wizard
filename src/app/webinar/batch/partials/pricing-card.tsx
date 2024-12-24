@@ -17,7 +17,7 @@ interface PricingCardProps {
   disabled?: boolean
 }
 
-export default function PricingCard({
+export function PricingCard({
   features,
   price,
   title,

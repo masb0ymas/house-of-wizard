@@ -2,42 +2,34 @@
 
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
-import { getWebinars } from '~/app/webinar/(main)/action'
-import WebinarCard, { WebinarCardSkeleton } from '~/app/webinar/(main)/partials/webinar-card'
+import { findWebinars } from '~/app/webinar/(main)/action'
+import { WebinarCard, WebinarCardSkeleton } from '~/app/webinar/(main)/partials/webinar-card'
 import Loader from '~/components/custom/loader'
 import YoutubePlyr from '~/components/custom/plyr'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '~/components/ui/pagination'
 import { Separator } from '~/components/ui/separator'
 import { WebinarEntity } from '~/data/entity/webinar'
-import { getWebinarBySlug } from '../action'
+import { findWebinarBySlug } from '../action'
 
 type IProps = {
   slug: string
 }
 
-export default function WebinarWatchSection({ slug }: IProps) {
-  const [webinarBySlug, setWebinarBySlug] = useState<WebinarEntity | null>(null)
+export default function WatchWebinarSection({ slug }: IProps) {
+  const [watchWebinar, setWatchWebinar] = useState<WebinarEntity | null>(null)
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])
+
   const [total, setTotal] = useState(0)
 
   const [isLoading, setIsLoading] = useState(true)
 
   const getWebinar = useCallback(async () => {
-    const { data } = await getWebinarBySlug(slug)
-    setWebinarBySlug(data)
+    const { data } = await findWebinarBySlug(slug)
+    setWatchWebinar(data)
     setIsLoading(false)
   }, [slug])
 
-  const getListWebinars = useCallback(async () => {
-    const { data, total } = await getWebinars({ page: 1, pageSize: 8 })
+  const getWebinars = useCallback(async () => {
+    const { data, total } = await findWebinars({ page: 1, pageSize: 8 })
     setWebinars(data)
     setTotal(total)
     setIsLoading(false)
@@ -45,8 +37,8 @@ export default function WebinarWatchSection({ slug }: IProps) {
 
   useEffect(() => {
     getWebinar()
-    getListWebinars()
-  }, [getWebinar, getListWebinars])
+    getWebinars()
+  }, [getWebinar, getWebinars])
 
   function renderContent() {
     if (isLoading) {
@@ -55,13 +47,13 @@ export default function WebinarWatchSection({ slug }: IProps) {
 
     return (
       <>
-        <h1 className="text-4xl font-semibold font-serif tracking-wide">{webinarBySlug?.title}</h1>
+        <h1 className="text-4xl font-semibold font-serif tracking-wide">{watchWebinar?.title}</h1>
         <h4 className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
           Elevate your expertise by learning how to analyze Web3 data and take the first step toward
           a career in the decentralized future.
         </h4>
 
-        {_.isEmpty(webinarBySlug?.recording_url) ? (
+        {_.isEmpty(watchWebinar?.recording_url) ? (
           <>
             <h4 className="text-2xl font-semibold font-serif tracking-wide mt-10">
               No recording available
@@ -70,8 +62,8 @@ export default function WebinarWatchSection({ slug }: IProps) {
           </>
         ) : (
           <YoutubePlyr
-            title={String(webinarBySlug?.title)}
-            src={String(webinarBySlug?.recording_url)}
+            title={String(watchWebinar?.title)}
+            src={String(watchWebinar?.recording_url)}
           />
         )}
       </>
@@ -120,35 +112,6 @@ export default function WebinarWatchSection({ slug }: IProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-center justify-center mt-8">
         {renderWebinarContent()}
       </div>
-
-      <Pagination className="mt-8">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" className="rounded-xl" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" className="rounded-xl">
-              1
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" className="rounded-xl" isActive>
-              2
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" className="rounded-xl">
-              3
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" className="rounded-xl" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
     </div>
   )
 }

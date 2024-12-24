@@ -2,11 +2,15 @@
 
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
+import { base } from 'viem/chains'
+import { useChainId } from 'wagmi'
 import MyPagination from '~/components/custom/pagination'
+import Ribbon from '~/components/ui/ribbon'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
-import { getWebinarLiveSession, getWebinars } from '../action'
-import WebinarCard, { WebinarCardSkeleton } from './webinar-card'
+import { WebinarPrivateEntity } from '~/data/entity/webinar_private'
+import { findLivePrivateWebinarSession, findLiveWebinarSession, findWebinars } from '../action'
+import { WebinarCard, WebinarCardSkeleton } from './webinar-card'
 
 export default function WebinarList() {
   const { data: session } = useSession()
@@ -14,25 +18,42 @@ export default function WebinarList() {
   const [page, setPage] = useState(1)
   const pageSize = 12
 
-  const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
+  const chain_id = useChainId() || base.id
+
+  const [liveWebinar, setLiveWebinar] = useState<WebinarEntity | null>(null)
+  const [livePrivateWebinar, setLivePrivateWebinar] = useState<WebinarPrivateEntity | null>(null)
   const [webinars, setWebinars] = useState<WebinarEntity[]>([])
 
   const [totalAttendance, setTotalAttendance] = useState(0)
-  const [totalAttendanceLive, setTotalAttendanceLive] = useState(0)
+  const [totalLiveAttendance, setTotalLiveAttendance] = useState(0)
+  const [totalLivePrivateAttendance, setTotalLivePrivateAttendance] = useState(0)
 
   const [isFetching, setIsFetching] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   const getLiveWebinar = useCallback(async () => {
-    const { data, total } = await getWebinarLiveSession()
-    setWebinarLive(data)
-    setTotalAttendanceLive(total)
+    const { data, total } = await findLiveWebinarSession({
+      chain_id,
+    })
+
+    setLiveWebinar(data)
+    setTotalLiveAttendance(total)
     setIsLoading(false)
-  }, [])
+  }, [chain_id])
+
+  const getLivePrivateWebinar = useCallback(async () => {
+    const { data, total } = await findLivePrivateWebinarSession({
+      chain_id,
+    })
+    setLivePrivateWebinar(data)
+    setTotalLivePrivateAttendance(total)
+    setIsLoading(false)
+  }, [chain_id])
 
   const getListWebinars = useCallback(async () => {
     setIsFetching(true)
-    const { data, total } = await getWebinars({ page, pageSize })
+    const { data, total } = await findWebinars({ page, pageSize })
+
     setWebinars(data)
     setTotalAttendance(total)
     setIsFetching(false)
@@ -40,19 +61,20 @@ export default function WebinarList() {
 
   useEffect(() => {
     getLiveWebinar()
+    getLivePrivateWebinar()
     getListWebinars()
-  }, [getLiveWebinar, getListWebinars])
+  }, [getLiveWebinar, getListWebinars, getLivePrivateWebinar])
 
   function renderLiveButton() {
-    if (webinarLive) {
-      const baseUrl = `/webinar/live/${webinarLive.slug}`
+    if (liveWebinar) {
+      const baseUrl = `/webinar/live/${liveWebinar.slug}`
       let redirectUrl = baseUrl
 
       if (!session?.user) {
         redirectUrl = `/sign-in?callbackUrl=${encodeURIComponent(baseUrl)}`
       }
 
-      if (new Date(webinarLive?.end_date) < new Date()) {
+      if (new Date(liveWebinar?.end_date) < new Date()) {
         return null
       }
 
@@ -62,11 +84,44 @@ export default function WebinarList() {
           color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
         >
           <WebinarCard
-            title={webinarLive.title}
+            title={liveWebinar.title}
             slug={redirectUrl}
-            description={webinarLive.description}
-            participants={totalAttendanceLive || 0}
-            date={webinarLive.start_date}
+            description={liveWebinar.description}
+            participants={totalLiveAttendance || 0}
+            date={liveWebinar.start_date}
+            isLive
+          />
+        </ShineBorder>
+      )
+    }
+
+    return null
+  }
+
+  function renderLivePrivateButton() {
+    if (!session?.user) {
+      return null
+    }
+
+    if (livePrivateWebinar) {
+      const redirectUrl = `/webinar/live/private/${livePrivateWebinar.slug}`
+
+      if (new Date(livePrivateWebinar?.end_date) < new Date()) {
+        return null
+      }
+
+      return (
+        <ShineBorder
+          className="p-0 w-full h-full flex flex-col items-center justify-center overflow-hidden rounded-lg bg-background md:shadow-xl"
+          color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
+        >
+          <Ribbon text="Private" />
+          <WebinarCard
+            title={livePrivateWebinar.title}
+            slug={redirectUrl}
+            description={livePrivateWebinar.description}
+            participants={totalLivePrivateAttendance || 0}
+            date={livePrivateWebinar.start_date}
             isLive
           />
         </ShineBorder>
@@ -84,6 +139,7 @@ export default function WebinarList() {
     return (
       <>
         {renderLiveButton()}
+        {renderLivePrivateButton()}
 
         {webinars.map((webinar) => {
           return (

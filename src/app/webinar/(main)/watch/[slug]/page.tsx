@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { capitalizeFirstLetter } from '~/lib/string'
-import WebinarWatchSection from './partials/webinar-watch'
+import WatchWebinarSection from './partials/watch-webinar-section'
 
 type IParams = {
   slug: string
@@ -25,7 +25,7 @@ export default async function WebinarWatchPage({ params }: IProps) {
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <WebinarWatchSection slug={slug} />
+      <WatchWebinarSection slug={slug} />
     </section>
   )
 }
