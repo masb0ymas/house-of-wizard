@@ -9,7 +9,12 @@ async function _axios() {
   return fetch.default
 }
 
-export async function getWebinarBySlug(slug: string) {
+/**
+ * Find Webinar By Slug
+ * @param slug
+ * @returns
+ */
+export async function findWebinarBySlug(slug: string) {
   const api = await _axios()
 
   let data = null

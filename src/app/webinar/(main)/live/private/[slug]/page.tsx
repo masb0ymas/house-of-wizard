@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { capitalizeFirstLetter } from '~/lib/string'
-import LiveWebinarSection from './partials/live-webinar-section'
+import LivePrivateWebinarSection from './partials/live-private-webinar-section'
 
 type IParams = {
   slug: string
@@ -16,12 +16,12 @@ export const generateMetadata = async ({ params }: IProps): Promise<Metadata> =>
   const title = capitalizeFirstLetter(slug)
 
   return {
-    title: `Live ${title} - House of Wizard`,
-    description: `Webinar Live ${title} House of Wizard`,
+    title: `Live Private ${title} - House of Wizard`,
+    description: `Webinar Live Private ${title} House of Wizard`,
   }
 }
 
-export default async function WebinarLivePage({ params }: IProps) {
+export default async function WebinarLivePrivatePage({ params }: IProps) {
   const { slug } = await params
 
   if (!slug) {
@@ -30,7 +30,7 @@ export default async function WebinarLivePage({ params }: IProps) {
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <LiveWebinarSection slug={slug} />
+      <LivePrivateWebinarSection slug={slug} />
     </section>
   )
 }

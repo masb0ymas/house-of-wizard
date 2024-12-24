@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Skeleton } from '~/components/ui/skeleton'
 import { WebinarPrivatePlanEntity } from '~/data/entity/webinar_private_plan'
 import { formatLocalDate } from '~/lib/date'
-import { getWebinarPrivatePlanByTrxId } from '../action'
+import { findPrivatePlanWebinarByTrxId } from '../action'
 
 type IProps = {
   id: string
@@ -19,7 +19,7 @@ export default function CourseDetail({ id }: IProps) {
   const [isLoading, setIsLoading] = useState(true)
 
   const getWebinarPlan = useCallback(async () => {
-    const { data } = await getWebinarPrivatePlanByTrxId(id)
+    const { data } = await findPrivatePlanWebinarByTrxId(id)
     setWebinarPlan(data)
     setIsLoading(false)
   }, [id])
@@ -30,7 +30,7 @@ export default function CourseDetail({ id }: IProps) {
 
   const webinar = {
     name: _.get(webinarPlan, 'webinar_batch.name', ''),
-    instructor: _.get(webinarPlan, 'webinar_batch.instructor', ''),
+    instructor: _.get(webinarPlan, 'webinar_batch.instructor.user.fullname', ''),
     start_date: _.get(webinarPlan, 'webinar_batch.start_date', ''),
     end_date: _.get(webinarPlan, 'webinar_batch.end_date', ''),
     duration: _.get(webinarPlan, 'webinar_batch.duration', ''),

@@ -1,6 +1,6 @@
 'use client'
 
-import { IconArrowRight, IconLock, IconUsers, IconVideo, IconVideoOff } from '@tabler/icons-react'
+import { IconArrowRight, IconLock, IconUsers } from '@tabler/icons-react'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
@@ -22,7 +22,7 @@ type WebinarCardProps = {
   isRecording?: boolean
 }
 
-export default function WebinarCard(props: WebinarCardProps) {
+export function WebinarCard(props: WebinarCardProps) {
   const {
     title,
     slug,

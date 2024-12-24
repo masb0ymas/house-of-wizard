@@ -9,7 +9,7 @@ import { TransactionEntity } from '~/data/entity/transaction'
 import { WebinarPrivatePlanEntity } from '~/data/entity/webinar_private_plan'
 import { formatCurrencyIDR } from '~/lib/number'
 import { validate } from '~/lib/validate'
-import { getTransactionById, getWebinarPrivatePlanByTrxId } from '../action'
+import { findPrivatePlanWebinarByTrxId, findTransactionById } from '../action'
 
 type IProps = {
   id: string
@@ -18,16 +18,17 @@ type IProps = {
 export default function PriceDetail({ id }: IProps) {
   const [webinarPlan, setWebinarPlan] = useState<WebinarPrivatePlanEntity | null>(null)
   const [transaction, setTransaction] = useState<TransactionEntity | null>(null)
+
   const [isLoading, setIsLoading] = useState(true)
 
   const getWebinarPlan = useCallback(async () => {
-    const { data } = await getWebinarPrivatePlanByTrxId(id)
+    const { data } = await findPrivatePlanWebinarByTrxId(id)
     setWebinarPlan(data)
     setIsLoading(false)
   }, [id])
 
   const getTransaction = useCallback(async () => {
-    const { data } = await getTransactionById(id)
+    const { data } = await findTransactionById(id)
     setTransaction(data)
     setIsLoading(false)
   }, [id])

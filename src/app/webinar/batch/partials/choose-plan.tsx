@@ -4,9 +4,9 @@ import _ from 'lodash'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
 import { WebinarPrivatePlanEntity } from '~/data/entity/webinar_private_plan'
-import { getWebinarPrivatePlans } from '../action'
+import { findPrivatePlanWebinars } from '../action'
 import Checkout from './checkout'
-import PricingCard, { PricingCardSkeleton } from './pricing-card'
+import { PricingCard, PricingCardSkeleton } from './pricing-card'
 
 export default function ChoosePlan() {
   const { data: session } = useSession()
@@ -17,7 +17,7 @@ export default function ChoosePlan() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
 
   const getWebinarPlans = useCallback(async () => {
-    const { data } = await getWebinarPrivatePlans({ pageSize: 2 })
+    const { data } = await findPrivatePlanWebinars({ pageSize: 2 })
     setWebinarPlans(data)
     setIsLoading(false)
   }, [])

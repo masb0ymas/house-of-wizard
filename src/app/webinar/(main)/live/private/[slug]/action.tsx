@@ -2,13 +2,13 @@
 
 import _ from 'lodash'
 import { env } from '~/config/env'
-import { WebinarEntity } from '~/data/entity/webinar'
-import { WebinarAttendanceEntity } from '~/data/entity/webinar_attendance'
+import { WebinarPrivateEntity } from '~/data/entity/webinar_private'
+import { WebinarPrivateAttendanceEntity } from '~/data/entity/webinar_private_attendance'
 import { auth } from '~/lib/auth'
 import createFetchApi from '~/lib/fetcher'
 
 type ResponseAttendance = {
-  data: WebinarAttendanceEntity | null
+  data: WebinarPrivateAttendanceEntity | null
   message: string | null
   isError: boolean
 }
@@ -23,7 +23,7 @@ async function _axios() {
  * @param slug
  * @returns
  */
-export async function findAttendanceBySlug(slug: string): Promise<ResponseAttendance> {
+export async function findPrivateAttendanceBySlug(slug: string): Promise<ResponseAttendance> {
   const api = await _axios()
 
   let data = null
@@ -31,7 +31,31 @@ export async function findAttendanceBySlug(slug: string): Promise<ResponseAttend
   let isError = false
 
   try {
-    const res = await api.get(`/v1/webinar-attendance/check/by-webinar-slug/${slug}`)
+    const res = await api.get(`/v1/webinar-private-attendance/check/by-webinar-slug/${slug}`)
+    data = res.data.data
+  } catch (err) {
+    console.log(err)
+    message = _.get(err, 'response.data.message', 'Something went wrong')
+    isError = true
+    console.log(message)
+  }
+
+  return { data, message, isError }
+}
+
+/**
+ * Find Active Batch
+ * @returns 
+ */
+export async function findActiveBatch() {
+  const api = await _axios()
+
+  let data = null
+  let message = null
+  let isError = false
+
+  try {
+    const res = await api.get(`/v1/webinar-batch/active`)
     data = res.data.data
   } catch (err) {
     console.log(err)
@@ -42,25 +66,26 @@ export async function findAttendanceBySlug(slug: string): Promise<ResponseAttend
   return { data, message, isError }
 }
 
+
+
 /**
  *
  * @param webinar
  * @returns
  */
-export async function markAttendance(webinar: WebinarEntity | null) {
+export async function markPrivateAttendance(webinar: WebinarPrivateEntity | null) {
   const session = await auth()
   const api = await _axios()
 
   const formValue = {
     user_id: session?.user?.id,
     fullname: session?.user?.name,
-    webinar_id: webinar?.id,
-    check_in: new Date(),
-    wallet_address: null,
+    webinar_private_id: webinar?.id,
+    attendance_date: new Date(),
     metadata: {
       title: webinar?.title,
       description: webinar?.description,
-      speakers: webinar?.speakers,
+      instructor: webinar?.instructor?.user?.fullname,
       date: webinar?.start_date,
       webinar_url: webinar?.webinar_url,
     },
@@ -71,7 +96,7 @@ export async function markAttendance(webinar: WebinarEntity | null) {
   let isError = false
 
   try {
-    const res = await api.post(`/v1/webinar-attendance`, formValue)
+    const res = await api.post(`/v1/webinar-private-attendance`, formValue)
     data = res.data.data
     message = 'Attendance marked successfully'
   } catch (err) {

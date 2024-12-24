@@ -7,7 +7,9 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
-import { getWebinarLiveSession } from '~/app/webinar/(main)/action'
+import { base } from 'viem/chains'
+import { useChainId } from 'wagmi'
+import { findLiveWebinarSession } from '~/app/webinar/(main)/action'
 import { Description, ItemType } from '~/components/custom/description'
 import Loader from '~/components/custom/loader'
 import { RainbowButton } from '~/components/ui/rainbow-button'
@@ -16,37 +18,41 @@ import { WebinarEntity } from '~/data/entity/webinar'
 import { WebinarAttendanceEntity } from '~/data/entity/webinar_attendance'
 import { formatLocalDate } from '~/lib/date'
 import { toast } from '~/lib/hooks/use-toast'
-import { getAttendanceBySlug, markAttendance } from '../action'
+import { findAttendanceBySlug, markAttendance } from '../action'
 
 type IProps = {
   slug: string
 }
 
-export default function WebinarLiveSection(props: IProps) {
+export default function LiveWebinarSection(props: IProps) {
   const { slug } = props
   const { data: session } = useSession()
 
-  const [webinarLive, setWebinarLive] = useState<WebinarEntity | null>(null)
-  const [webinarAttendance, setWebinarAttendance] = useState<WebinarAttendanceEntity | null>(null)
+  const chain_id = useChainId() || base.id
+
+  const [liveWebinar, setLiveWebinar] = useState<WebinarEntity | null>(null)
+  const [liveWebinarAttendance, setLiveWebinarAttendance] =
+    useState<WebinarAttendanceEntity | null>(null)
+
   const [isLoading, setIsLoading] = useState(true)
-  const [visible, setVisible] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
 
   const getLiveWebinar = useCallback(async () => {
-    const { data } = await getWebinarLiveSession()
-    setWebinarLive(data)
+    const { data } = await findLiveWebinarSession({ chain_id })
+    setLiveWebinar(data)
     setIsLoading(false)
 
-    console.log(visible)
-  }, [visible])
+    console.log('Fetching...', isFetching)
+  }, [chain_id, isFetching])
 
   const getAttendance = useCallback(async () => {
-    const { data } = await getAttendanceBySlug(slug)
-    setWebinarAttendance(data)
+    const { data } = await findAttendanceBySlug(slug)
+    setLiveWebinarAttendance(data)
     setIsLoading(false)
   }, [slug])
 
   const postAttendance = useCallback(async (webinar: WebinarEntity | null) => {
-    setVisible(true)
+    setIsFetching(true)
     const { message } = await markAttendance(webinar)
 
     toast({
@@ -55,7 +61,7 @@ export default function WebinarLiveSection(props: IProps) {
       duration: 5000,
     })
 
-    setVisible(false)
+    setIsFetching(false)
   }, [])
 
   useEffect(() => {
@@ -97,9 +103,9 @@ export default function WebinarLiveSection(props: IProps) {
     }
 
     // webinar live exists
-    if (webinarLive?.id) {
+    if (liveWebinar?.id) {
       // slug not match
-      if (slug !== webinarLive?.slug) {
+      if (slug !== liveWebinar?.slug) {
         return (
           <WebinarHeader
             title="Webinar - Live Session"
@@ -109,14 +115,14 @@ export default function WebinarLiveSection(props: IProps) {
       }
 
       // no attendance
-      if (_.isEmpty(webinarAttendance?.id)) {
-        const start_date = subMinutes(new Date(String(webinarLive?.start_date)), 30) // 30 minutes early
-        const end_date = new Date(String(webinarLive?.end_date))
+      if (_.isEmpty(liveWebinarAttendance?.id)) {
+        const start_date = subMinutes(new Date(String(liveWebinar?.start_date)), 30) // 30 minutes early
+        const end_date = new Date(String(liveWebinar?.end_date))
 
         const is_start_attendance = start_date < new Date() && end_date > new Date()
         const is_end_attendance = end_date < new Date()
 
-        const live_at = webinarLive?.start_date && formatLocalDate(String(webinarLive?.start_date))
+        const live_at = liveWebinar?.start_date && formatLocalDate(String(liveWebinar?.start_date))
 
         let subtitle = 'To get access to the webinar, please mark attendance first.'
         if (is_end_attendance) {
@@ -138,18 +144,18 @@ export default function WebinarLiveSection(props: IProps) {
             {is_start_attendance && (
               <RainbowButton
                 className="gap-2"
-                disabled={visible}
-                onClick={() => postAttendance(webinarLive)}
+                disabled={isFetching}
+                onClick={() => postAttendance(liveWebinar)}
               >
-                {visible && (
+                {isFetching && (
                   <IconLoader className="h-4 w-4 animate-spin transition-transform duration-300 group-hover:translate-x-1" />
                 )}
 
                 <span className="font-serif font-semibold tracking-wider">
-                  {visible ? 'Loading...' : 'Mark Attendance'}
+                  {isFetching ? 'Loading...' : 'Mark Attendance'}
                 </span>
 
-                {!visible && (
+                {!isFetching && (
                   <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 )}
               </RainbowButton>
@@ -173,9 +179,9 @@ export default function WebinarLiveSection(props: IProps) {
       }
 
       // attendance exists
-      if (webinarAttendance?.id) {
-        const start_date = subMinutes(new Date(String(webinarLive?.start_date)), 30) // 30 minutes early
-        const end_date = new Date(String(webinarLive?.end_date))
+      if (liveWebinarAttendance?.id) {
+        const start_date = subMinutes(new Date(String(liveWebinar?.start_date)), 30) // 30 minutes early
+        const end_date = new Date(String(liveWebinar?.end_date))
 
         const is_start_attendance = start_date < new Date() && end_date > new Date()
         const is_end_attendance = end_date < new Date()
@@ -183,13 +189,13 @@ export default function WebinarLiveSection(props: IProps) {
         return (
           <>
             <WebinarHeader
-              title={webinarLive?.title}
+              title={liveWebinar?.title}
               subtitle="Elevate your expertise by learning how to analyze Web3 data and take the first step toward a career in the decentralized future."
             />
 
             {is_start_attendance && !is_end_attendance && (
               <div className="flex flex-col gap-2 text-center w-full mt-8">
-                {details.map((content) => Description<any>({ item: webinarLive, content }))}
+                {details.map((content) => Description<any>({ item: liveWebinar, content }))}
               </div>
             )}
 

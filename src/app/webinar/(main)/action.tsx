@@ -4,6 +4,8 @@ import _ from 'lodash'
 import qs from 'qs'
 import { env } from '~/config/env'
 import { WebinarEntity } from '~/data/entity/webinar'
+import { WebinarPrivateEntity } from '~/data/entity/webinar_private'
+import { auth } from '~/lib/auth'
 import createFetchApi from '~/lib/fetcher'
 
 type RequestGetWebinars = {
@@ -23,13 +25,18 @@ async function _axios() {
   return fetch.default
 }
 
-export async function getWebinars({
+/**
+ * Get Webinars
+ * @param params
+ * @returns
+ */
+export async function findWebinars({
   page,
   pageSize,
 }: RequestGetWebinars): Promise<ResponseWebinars> {
   const api = await _axios()
 
-  const query = qs.stringify({
+  const queryParams = qs.stringify({
     page,
     pageSize,
     status: 'archive',
@@ -41,7 +48,7 @@ export async function getWebinars({
   let isError = false
 
   try {
-    const res = await api.get(`/v1/webinar?${query}`)
+    const res = await api.get(`/v1/webinar?${queryParams}`)
     data = res.data.data
     total = res.data.total
   } catch (err) {
@@ -53,6 +60,10 @@ export async function getWebinars({
   return { data, total, message, isError }
 }
 
+type ReqWebinarLive = {
+  chain_id: number
+}
+
 type ResponseWebinarLive = {
   data: WebinarEntity | null
   total: number
@@ -60,7 +71,14 @@ type ResponseWebinarLive = {
   isError: boolean
 }
 
-export async function getWebinarLiveSession(): Promise<ResponseWebinarLive> {
+/**
+ * Get Webinar Live Session
+ * @param params
+ * @returns
+ */
+export async function findLiveWebinarSession({
+  chain_id,
+}: ReqWebinarLive): Promise<ResponseWebinarLive> {
   const api = await _axios()
 
   let data = null
@@ -68,8 +86,56 @@ export async function getWebinarLiveSession(): Promise<ResponseWebinarLive> {
   let message = null
   let isError = false
 
+  const queryParams = qs.stringify({ chain_id })
+
   try {
-    const res = await api.get(`/v1/webinar/live`)
+    const res = await api.get(`/v1/webinar/live?${queryParams}`)
+    data = res.data.data
+    total = res.data.total
+  } catch (err) {
+    console.log(err)
+    message = _.get(err, 'response.data.message', 'Something went wrong')
+    isError = true
+  }
+
+  return { data, total, message, isError }
+}
+
+type ReqWebinarLivePrivate = {
+  chain_id: number
+}
+
+type ResponseWebinarLivePrivate = {
+  data: WebinarPrivateEntity | null
+  total: number
+  message: string | null
+  isError: boolean
+}
+
+/**
+ * Get Webinar Live Private Session
+ * @param params
+ * @returns
+ */
+export async function findLivePrivateWebinarSession({
+  chain_id,
+}: ReqWebinarLivePrivate): Promise<ResponseWebinarLivePrivate> {
+  const api = await _axios()
+  const session = await auth()
+
+  if (!session?.user) {
+    return { data: null, total: 0, message: null, isError: false }
+  }
+
+  let data = null
+  let total = 0
+  let message = null
+  let isError = false
+
+  const queryParams = qs.stringify({ chain_id })
+
+  try {
+    const res = await api.get(`/v1/webinar-private/live?${queryParams}`)
     data = res.data.data
     total = res.data.total
   } catch (err) {
