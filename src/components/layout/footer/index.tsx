@@ -5,6 +5,7 @@ import {
   IconBrandTelegram,
   IconBrandTwitter,
   IconBrandYoutube,
+  IconMail,
 } from '@tabler/icons-react'
 import { Mail, Phone } from 'lucide-react'
 import Image from 'next/image'
@@ -35,9 +36,10 @@ const socialMedia = [
   // { name: 'facebook', icon: IconBrandFacebook, href: '/' },
   // { name: 'instagram', icon: IconBrandInstagram, href: '/' },
   { name: 'twitter', icon: IconBrandTwitter, href: 'https://x.com/House_of_Wizard' },
+  { name: 'discord', icon: IconBrandDiscord, href: 'https://discord.gg/zbDrjC4art' },
   { name: 'youtube', icon: IconBrandYoutube, href: 'https://www.youtube.com/@gulalijawa5870' },
   { name: 'telegram', icon: IconBrandTelegram, href: 'https://t.me/HouseofWizard' },
-  { name: 'discord', icon: IconBrandDiscord, href: 'https://discord.gg/zbDrjC4art' },
+  { name: 'mail', icon: IconMail, href: 'mailto:info@house-of-wizard.xyz' },
 ]
 
 export default function Footer() {
@@ -119,26 +121,6 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 space-y-2">
-              <div className="flex items-center gap-2 text-sm">
-                <Mail className="h-4 w-4" />
-                <Link
-                  href="mailto:info@house-of-wizard.xyz"
-                  className="text-sm hover:text-indigo-500 transition"
-                >
-                  <span>info@house-of-wizard.xyz</span>
-                </Link>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Phone className="h-4 w-4" />
-                <Link
-                  href="https://t.me/HouseofWizard"
-                  className="text-sm hover:text-indigo-500 transition"
-                >
-                  <span>https://t.me/HouseofWizard</span>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </div>
