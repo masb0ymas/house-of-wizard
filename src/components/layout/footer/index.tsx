@@ -1,4 +1,5 @@
 import {
+  IconBrandDiscord,
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandTelegram,
@@ -31,11 +32,12 @@ const support = [
 ]
 
 const socialMedia = [
-  { name: 'facebook', icon: IconBrandFacebook, href: '/' },
+  // { name: 'facebook', icon: IconBrandFacebook, href: '/' },
+  // { name: 'instagram', icon: IconBrandInstagram, href: '/' },
   { name: 'twitter', icon: IconBrandTwitter, href: 'https://x.com/House_of_Wizard' },
   { name: 'youtube', icon: IconBrandYoutube, href: 'https://www.youtube.com/@gulalijawa5870' },
-  { name: 'instagram', icon: IconBrandInstagram, href: '/' },
   { name: 'telegram', icon: IconBrandTelegram, href: 'https://t.me/HouseofWizard' },
+  { name: 'discord', icon: IconBrandDiscord, href: 'https://discord.gg/zbDrjC4art' },
 ]
 
 export default function Footer() {
