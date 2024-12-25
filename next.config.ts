@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
     AUTH_SECRET: process.env.AUTH_SECRET,
 
-    WALLETCONNECT_PROJECT_ID: process.env.WALLETCONNECT_PROJECT_ID,
+    REOWN_PROJECT_ID: process.env.REOWN_PROJECT_ID,
   },
   images: {
     remotePatterns: [
