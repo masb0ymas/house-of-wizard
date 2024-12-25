@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { env } from '~/config/env'
 import { WebinarPrivateEntity } from '~/data/entity/webinar_private'
 import { WebinarPrivateAttendanceEntity } from '~/data/entity/webinar_private_attendance'
-import { auth } from '~/lib/auth'
+import { auth } from '~/lib/auth/handler'
 import createFetchApi from '~/lib/fetcher'
 
 type ResponseAttendance = {
