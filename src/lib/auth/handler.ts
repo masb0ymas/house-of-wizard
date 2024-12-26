@@ -22,7 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [GoogleCredentials, SiweCredentials],
   callbacks: {
     async signIn({ user, account }) {
-      console.log('SIGN IN', user, account)
+      // console.log('SIGN IN', user, account)
 
       if (account?.provider === 'google') {
         const formValue = {
@@ -43,7 +43,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true
     },
     async jwt({ token, user, account }) {
-      console.log('JWT', token, user, account)
+      // console.log('JWT', token, user, account)
 
       if (account) {
         if (account.provider === 'google') {
@@ -61,7 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token
     },
     async session({ session, token }) {
-      console.log('SESSION', session, token)
+      // console.log('SESSION', session, token)
 
       session.idToken = token.idToken as string
       session.provider = token.provider as string
