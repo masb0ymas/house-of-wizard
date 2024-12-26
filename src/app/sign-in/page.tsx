@@ -1,11 +1,11 @@
-import { IconBrandDiscord, IconBrandTwitter } from '@tabler/icons-react'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { BorderBeam } from '~/components/ui/border-beam'
-import { Button } from '~/components/ui/button'
 import { auth } from '~/lib/auth/handler'
+import SignInDiscord from './partials/sign-in-discord'
 import SignInForm from './partials/sign-in-form'
 import SignInGoogle from './partials/sign-in-google'
+import SignInTwitter from './partials/sign-in-twitter'
 import { ConnectButton } from './partials/sign-in-web3'
 
 export const metadata: Metadata = {
@@ -53,16 +53,8 @@ export default async function SignInPage({ searchParams }: IProps) {
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <SignInGoogle callbackUrl={callbackUrl} />
-
-              <Button variant={'outline'} className="w-full h-10" radius={'lg'}>
-                <IconBrandTwitter />
-                <span>Twitter</span>
-              </Button>
-
-              <Button variant={'outline'} className="w-full h-10" radius={'lg'}>
-                <IconBrandDiscord />
-                <span>Discord</span>
-              </Button>
+              <SignInTwitter />
+              <SignInDiscord />
             </div>
 
             <ConnectButton />
