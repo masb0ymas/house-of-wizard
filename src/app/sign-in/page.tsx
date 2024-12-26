@@ -1,10 +1,12 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { BorderBeam } from '~/components/ui/border-beam'
-import { auth } from '~/lib/auth'
+import { auth } from '~/lib/auth/handler'
+import SignInDiscord from './partials/sign-in-discord'
 import SignInForm from './partials/sign-in-form'
 import SignInGoogle from './partials/sign-in-google'
-import SignInWeb3 from './partials/sign-in-web3'
+import SignInTwitter from './partials/sign-in-twitter'
+import { ConnectButton } from './partials/sign-in-web3'
 
 export const metadata: Metadata = {
   title: 'Sign In - House of Wizard',
@@ -27,7 +29,7 @@ export default async function SignInPage({ searchParams }: IProps) {
   const { callbackUrl } = await searchParams
   const session = await auth()
 
-  if (session?.user) {
+  if (session?.user || session?.idToken) {
     redirect('/')
   }
 
@@ -39,17 +41,23 @@ export default async function SignInPage({ searchParams }: IProps) {
         <div className="bg-white rounded-2xl shadow-xl p-8 space-y-8">
           {/* Header */}
           <div className="text-center">
-            <h1 className="text-3xl font-bold font-serif tracking-wide text-gray-900">House of Wizard</h1>
+            <h1 className="text-3xl font-bold font-serif tracking-wide text-gray-900">
+              House of Wizard
+            </h1>
             <h3 className="mt-2 text-gray-500">
               To become a great wizard, you need to login with your account first.
             </h3>
           </div>
 
           {/* Social Login Buttons */}
-          <div className="flex flex-row gap-2">
-            <SignInGoogle callbackUrl={callbackUrl} />
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <SignInGoogle callbackUrl={callbackUrl} />
+              <SignInTwitter />
+              <SignInDiscord />
+            </div>
 
-            <SignInWeb3 />
+            <ConnectButton />
           </div>
 
           {/* Divider */}
@@ -58,7 +66,9 @@ export default async function SignInPage({ searchParams }: IProps) {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500 font-serif tracking-wider">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500 font-serif tracking-wider">
+                Or continue with
+              </span>
             </div>
           </div>
 

@@ -1,26 +1,25 @@
 'use client'
 
-import { IconWallet } from '@tabler/icons-react'
-import { Button } from '~/components/ui/button'
-import { toast } from '~/lib/hooks/use-toast'
+import clsx from 'clsx'
+import { useSession } from 'next-auth/react'
 
-export default function SignInWeb3() {
+export const ConnectButton = () => {
+  const { data: session } = useSession()
+
+  function renderAppkit() {
+    // @ts-expect-error
+    return <appkit-button />
+  }
+
   return (
-    <Button
-      variant={'outline'}
-      className="w-full"
-      radius={'lg'}
-      type="button"
-      onClick={() => {
-        toast({
-          title: 'Login with Web3 Wallet',
-          description: 'This feature is coming soon',
-          className: 'rounded-xl',
-        })
-      }}
+    <div
+      className={clsx(
+        `w-full flex items-center justify-center`,
+        session?.provider === 'siwe' &&
+          'rounded-xl border border-input bg-primary shadow-sm hover:bg-primary/80 hover:text-accent-foreground'
+      )}
     >
-      <IconWallet className="w-5 h-5" />
-      <span className="font-medium font-serif tracking-wider">Connect Wallet</span>
-    </Button>
+      {renderAppkit()}
+    </div>
   )
 }

@@ -4,9 +4,8 @@ import './globals.css'
 import '@vidstack/react/player/styles/base.css'
 import '@vidstack/react/player/styles/plyr/theme.css'
 
-import '@rainbow-me/rainbowkit/styles.css'
-
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import Provider from '~/lib/provider'
 
 export const metadata: Metadata = {
@@ -19,6 +18,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const getHeaders = await headers()
+  const cookie = getHeaders.get('cookie')
+
   return (
     <html lang="en">
       <head>
@@ -44,7 +46,7 @@ export default async function RootLayout({
         />
       </head>
       <body className={`antialiased`}>
-        <Provider>{children}</Provider>
+        <Provider cookie={cookie}>{children}</Provider>
       </body>
     </html>
   )

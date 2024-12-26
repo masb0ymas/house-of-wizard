@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { IconMail } from '@tabler/icons-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import authSchema from '~/data/schema/auth'
-import { toast } from '~/lib/hooks/use-toast'
 
 export default function SignInForm() {
   const {
@@ -24,11 +24,9 @@ export default function SignInForm() {
       {/* Email Form */}
       <form
         onSubmit={handleSubmit((data) => {
-          toast({
-            title: 'Login with Email',
-            description: 'This feature is coming soon',
-            className: 'rounded-xl',
-          })
+          toast(
+            'We are currently developing the ability to log in with your email address. Thank you for your patience.'
+          )
         })}
         className="space-y-4"
       >

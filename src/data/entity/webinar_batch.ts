@@ -6,6 +6,7 @@ export type WebinarBatchEntity = {
   instructor: string
   name: string
   batch: number
+  type: string // private | exclusive | express
   start_date: string
   end_date: string
   duration: string // 16 weeks

@@ -5,7 +5,7 @@ import qs from 'qs'
 import { env } from '~/config/env'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { WebinarPrivateEntity } from '~/data/entity/webinar_private'
-import { auth } from '~/lib/auth'
+import { auth } from '~/lib/auth/handler'
 import createFetchApi from '~/lib/fetcher'
 
 type RequestGetWebinars = {

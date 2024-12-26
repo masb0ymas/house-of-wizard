@@ -1,20 +1,22 @@
 import { SessionProvider } from 'next-auth/react'
 import { PropsWithChildren } from 'react'
-import { Toaster } from '~/components/ui/toaster'
+import { Toaster } from 'react-hot-toast'
 import WrapperNProgress from './WrapperNProgress'
-import WrapperWeb3 from './WrapperWeb3'
+import WrapperWagmi from './WrapperWagmi'
 
-type IProps = PropsWithChildren
+type IProps = PropsWithChildren & {
+  cookie: string | null
+}
 
-export default function Provider({ children }: IProps) {
+export default function Provider({ children, cookie }: IProps) {
   return (
     <SessionProvider>
-      <WrapperWeb3>
+      <WrapperWagmi cookie={cookie}>
         <WrapperNProgress>
           {children}
-          <Toaster />
+          <Toaster position="top-right" />
         </WrapperNProgress>
-      </WrapperWeb3>
+      </WrapperWagmi>
     </SessionProvider>
   )
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import _ from 'lodash'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
 import { base } from 'viem/chains'
@@ -9,6 +10,7 @@ import Ribbon from '~/components/ui/ribbon'
 import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { WebinarPrivateEntity } from '~/data/entity/webinar_private'
+import { capitalizeFirstLetter } from '~/lib/string'
 import { findLivePrivateWebinarSession, findLiveWebinarSession, findWebinars } from '../action'
 import { WebinarCard, WebinarCardSkeleton } from './webinar-card'
 
@@ -110,12 +112,14 @@ export default function WebinarList() {
         return null
       }
 
+      const type = _.get(livePrivateWebinar, 'webinar_batch.type', 'Private')
+
       return (
         <ShineBorder
           className="p-0 w-full h-full flex flex-col items-center justify-center overflow-hidden rounded-lg bg-background md:shadow-xl"
           color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
         >
-          <Ribbon text="Private" />
+          <Ribbon text={capitalizeFirstLetter(type)} />
           <WebinarCard
             title={livePrivateWebinar.title}
             slug={redirectUrl}
