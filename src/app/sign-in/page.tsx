@@ -1,6 +1,8 @@
+import { IconBrandDiscord, IconBrandTwitter } from '@tabler/icons-react'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { BorderBeam } from '~/components/ui/border-beam'
+import { Button } from '~/components/ui/button'
 import { auth } from '~/lib/auth/handler'
 import SignInForm from './partials/sign-in-form'
 import SignInGoogle from './partials/sign-in-google'
@@ -27,7 +29,7 @@ export default async function SignInPage({ searchParams }: IProps) {
   const { callbackUrl } = await searchParams
   const session = await auth()
 
-  if (session?.user) {
+  if (session?.user || session?.idToken) {
     redirect('/')
   }
 
@@ -48,8 +50,20 @@ export default async function SignInPage({ searchParams }: IProps) {
           </div>
 
           {/* Social Login Buttons */}
-          <div className="flex flex-row gap-2">
-            <SignInGoogle callbackUrl={callbackUrl} />
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <SignInGoogle callbackUrl={callbackUrl} />
+
+              <Button variant={'outline'} className="w-full h-10" radius={'lg'}>
+                <IconBrandTwitter />
+                <span>Twitter</span>
+              </Button>
+
+              <Button variant={'outline'} className="w-full h-10" radius={'lg'}>
+                <IconBrandDiscord />
+                <span>Discord</span>
+              </Button>
+            </div>
 
             <ConnectButton />
           </div>
