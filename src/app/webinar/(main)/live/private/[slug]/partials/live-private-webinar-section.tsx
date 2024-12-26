@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { base } from 'viem/chains'
 import { useChainId } from 'wagmi'
 import { findLivePrivateWebinarSession } from '~/app/webinar/(main)/action'
@@ -18,7 +19,6 @@ import { WebinarBatchEntity } from '~/data/entity/webinar_batch'
 import { WebinarPrivateEntity } from '~/data/entity/webinar_private'
 import { WebinarPrivateAttendanceEntity } from '~/data/entity/webinar_private_attendance'
 import { formatLocalDate } from '~/lib/date'
-import { toast } from '~/lib/hooks/use-toast'
 import { findActiveBatch, findPrivateAttendanceBySlug, markPrivateAttendance } from '../action'
 
 type IProps = {
@@ -61,14 +61,17 @@ export default function LivePrivateWebinarSection(props: IProps) {
 
   const postAttendance = useCallback(async (webinar: WebinarPrivateEntity | null) => {
     setIsFetching(true)
-    const { message } = await markPrivateAttendance(webinar)
+    const { message, isError } = await markPrivateAttendance(webinar)
 
-    toast({
-      title: 'Mark Attendance',
-      description: message,
-      duration: 5000,
-    })
-
+    if (!isError) {
+      toast.success('Successfully marked attendance', {
+        duration: 5000,
+      })
+    } else {
+      toast.error(`Failed to mark attendance, error: ${message}`, {
+        duration: 5000,
+      })
+    }
     setIsFetching(false)
   }, [])
 
@@ -79,9 +82,11 @@ export default function LivePrivateWebinarSection(props: IProps) {
   }, [getLivePrivateWebinar, getPrivateAttendance, getWebinarBatch])
 
   const details = [
-    { key: 'batch', title: 'Batch', type: ItemType.string },
+    { key: 'webinar_batch.batch', title: 'Batch', type: ItemType.string },
     { key: 'title', title: 'Webinar', type: ItemType.string },
-    { key: 'instructor', title: 'Instructor', type: ItemType.string },
+    { key: 'instructor.user.fullname', title: 'Instructor', type: ItemType.string },
+    { key: 'webinar_batch.type', title: 'Type', type: ItemType.string },
+    { key: 'category.name', title: 'Category', type: ItemType.string },
     { key: 'start_date', title: 'Schedule', type: ItemType.date },
     { key: 'webinar_url', title: 'Webinar URL', type: ItemType.link },
   ]
@@ -121,7 +126,7 @@ export default function LivePrivateWebinarSection(props: IProps) {
       if (slug !== livePrivateWebinar?.slug) {
         return (
           <WebinarHeader
-            title={`Webinar - Live Private Session ${batch}`}
+            title={`Webinar - Live Private Session ${new_batch}`}
             subtitle="Currently, there are no webinars available."
           />
         )
@@ -142,12 +147,15 @@ export default function LivePrivateWebinarSection(props: IProps) {
         if (is_end_attendance) {
           subtitle = 'Currently, there are no webinars available.'
         } else if (!is_start_attendance && !is_end_attendance) {
-          subtitle = `Please stay tuned for the webinar, which will be streamed live on`
+          subtitle = `${livePrivateWebinar?.description} Please stay tuned for the webinar, which will be streamed live on`
         }
 
         return (
           <>
-            <WebinarHeader title={`Webinar - Live Private Session ${batch}`} subtitle={subtitle} />
+            <WebinarHeader
+              title={`Webinar - Live Private Session ${new_batch}`}
+              subtitle={subtitle}
+            />
 
             {!is_start_attendance && !is_end_attendance && (
               <h4 className="text-lg sm:text-xl text-gray-500 font-semibold font-serif tracking-wide">
@@ -204,7 +212,7 @@ export default function LivePrivateWebinarSection(props: IProps) {
           <>
             <WebinarHeader
               title={livePrivateWebinar?.title}
-              subtitle="Elevate your expertise by learning how to analyze Web3 data and take the first step toward a career in the decentralized future."
+              subtitle={`Elevate your expertise by learning how to analyze Web3 data and take the first step toward a career in the decentralized future.`}
             />
 
             {is_start_attendance && !is_end_attendance && (
@@ -227,7 +235,7 @@ export default function LivePrivateWebinarSection(props: IProps) {
 
     return (
       <WebinarHeader
-        title={`Webinar - Live Private Session ${batch}`}
+        title={`Webinar - Live Private Session ${new_batch}`}
         subtitle="Currently, there are no webinars available."
       />
     )

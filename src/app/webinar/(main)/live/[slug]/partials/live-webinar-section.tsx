@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { base } from 'viem/chains'
 import { useChainId } from 'wagmi'
 import { findLiveWebinarSession } from '~/app/webinar/(main)/action'
@@ -17,7 +18,6 @@ import ShineBorder from '~/components/ui/shine-border'
 import { WebinarEntity } from '~/data/entity/webinar'
 import { WebinarAttendanceEntity } from '~/data/entity/webinar_attendance'
 import { formatLocalDate } from '~/lib/date'
-import { toast } from '~/lib/hooks/use-toast'
 import { findAttendanceBySlug, markAttendance } from '../action'
 
 type IProps = {
@@ -53,13 +53,17 @@ export default function LiveWebinarSection(props: IProps) {
 
   const postAttendance = useCallback(async (webinar: WebinarEntity | null) => {
     setIsFetching(true)
-    const { message } = await markAttendance(webinar)
+    const { message, isError } = await markAttendance(webinar)
 
-    toast({
-      title: 'Mark Attendance',
-      description: message,
-      duration: 5000,
-    })
+    if (!isError) {
+      toast.success('Successfully marked attendance', {
+        duration: 5000,
+      })
+    } else {
+      toast.error(`Failed to mark attendance, error: ${message}`, {
+        duration: 5000,
+      })
+    }
 
     setIsFetching(false)
   }, [])

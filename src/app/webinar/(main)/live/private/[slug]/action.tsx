@@ -45,7 +45,7 @@ export async function findPrivateAttendanceBySlug(slug: string): Promise<Respons
 
 /**
  * Find Active Batch
- * @returns 
+ * @returns
  */
 export async function findActiveBatch() {
   const api = await _axios()
@@ -66,8 +66,6 @@ export async function findActiveBatch() {
   return { data, message, isError }
 }
 
-
-
 /**
  *
  * @param webinar
@@ -82,6 +80,7 @@ export async function markPrivateAttendance(webinar: WebinarPrivateEntity | null
     fullname: session?.user?.name,
     webinar_private_id: webinar?.id,
     attendance_date: new Date(),
+    is_attendance: true,
     metadata: {
       title: webinar?.title,
       description: webinar?.description,

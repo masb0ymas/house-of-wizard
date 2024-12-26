@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { RainbowButton } from '~/components/ui/rainbow-button'
-import { toast } from '~/lib/hooks/use-toast'
+import toast from 'react-hot-toast'
 import { getSplitName } from '~/lib/string'
 import { createTransaction } from '../action'
 
@@ -34,14 +34,16 @@ export default function Checkout({ id }: IProps) {
   const onSubmit = useCallback(async (values: any) => {
     const { data: trx, message, isError } = await createTransaction(values)
 
-    if (message) {
-      toast({
-        title: message,
-        variant: isError ? 'destructive' : 'default',
-        className: 'rounded-xl',
+    if (isError) {
+      toast.error(`Failed to create transaction, error: ${message}`, {
+        duration: 5000,
       })
       return
     }
+
+    toast.success(message, {
+      duration: 5000,
+    })
 
     return window.open(`/webinar/batch/payment/${trx.trx_id}`, '_self')
   }, [])
