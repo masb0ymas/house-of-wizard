@@ -21,7 +21,7 @@ export default async function SettingLayout({ children }: IProps) {
     <Layout>
       <div className="bg-gradient-to-br from-indigo-100 via-white to-purple-100 py-36 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mt-4 flex gap-12 lg:mt-10">
+          <div className="flex gap-12">
             <div className="w-[13.75rem] max-lg:hidden">
               <nav className="isolate space-y-4 divide-y">
                 <SidebarGroup>
