@@ -10,31 +10,21 @@ import {
 
 export const menus = [
   {
-    group: 'Activity',
+    group: 'Webinar',
     items: [
       {
         name: 'Attendance',
         href: '/attendance',
         icon: IconCalendar,
       },
-    ],
-  },
-  {
-    group: 'Private Webinar',
-    items: [
-      {
-        name: 'Attendance',
-        href: '/private/attendance',
-        icon: IconCalendar,
-      },
       {
         name: 'Membership',
-        href: '/private/membership',
+        href: '/membership',
         icon: IconUsers,
       },
       {
         name: 'Certificate',
-        href: '/private/certificate',
+        href: '/certificate',
         icon: IconCertificate,
       },
     ],
@@ -44,7 +34,7 @@ export const menus = [
     items: [
       {
         name: 'Transaction',
-        href: '/billing/transaction',
+        href: '/transaction',
         icon: IconReceipt,
       },
     ],
@@ -54,17 +44,17 @@ export const menus = [
     items: [
       {
         name: 'Profile',
-        href: '/account/profile',
+        href: '/profile',
         icon: IconUser,
       },
       {
         name: 'Change Password',
-        href: '/account/change-password',
+        href: '/change-password',
         icon: IconPassword,
       },
       {
         name: 'Logout',
-        href: '/account/logout',
+        href: '/logout',
         icon: IconLogout,
       },
     ],
