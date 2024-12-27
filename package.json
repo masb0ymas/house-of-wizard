@@ -28,6 +28,7 @@
     "@tabler/icons-react": "^3.26.0",
     "@tanstack/react-query": "^5.62.10",
     "@tanstack/react-query-devtools": "^5.62.10",
+    "@tanstack/react-table": "^8.20.6",
     "@vidstack/react": "^1.12.12",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
