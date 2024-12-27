@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Button } from '~/components/ui/button'
 
-export default function ProfilePage() {
+export default function LogoutPage() {
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const handleSignOut = useCallback(async () => {
