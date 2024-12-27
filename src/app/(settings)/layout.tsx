@@ -10,13 +10,12 @@ export default async function SettingLayout({ children }: IProps) {
   const session = await auth()
 
   if (!session?.user) {
-    const baseUrl = '/attendance'
-    redirect(`/sign-in?callbackUrl=${encodeURIComponent(baseUrl)}`)
+    redirect(`/sign-in?callbackUrl=${encodeURIComponent('/attendance')}`)
   }
 
   return (
     <Layout>
-      <div className="bg-gradient-to-br from-indigo-100 via-white to-purple-100 py-36 pb-24">
+      <div className="bg-gradient-to-br from-gray-200 via-white to-gray-200 py-36 pb-24">
         <Sidebar>{children}</Sidebar>
       </div>
     </Layout>
