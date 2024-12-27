@@ -46,7 +46,7 @@ export function Sidebar({ children }: IProps) {
           </nav>
         </div>
 
-        <div className="w-full flex-1 max-lg:space-y-6">{children}</div>
+        <div className="w-full flex-1 max-lg:space-y-6 mt-3.5">{children}</div>
       </div>
     </div>
   )
