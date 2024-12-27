@@ -18,7 +18,7 @@ export default function GetAccess({ isMobile }: IProps) {
     const name = _.get(session, 'user.name', '')
 
     return (
-      <Link href="/profile" className="flex items-center gap-2 hover:underline">
+      <Link href="/attendance" className="flex items-center gap-2 hover:underline">
         <Avatar className="h-8 w-8 rounded-lg">
           <AvatarImage src="https://api.dicebear.com/9.x/thumbs/svg" alt={name} />
           <AvatarFallback className="rounded-lg">{name?.slice(0, 2)}</AvatarFallback>
