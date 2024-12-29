@@ -56,8 +56,6 @@ export default async function SignInPage({ searchParams }: IProps) {
               <SignInTwitter />
               <SignInDiscord />
             </div>
-
-            <ConnectButton />
           </div>
 
           {/* Divider */}
