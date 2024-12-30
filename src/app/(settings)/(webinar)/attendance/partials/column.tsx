@@ -2,10 +2,10 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 import { formatDistance } from 'date-fns'
-import { WebinarAttendanceEntity } from '~/data/entity/webinar_attendance'
+import { WebinarLogAttendanceEntity } from '~/data/entity/webinar_log_attendance'
 import { formatLocalDate } from '~/lib/date'
 
-export const columns: ColumnDef<WebinarAttendanceEntity>[] = [
+export const columns: ColumnDef<WebinarLogAttendanceEntity>[] = [
   {
     accessorKey: 'webinar.title',
     header: 'Title',
@@ -29,11 +29,11 @@ export const columns: ColumnDef<WebinarAttendanceEntity>[] = [
     },
   },
   {
-    accessorKey: 'check_in',
+    accessorKey: 'attendance_at',
     header: 'Attendance',
     cell: ({ row }) => {
-      if (row.original.check_in) {
-        return <div className="w-[120px]">{formatLocalDate(row.original.check_in)}</div>
+      if (row.original.attendance_at) {
+        return <div className="w-[120px]">{formatLocalDate(row.original.attendance_at)}</div>
       }
 
       return '-'
@@ -44,7 +44,7 @@ export const columns: ColumnDef<WebinarAttendanceEntity>[] = [
     header: 'Note',
     cell: ({ row }) => {
       const start_date = new Date(row.original.webinar.start_date)
-      const attendance = new Date(row.original.check_in)
+      const attendance = new Date(row.original.attendance_at)
 
       let note = ''
 

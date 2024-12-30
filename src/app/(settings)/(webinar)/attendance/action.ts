@@ -20,7 +20,7 @@ async function _axios() {
  * @param params
  * @returns
  */
-export async function findWebinarAttendances({ page, pageSize }: ReqFindAll) {
+export async function findLogAttendances({ page, pageSize }: ReqFindAll) {
   const api = await _axios()
 
   let data = []
@@ -31,7 +31,7 @@ export async function findWebinarAttendances({ page, pageSize }: ReqFindAll) {
   const queryParams = qs.stringify({ page, pageSize }, { skipNulls: true })
 
   try {
-    const res = await api.get(`/v1/webinar-attendance/by-user-login?${queryParams}`)
+    const res = await api.get(`/v1/webinar-log-attendance/by-user-login?${queryParams}`)
     data = res.data.data
     total = res.data.total
   } catch (err) {
