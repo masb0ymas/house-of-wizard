@@ -6,7 +6,6 @@ import SignInDiscord from './partials/sign-in-discord'
 import SignInForm from './partials/sign-in-form'
 import SignInGoogle from './partials/sign-in-google'
 import SignInTwitter from './partials/sign-in-twitter'
-import { ConnectButton } from './partials/sign-in-web3'
 
 export const metadata: Metadata = {
   title: 'Sign In - House of Wizard',
