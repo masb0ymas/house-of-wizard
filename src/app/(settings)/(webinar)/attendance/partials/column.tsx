@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { formatDistance } from 'date-fns'
 import { WebinarLogAttendanceEntity } from '~/data/entity/webinar_log_attendance'
 import { formatLocalDate } from '~/lib/date'
+import { capitalizeFirstLetter } from '~/lib/string'
 
 export const columns: ColumnDef<WebinarLogAttendanceEntity>[] = [
   {
@@ -14,8 +15,15 @@ export const columns: ColumnDef<WebinarLogAttendanceEntity>[] = [
     },
   },
   {
-    accessorKey: 'webinar.speakers',
+    accessorKey: 'webinar.instructor',
     header: 'Speakers',
+  },
+  {
+    accessorKey: 'type',
+    header: 'Type',
+    cell: ({ row }) => {
+      return <div className="w-[110px]">{capitalizeFirstLetter(row.original.type)}</div>
+    },
   },
   {
     accessorKey: 'webinar.start_date',
