@@ -34,13 +34,13 @@ export default function Header() {
         <div className="flex justify-between items-center h-14">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <Image
+            {/* <Image
               src="/logo-how.png"
               alt="House of Wizard"
-              className="h-10 w-10"
-              width={40}
-              height={40}
-            />
+              className="h-12 w-12"
+              width={80}
+              height={80}
+            /> */}
             <span className="font-bold font-serif tracking-wide text-xl">House of Wizard</span>
           </Link>
 
