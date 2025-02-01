@@ -247,13 +247,15 @@ export default function LivePrivateWebinarSection(props: IProps) {
         className="relative h-48 w-48 min-h-48 min-w-48 p-0 flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
         color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
       >
-        <Image
-          src="/logo-how.png"
-          alt="House of Wizard"
-          className="h-48 w-48 pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10"
-          width={192}
-          height={192}
-        />
+        <div className="w-[190px] h-[190px]">
+          <Image
+            src="/logo-how.png"
+            alt="House of Wizard"
+            className="h-48 w-48 pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10 object-cover"
+            width={190}
+            height={190}
+          />
+        </div>
       </ShineBorder>
 
       {renderContent()}
