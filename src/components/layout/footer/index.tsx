@@ -51,13 +51,13 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Image
+              {/* <Image
                 src="/logo-how.png"
                 alt="House of Wizard"
                 className="h-10 w-10"
                 width={40}
                 height={40}
-              />
+              /> */}
               <span className="font-bold font-serif tracking-wide text-xl text-white">
                 House of Wizard
               </span>
