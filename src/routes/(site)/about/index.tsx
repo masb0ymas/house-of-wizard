@@ -13,18 +13,17 @@ function RouteComponent() {
       <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-indigo-200/40 blur-3xl" />
       <div className="relative mx-auto flex max-w-6xl flex-col gap-12 px-4 sm:px-6 lg:px-8">
         <header className="flex flex-col gap-6">
-          <span className="inline-flex w-fit font-serif items-center rounded-full border border-slate-200 bg-white/80 px-4 py-1 text-xs font-medium uppercase tracking-[0.3em] text-slate-500">
+          <span className="inline-flex w-fit items-center rounded-full border border-slate-200 bg-white/80 px-4 py-1 font-serif text-xs font-medium tracking-[0.3em] text-slate-500 uppercase">
             House of Wizard
           </span>
           <div className="space-y-4">
-            <h1 className="text-4xl font-semibold font-serif tracking-normal leading-tight text-slate-900 sm:text-5xl">
+            <h1 className="font-serif text-4xl leading-tight font-semibold tracking-normal text-slate-900 sm:text-5xl">
               Elegant, rigorous education for web3 data analysts.
             </h1>
             <p className="max-w-2xl text-lg text-slate-600">
-              We are a premium learning studio shaping the next generation of
-              web3 data analysts. House of Wizard blends research-grade
-              analytics, cohort mentorship, and community guidance so learners
-              can turn on-chain signals into confident decisions.
+              We are a premium learning studio shaping the next generation of web3 data analysts.
+              House of Wizard blends research-grade analytics, cohort mentorship, and community
+              guidance so learners can turn on-chain signals into confident decisions.
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
@@ -46,21 +45,16 @@ function RouteComponent() {
         <section className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
           <div className="space-y-6">
             <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
-              <h2 className="text-xl font-semibold font-serif text-slate-900">
-                Our mission
-              </h2>
+              <h2 className="font-serif text-xl font-semibold text-slate-900">Our mission</h2>
               <p className="mt-3 text-slate-600">
-                We help analysts master blockchain data with confidence. From
-                token flows to protocol health, we train you to ask sharper
-                questions, build trusted dashboards, and deliver insights that
-                move teams forward.
+                We help analysts master blockchain data with confidence. From token flows to
+                protocol health, we train you to ask sharper questions, build trusted dashboards,
+                and deliver insights that move teams forward.
               </p>
             </div>
 
             <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
-              <h3 className="text-lg font-semibold text-slate-900">
-                What you learn
-              </h3>
+              <h3 className="text-lg font-semibold text-slate-900">What you learn</h3>
               <ul className="mt-4 list-disc space-y-2 pl-6 text-slate-600">
                 <li>On-chain data modeling and analytics workflows.</li>
                 <li>Protocol growth, retention, and cohort analysis.</li>
@@ -70,9 +64,7 @@ function RouteComponent() {
             </div>
 
             <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
-              <h3 className="text-lg font-semibold text-slate-900">
-                How we deliver
-              </h3>
+              <h3 className="text-lg font-semibold text-slate-900">How we deliver</h3>
               <ul className="mt-4 list-disc space-y-2 pl-6 text-slate-600">
                 <li>Mentor-led cohorts with live case walkthroughs.</li>
                 <li>Research studio sessions for portfolio-ready insights.</li>
@@ -84,38 +76,28 @@ function RouteComponent() {
 
           <aside className="space-y-6">
             <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
-              <h3 className="text-lg font-semibold text-slate-900">
-                Brand pillars
-              </h3>
+              <h3 className="text-lg font-semibold text-slate-900">Brand pillars</h3>
               <ul className="mt-4 space-y-3 text-slate-600">
                 <li>
-                  <span className="font-semibold text-slate-800">
-                    Craftsmanship:
-                  </span>{' '}
-                  elegant analysis and meticulous data narratives.
+                  <span className="font-semibold text-slate-800">Craftsmanship:</span> elegant
+                  analysis and meticulous data narratives.
                 </li>
                 <li>
-                  <span className="font-semibold text-slate-800">
-                    Integrity:
-                  </span>{' '}
-                  transparent methods and privacy-first learning.
+                  <span className="font-semibold text-slate-800">Integrity:</span> transparent
+                  methods and privacy-first learning.
                 </li>
                 <li>
-                  <span className="font-semibold text-slate-800">
-                    Community:
-                  </span>{' '}
-                  a global network of analysts, builders, and mentors.
+                  <span className="font-semibold text-slate-800">Community:</span> a global network
+                  of analysts, builders, and mentors.
                 </li>
               </ul>
             </div>
 
             <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
-              <h3 className="text-lg font-semibold text-slate-900">
-                Community touchpoints
-              </h3>
+              <h3 className="text-lg font-semibold text-slate-900">Community touchpoints</h3>
               <p className="mt-3 text-slate-600">
-                We connect learners through curated circles and meaningful
-                rituals that deepen skills and trust.
+                We connect learners through curated circles and meaningful rituals that deepen
+                skills and trust.
               </p>
               <ul className="mt-4 list-disc space-y-2 pl-6 text-slate-600">
                 <li>Weekly research salons and data discussions.</li>
@@ -127,8 +109,8 @@ function RouteComponent() {
             <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
               <Separator />
               <p className="mt-4 text-sm text-slate-600">
-                Ready to turn insight into impact? Join House of Wizard and
-                shape the future of web3 analytics with us.
+                Ready to turn insight into impact? Join House of Wizard and shape the future of web3
+                analytics with us.
               </p>
             </div>
           </aside>
@@ -136,34 +118,26 @@ function RouteComponent() {
 
         <section className="grid gap-6 md:grid-cols-3">
           <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+            <p className="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase">
               Experience
             </p>
-            <p className="mt-3 text-2xl font-semibold text-slate-900">
-              Cohort-led learning
-            </p>
+            <p className="mt-3 text-2xl font-semibold text-slate-900">Cohort-led learning</p>
             <p className="mt-2 text-slate-600">
               Small, high-touch cohorts focused on mastery and accountability.
             </p>
           </div>
           <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-              Focus
-            </p>
-            <p className="mt-3 text-2xl font-semibold text-slate-900">
-              Web3 intelligence
-            </p>
+            <p className="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase">Focus</p>
+            <p className="mt-3 text-2xl font-semibold text-slate-900">Web3 intelligence</p>
             <p className="mt-2 text-slate-600">
               We specialize in on-chain data, protocols, and ecosystem growth.
             </p>
           </div>
           <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+            <p className="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase">
               Outcomes
             </p>
-            <p className="mt-3 text-2xl font-semibold text-slate-900">
-              Insight-ready portfolios
-            </p>
+            <p className="mt-3 text-2xl font-semibold text-slate-900">Insight-ready portfolios</p>
             <p className="mt-2 text-slate-600">
               Graduate with case studies and dashboards that earn trust.
             </p>
@@ -172,16 +146,15 @@ function RouteComponent() {
 
         <section className="rounded-2xl border border-slate-200/70 bg-slate-900 p-8 text-white shadow-lg sm:p-10">
           <div className="flex flex-col gap-4">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-200">
+            <p className="text-sm font-semibold tracking-[0.3em] text-amber-200 uppercase">
               The invitation
             </p>
-            <h2 className="text-2xl font-semibold font-serif sm:text-3xl">
+            <h2 className="font-serif text-2xl font-semibold sm:text-3xl">
               Join a community where analytics meets craft.
             </h2>
             <p className="text-slate-200">
-              Whether you are leveling up or leading analytics at a protocol,
-              House of Wizard is a home for thoughtful, ethical data builders.
-              We would love to meet you.
+              Whether you are leveling up or leading analytics at a protocol, House of Wizard is a
+              home for thoughtful, ethical data builders. We would love to meet you.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link

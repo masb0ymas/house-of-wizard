@@ -23,16 +23,12 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm">
-              Empowering the next generation of Web3 data analysts through
-              comprehensive online education.
+              Empowering the next generation of Web3 data analysts through comprehensive online
+              education.
             </p>
             <div className="flex space-x-4">
               {FooterMenu.socialMedia.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="transition hover:text-indigo-500"
-                >
+                <Link key={item.name} to={item.href} className="transition hover:text-indigo-500">
                   <item.icon className="h-5 w-5" />
                 </Link>
               ))}
@@ -47,10 +43,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {FooterMenu.courseCategories.map((category) => (
                 <li key={category.name}>
-                  <Link
-                    to={category.href}
-                    className="text-sm transition hover:text-indigo-500"
-                  >
+                  <Link to={category.href} className="text-sm transition hover:text-indigo-500">
                     {category.name}
                   </Link>
                 </li>
@@ -66,10 +59,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {FooterMenu.quickLinks.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm transition hover:text-indigo-500"
-                  >
+                  <Link to={link.href} className="text-sm transition hover:text-indigo-500">
                     {link.name}
                   </Link>
                 </li>
@@ -85,10 +75,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {FooterMenu.support.map((item) => (
                 <li key={item.name}>
-                  <Link
-                    to={item.href}
-                    className="text-sm transition hover:text-indigo-500"
-                  >
+                  <Link to={item.href} className="text-sm transition hover:text-indigo-500">
                     {item.name}
                   </Link>
                 </li>
@@ -110,10 +97,7 @@ export default function Footer() {
                 <Link to="/terms" className="transition hover:text-indigo-500">
                   Terms
                 </Link>
-                <Link
-                  to="/privacy"
-                  className="transition hover:text-indigo-500"
-                >
+                <Link to="/privacy" className="transition hover:text-indigo-500">
                   Privacy
                 </Link>
                 <Link to="/" className="transition hover:text-indigo-500">
