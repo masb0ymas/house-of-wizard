@@ -1,9 +1,15 @@
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import type { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
-import { createRootRouteWithContext, HeadContent, Scripts } from '@tanstack/react-router'
+import {
+  createRootRouteWithContext,
+  ErrorComponent,
+  HeadContent,
+  Scripts,
+} from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
+import NotFound from '~/components/block/common/not-found'
 import { GOOGLE_FONTS, META_ICONS, META_TAGS } from '~/lib/constants/meta'
 import DecorationProvider from '~/lib/providers/decoration'
 
@@ -26,6 +32,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: NotFound,
+  errorComponent: ErrorComponent,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {

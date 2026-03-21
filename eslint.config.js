@@ -20,6 +20,7 @@ export default [
       '@typescript-eslint/require-await': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-unnecessary-condition': 'off',
 
       // simple import sort
       'simple-import-sort/imports': 'error',

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as siteRouteRouteImport } from './routes/(site)/route'
+import { Route as publicWebinarRouteRouteImport } from './routes/(public)/webinar/route'
 import { Route as siteTermsIndexRouteImport } from './routes/(site)/terms/index'
 import { Route as sitePrivacyIndexRouteImport } from './routes/(site)/privacy/index'
 import { Route as siteContactIndexRouteImport } from './routes/(site)/contact/index'
@@ -21,9 +22,15 @@ import { Route as protectedProfileIndexRouteImport } from './routes/(protected)/
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as publicWebinarBatchIndexRouteImport } from './routes/(public)/webinar/batch/index'
 import { Route as publicauthSignInIndexRouteImport } from './routes/(public)/(auth)/sign-in/index'
+import { Route as publicWebinarWatchSlugRouteImport } from './routes/(public)/webinar/watch/$slug'
 
 const siteRouteRoute = siteRouteRouteImport.update({
   id: '/(site)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicWebinarRouteRoute = publicWebinarRouteRouteImport.update({
+  id: '/(public)/webinar',
+  path: '/webinar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const siteTermsIndexRoute = siteTermsIndexRouteImport.update({
@@ -52,9 +59,9 @@ const sitehomeIndexRoute = sitehomeIndexRouteImport.update({
   getParentRoute: () => siteRouteRoute,
 } as any)
 const publicWebinarIndexRoute = publicWebinarIndexRouteImport.update({
-  id: '/(public)/webinar/',
-  path: '/webinar/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => publicWebinarRouteRoute,
 } as any)
 const protectedSettingIndexRoute = protectedSettingIndexRouteImport.update({
   id: '/(protected)/setting/',
@@ -72,17 +79,23 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const publicWebinarBatchIndexRoute = publicWebinarBatchIndexRouteImport.update({
-  id: '/(public)/webinar/batch/',
-  path: '/webinar/batch/',
-  getParentRoute: () => rootRouteImport,
+  id: '/batch/',
+  path: '/batch/',
+  getParentRoute: () => publicWebinarRouteRoute,
 } as any)
 const publicauthSignInIndexRoute = publicauthSignInIndexRouteImport.update({
   id: '/(public)/(auth)/sign-in/',
   path: '/sign-in/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const publicWebinarWatchSlugRoute = publicWebinarWatchSlugRouteImport.update({
+  id: '/watch/$slug',
+  path: '/watch/$slug',
+  getParentRoute: () => publicWebinarRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/webinar': typeof publicWebinarRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/profile/': typeof protectedProfileIndexRoute
   '/setting/': typeof protectedSettingIndexRoute
@@ -92,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/contact/': typeof siteContactIndexRoute
   '/privacy/': typeof sitePrivacyIndexRoute
   '/terms/': typeof siteTermsIndexRoute
+  '/webinar/watch/$slug': typeof publicWebinarWatchSlugRoute
   '/sign-in/': typeof publicauthSignInIndexRoute
   '/webinar/batch/': typeof publicWebinarBatchIndexRoute
 }
@@ -105,12 +119,14 @@ export interface FileRoutesByTo {
   '/contact': typeof siteContactIndexRoute
   '/privacy': typeof sitePrivacyIndexRoute
   '/terms': typeof siteTermsIndexRoute
+  '/webinar/watch/$slug': typeof publicWebinarWatchSlugRoute
   '/sign-in': typeof publicauthSignInIndexRoute
   '/webinar/batch': typeof publicWebinarBatchIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(site)': typeof siteRouteRouteWithChildren
+  '/(public)/webinar': typeof publicWebinarRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/(protected)/profile/': typeof protectedProfileIndexRoute
   '/(protected)/setting/': typeof protectedSettingIndexRoute
@@ -120,12 +136,14 @@ export interface FileRoutesById {
   '/(site)/contact/': typeof siteContactIndexRoute
   '/(site)/privacy/': typeof sitePrivacyIndexRoute
   '/(site)/terms/': typeof siteTermsIndexRoute
+  '/(public)/webinar/watch/$slug': typeof publicWebinarWatchSlugRoute
   '/(public)/(auth)/sign-in/': typeof publicauthSignInIndexRoute
   '/(public)/webinar/batch/': typeof publicWebinarBatchIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/webinar'
     | '/api/auth/$'
     | '/profile/'
     | '/setting/'
@@ -135,6 +153,7 @@ export interface FileRouteTypes {
     | '/contact/'
     | '/privacy/'
     | '/terms/'
+    | '/webinar/watch/$slug'
     | '/sign-in/'
     | '/webinar/batch/'
   fileRoutesByTo: FileRoutesByTo
@@ -148,11 +167,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/privacy'
     | '/terms'
+    | '/webinar/watch/$slug'
     | '/sign-in'
     | '/webinar/batch'
   id:
     | '__root__'
     | '/(site)'
+    | '/(public)/webinar'
     | '/api/auth/$'
     | '/(protected)/profile/'
     | '/(protected)/setting/'
@@ -162,18 +183,18 @@ export interface FileRouteTypes {
     | '/(site)/contact/'
     | '/(site)/privacy/'
     | '/(site)/terms/'
+    | '/(public)/webinar/watch/$slug'
     | '/(public)/(auth)/sign-in/'
     | '/(public)/webinar/batch/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   siteRouteRoute: typeof siteRouteRouteWithChildren
+  publicWebinarRouteRoute: typeof publicWebinarRouteRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   protectedProfileIndexRoute: typeof protectedProfileIndexRoute
   protectedSettingIndexRoute: typeof protectedSettingIndexRoute
-  publicWebinarIndexRoute: typeof publicWebinarIndexRoute
   publicauthSignInIndexRoute: typeof publicauthSignInIndexRoute
-  publicWebinarBatchIndexRoute: typeof publicWebinarBatchIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -183,6 +204,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof siteRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/webinar': {
+      id: '/(public)/webinar'
+      path: '/webinar'
+      fullPath: '/webinar'
+      preLoaderRoute: typeof publicWebinarRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(site)/terms/': {
@@ -222,10 +250,10 @@ declare module '@tanstack/react-router' {
     }
     '/(public)/webinar/': {
       id: '/(public)/webinar/'
-      path: '/webinar'
+      path: '/'
       fullPath: '/webinar/'
       preLoaderRoute: typeof publicWebinarIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof publicWebinarRouteRoute
     }
     '/(protected)/setting/': {
       id: '/(protected)/setting/'
@@ -250,10 +278,10 @@ declare module '@tanstack/react-router' {
     }
     '/(public)/webinar/batch/': {
       id: '/(public)/webinar/batch/'
-      path: '/webinar/batch'
+      path: '/batch'
       fullPath: '/webinar/batch/'
       preLoaderRoute: typeof publicWebinarBatchIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof publicWebinarRouteRoute
     }
     '/(public)/(auth)/sign-in/': {
       id: '/(public)/(auth)/sign-in/'
@@ -261,6 +289,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/sign-in/'
       preLoaderRoute: typeof publicauthSignInIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/(public)/webinar/watch/$slug': {
+      id: '/(public)/webinar/watch/$slug'
+      path: '/watch/$slug'
+      fullPath: '/webinar/watch/$slug'
+      preLoaderRoute: typeof publicWebinarWatchSlugRouteImport
+      parentRoute: typeof publicWebinarRouteRoute
     }
   }
 }
@@ -285,14 +320,28 @@ const siteRouteRouteWithChildren = siteRouteRoute._addFileChildren(
   siteRouteRouteChildren,
 )
 
+interface publicWebinarRouteRouteChildren {
+  publicWebinarIndexRoute: typeof publicWebinarIndexRoute
+  publicWebinarWatchSlugRoute: typeof publicWebinarWatchSlugRoute
+  publicWebinarBatchIndexRoute: typeof publicWebinarBatchIndexRoute
+}
+
+const publicWebinarRouteRouteChildren: publicWebinarRouteRouteChildren = {
+  publicWebinarIndexRoute: publicWebinarIndexRoute,
+  publicWebinarWatchSlugRoute: publicWebinarWatchSlugRoute,
+  publicWebinarBatchIndexRoute: publicWebinarBatchIndexRoute,
+}
+
+const publicWebinarRouteRouteWithChildren =
+  publicWebinarRouteRoute._addFileChildren(publicWebinarRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   siteRouteRoute: siteRouteRouteWithChildren,
+  publicWebinarRouteRoute: publicWebinarRouteRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   protectedProfileIndexRoute: protectedProfileIndexRoute,
   protectedSettingIndexRoute: protectedSettingIndexRoute,
-  publicWebinarIndexRoute: publicWebinarIndexRoute,
   publicauthSignInIndexRoute: publicauthSignInIndexRoute,
-  publicWebinarBatchIndexRoute: publicWebinarBatchIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
