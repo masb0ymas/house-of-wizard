@@ -1,36 +1,35 @@
-//  @ts-check
-
-import { tanstackConfig } from '@tanstack/eslint-config'
+import js from '@eslint/js'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
-export default [
-  ...tanstackConfig,
+export default defineConfig([
+  globalIgnores(['dist', 'node_modules', '.output', 'dist']),
   {
+    files: ['**/*.{ts,tsx,js,jsx}'],
+    extends: [js.configs.recommended, tseslint.configs.recommended, reactRefresh.configs.vite],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
     plugins: {
       'simple-import-sort': simpleImportSort,
+      'react-hooks': reactHooks,
     },
     rules: {
-      // JavaScript
-      'import/no-cycle': 'off',
-      'import/order': 'off',
-      'sort-imports': 'off',
+      // react
+      'react-refresh/only-export-components': 'off',
 
-      // TypeScript
-      '@typescript-eslint/array-type': 'off',
-      '@typescript-eslint/require-await': 'off',
+      // typescript
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/no-unnecessary-condition': 'off',
 
       // simple import sort
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
-
-      // Package
-      'pnpm/json-enforce-catalog': 'off',
     },
   },
-  {
-    ignores: ['eslint.config.js', 'prettier.config.js'],
-  },
-]
+])
