@@ -13,7 +13,7 @@ export default function Profile({ isMobile }: ProfileProps) {
     <Link to="/sign-in">
       <RainbowButton
         className={cn(
-          'h-10 font-serif font-semibold tracking-wider pt-1 rounded-lg',
+          'h-10 rounded-lg pt-1 font-serif font-semibold tracking-wider',
           isMobile && 'w-full',
         )}
       >

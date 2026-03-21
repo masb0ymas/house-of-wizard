@@ -174,9 +174,4 @@ export const TWITTER_META = [
   },
 ]
 
-export const META_TAGS = [
-  ...META_DATA,
-  ...META_CONTENT,
-  ...OPEN_GRAPH_META,
-  ...TWITTER_META,
-]
+export const META_TAGS = [...META_DATA, ...META_CONTENT, ...OPEN_GRAPH_META, ...TWITTER_META]

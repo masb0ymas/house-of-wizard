@@ -11,39 +11,35 @@ export default function CallToAction() {
       <div className="absolute -top-24 right-0 h-64 w-64 rounded-full bg-indigo-200/40 blur-3xl" />
       <div className="absolute -bottom-28 left-0 h-72 w-72 rounded-full bg-purple-200/40 blur-3xl" />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-200/70 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-600">
+            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-200/70 bg-white/80 px-4 py-1 text-xs font-semibold tracking-wider text-indigo-600 uppercase">
               <IconSparkles className="h-4 w-4" />
               Opportunity
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-serif text-neutral-900 leading-tight">
+            <h2 className="font-serif text-3xl leading-tight text-neutral-900 sm:text-5xl">
               Become a Web3 Data Analyst with
-              <span className="block text-indigo-700 font-bold">
-                House of Wizard
-              </span>
+              <span className="block font-bold text-indigo-700">House of Wizard</span>
             </h2>
-            <p className="text-lg text-neutral-600 max-w-xl">
-              Unlock the skills to interpret on-chain activity, DeFi flows, and
-              token movements. Learn with real datasets, mentor feedback, and a
-              career roadmap built for modern Web3 analysts.
+            <p className="max-w-xl text-lg text-neutral-600">
+              Unlock the skills to interpret on-chain activity, DeFi flows, and token movements.
+              Learn with real datasets, mentor feedback, and a career roadmap built for modern Web3
+              analysts.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Link to="/webinar/batch" className="inline-flex">
-                <RainbowButton className="h-11 px-6 rounded-lg gap-2 pt-1">
-                  <span className="font-serif font-semibold tracking-wider">
-                    Join the Cohort
-                  </span>
+                <RainbowButton className="h-11 gap-2 rounded-lg px-6 pt-1">
+                  <span className="font-serif font-semibold tracking-wider">Join the Cohort</span>
                   <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </RainbowButton>
               </Link>
               <Link to="/webinar" className="inline-flex">
                 <Button
                   variant="outline"
-                  className="h-11 px-6 rounded-lg font-serif font-semibold tracking-wider"
+                  className="h-11 rounded-lg px-6 font-serif font-semibold tracking-wider"
                 >
                   Explore Courses
                 </Button>
@@ -70,10 +66,8 @@ export default function CallToAction() {
             <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-xl backdrop-blur">
               <div className="space-y-6">
                 <div>
-                  <p className="text-sm font-semibold text-indigo-600">
-                    What you will master
-                  </p>
-                  <h3 className="text-2xl font-serif text-neutral-900">
+                  <p className="text-sm font-semibold text-indigo-600">What you will master</p>
+                  <h3 className="font-serif text-2xl text-neutral-900">
                     Learn the analyst stack end to end.
                   </h3>
                 </div>
@@ -94,8 +88,8 @@ export default function CallToAction() {
                   ))}
                 </ul>
                 <div className="rounded-2xl bg-indigo-50 px-4 py-3 text-sm text-indigo-700">
-                  Spots are limited. Secure your place and start building a Web3
-                  data career with House of Wizard.
+                  Spots are limited. Secure your place and start building a Web3 data career with
+                  House of Wizard.
                 </div>
               </div>
             </div>

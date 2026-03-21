@@ -9,14 +9,12 @@ export const FEATURES = [
   },
   {
     name: 'Industry Recognition',
-    description:
-      'Our certificates are recognized by leading Web3 companies worldwide',
+    description: 'Our certificates are recognized by leading Web3 companies worldwide',
     icon: IconTrophy,
   },
   {
     name: 'Comprehensive Curriculum',
-    description:
-      'Structured learning path from basics to advanced blockchain analytics',
+    description: 'Structured learning path from basics to advanced blockchain analytics',
     icon: IconBook,
   },
 ]

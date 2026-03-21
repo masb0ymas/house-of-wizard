@@ -8,21 +8,20 @@ export default function AboutSection() {
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-violet-200/35 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-72 w-72 translate-x-1/3 rounded-full bg-fuchsia-200/30 blur-3xl" />
+        <div className="absolute right-0 bottom-0 h-72 w-72 translate-x-1/3 rounded-full bg-fuchsia-200/30 blur-3xl" />
       </div>
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-16 max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-purple-700">
+          <p className="text-xs font-semibold tracking-[0.3em] text-purple-700 uppercase">
             House of Wizard
           </p>
-          <h2 className="mt-4 text-4xl font-semibold text-slate-900 sm:text-5xl font-serif tracking-wide leading-tight">
+          <h2 className="mt-4 font-serif text-4xl leading-tight font-semibold tracking-wide text-slate-900 sm:text-5xl">
             The next generation of education for Web3 Data Analyst
           </h2>
           <div className="mx-auto mt-6 h-px w-24 bg-linear-to-r from-violet-300/40 via-fuchsia-500/70 to-violet-300/40" />
-          <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-            We blend mastery-driven curriculum with studio-level mentorship so
-            every learner can build with confidence, precision, and lasting
-            impact.
+          <p className="mt-6 text-lg leading-relaxed text-slate-600">
+            We blend mastery-driven curriculum with studio-level mentorship so every learner can
+            build with confidence, precision, and lasting impact.
           </p>
         </div>
 
@@ -46,16 +45,14 @@ function FeatureCard({ feature }: { feature: (typeof FEATURES)[0] }) {
         <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-purple-100 text-purple-700 ring-1 ring-purple-200/70">
           <feature.icon className="h-6 w-6" strokeWidth={1.6} />
         </div>
-        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
+        <span className="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase">
           {feature.name}
         </span>
       </div>
-      <h3 className="mt-6 text-xl font-semibold text-slate-900 font-serif tracking-wide">
+      <h3 className="mt-6 font-serif text-xl font-semibold tracking-wide text-slate-900">
         {feature.name}
       </h3>
-      <p className="mt-4 text-sm leading-relaxed text-slate-600">
-        {feature.description}
-      </p>
+      <p className="mt-4 text-sm leading-relaxed text-slate-600">{feature.description}</p>
     </div>
   )
 }
