@@ -1,6 +1,5 @@
 import { IconArrowRight, IconLock, IconUsers } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
-import { useMemo } from 'react'
 
 import { Button } from '~/components/ui/button'
 import {
@@ -41,34 +40,6 @@ export function WebinarCard({
   date,
   duration,
 }: WebinarCardProps) {
-  const status = useMemo(() => {
-    if (isLive) {
-      return {
-        label: 'Live Now',
-        className: 'bg-rose-50 text-rose-700 ring-rose-200',
-      }
-    }
-
-    if (isPremium) {
-      return {
-        label: 'Premium',
-        className: 'bg-amber-50 text-amber-800 ring-amber-200',
-      }
-    }
-
-    if (isRecording) {
-      return {
-        label: 'Replay',
-        className: 'bg-slate-100 text-slate-700 ring-slate-200',
-      }
-    }
-
-    return {
-      label: 'Upcoming',
-      className: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
-    }
-  }, [isLive, isPremium, isRecording])
-
   const renderDays = () => {
     if (isLive || date) {
       return `${formatDate(date!, 'dd/MM/yyyy')} WIB`
