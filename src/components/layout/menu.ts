@@ -33,15 +33,15 @@ export const FooterMenu = {
     { name: 'NFT Data Analysis', href: '#' },
   ],
   quickLinks: [
-    { name: 'About Us', href: '#' },
+    { name: 'About Us', href: '/about' },
     { name: 'Career Paths', href: '#' },
     { name: 'Success Stories', href: '#' },
     { name: 'Blog', href: '#' },
   ],
   support: [
     { name: 'Help Center', href: '#' },
-    { name: 'Terms of Service', href: '/terms-of-service' },
-    { name: 'Privacy Policy', href: '/privacy-policy' },
+    { name: 'Terms of Service', href: '/terms' },
+    { name: 'Privacy Policy', href: '/privacy' },
     { name: 'Contact Us', href: '#' },
   ],
   socialMedia: [

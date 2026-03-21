@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as siteRouteRouteImport } from './routes/(site)/route'
 import { Route as siteTermsIndexRouteImport } from './routes/(site)/terms/index'
 import { Route as sitePrivacyIndexRouteImport } from './routes/(site)/privacy/index'
+import { Route as siteContactIndexRouteImport } from './routes/(site)/contact/index'
 import { Route as siteAboutIndexRouteImport } from './routes/(site)/about/index'
 import { Route as sitehomeIndexRouteImport } from './routes/(site)/(home)/index'
 import { Route as publicWebinarIndexRouteImport } from './routes/(public)/webinar/index'
@@ -33,6 +34,11 @@ const siteTermsIndexRoute = siteTermsIndexRouteImport.update({
 const sitePrivacyIndexRoute = sitePrivacyIndexRouteImport.update({
   id: '/privacy/',
   path: '/privacy/',
+  getParentRoute: () => siteRouteRoute,
+} as any)
+const siteContactIndexRoute = siteContactIndexRouteImport.update({
+  id: '/contact/',
+  path: '/contact/',
   getParentRoute: () => siteRouteRoute,
 } as any)
 const siteAboutIndexRoute = siteAboutIndexRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/webinar/': typeof publicWebinarIndexRoute
   '/': typeof sitehomeIndexRoute
   '/about/': typeof siteAboutIndexRoute
+  '/contact/': typeof siteContactIndexRoute
   '/privacy/': typeof sitePrivacyIndexRoute
   '/terms/': typeof siteTermsIndexRoute
   '/sign-in/': typeof publicauthSignInIndexRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/webinar': typeof publicWebinarIndexRoute
   '/': typeof sitehomeIndexRoute
   '/about': typeof siteAboutIndexRoute
+  '/contact': typeof siteContactIndexRoute
   '/privacy': typeof sitePrivacyIndexRoute
   '/terms': typeof siteTermsIndexRoute
   '/sign-in': typeof publicauthSignInIndexRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/(public)/webinar/': typeof publicWebinarIndexRoute
   '/(site)/(home)/': typeof sitehomeIndexRoute
   '/(site)/about/': typeof siteAboutIndexRoute
+  '/(site)/contact/': typeof siteContactIndexRoute
   '/(site)/privacy/': typeof sitePrivacyIndexRoute
   '/(site)/terms/': typeof siteTermsIndexRoute
   '/(public)/(auth)/sign-in/': typeof publicauthSignInIndexRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/webinar/'
     | '/'
     | '/about/'
+    | '/contact/'
     | '/privacy/'
     | '/terms/'
     | '/sign-in/'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/webinar'
     | '/'
     | '/about'
+    | '/contact'
     | '/privacy'
     | '/terms'
     | '/sign-in'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '/(public)/webinar/'
     | '/(site)/(home)/'
     | '/(site)/about/'
+    | '/(site)/contact/'
     | '/(site)/privacy/'
     | '/(site)/terms/'
     | '/(public)/(auth)/sign-in/'
@@ -185,6 +197,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy/'
       preLoaderRoute: typeof sitePrivacyIndexRouteImport
+      parentRoute: typeof siteRouteRoute
+    }
+    '/(site)/contact/': {
+      id: '/(site)/contact/'
+      path: '/contact'
+      fullPath: '/contact/'
+      preLoaderRoute: typeof siteContactIndexRouteImport
       parentRoute: typeof siteRouteRoute
     }
     '/(site)/about/': {
@@ -249,6 +268,7 @@ declare module '@tanstack/react-router' {
 interface siteRouteRouteChildren {
   sitehomeIndexRoute: typeof sitehomeIndexRoute
   siteAboutIndexRoute: typeof siteAboutIndexRoute
+  siteContactIndexRoute: typeof siteContactIndexRoute
   sitePrivacyIndexRoute: typeof sitePrivacyIndexRoute
   siteTermsIndexRoute: typeof siteTermsIndexRoute
 }
@@ -256,6 +276,7 @@ interface siteRouteRouteChildren {
 const siteRouteRouteChildren: siteRouteRouteChildren = {
   sitehomeIndexRoute: sitehomeIndexRoute,
   siteAboutIndexRoute: siteAboutIndexRoute,
+  siteContactIndexRoute: siteContactIndexRoute,
   sitePrivacyIndexRoute: sitePrivacyIndexRoute,
   siteTermsIndexRoute: siteTermsIndexRoute,
 }

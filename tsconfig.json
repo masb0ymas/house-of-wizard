@@ -1,5 +1,11 @@
 {
-  "include": ["**/*.ts", "**/*.tsx", "eslint.config.js", "prettier.config.js", "vite.config.js"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "eslint.config.js",
+    "prettier.config.js",
+    "vite.config.js"
+  ],
 
   "compilerOptions": {
     "target": "ES2022",
@@ -9,6 +15,13 @@
     "paths": {
       "~/*": ["./src/*"]
     },
+    "plugins": [
+      {
+        "name": "ts-plugin-sort-import-suggestions",
+        "moveUpPatterns": ["@/", "\\.{1,2}/", "~/", "\\.{1,2}/"],
+        "moveDownPatterns": ["@radix-ui", "lucide-react"]
+      }
+    ],
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
 

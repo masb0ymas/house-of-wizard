@@ -24,5 +24,6 @@
     "source.fixAll.tslint": "explicit",
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
