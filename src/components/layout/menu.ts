@@ -42,7 +42,7 @@ export const FooterMenu = {
     { name: 'Help Center', href: '#' },
     { name: 'Terms of Service', href: '/terms' },
     { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Contact Us', href: '#' },
+    { name: 'Contact Us', href: '/contact' },
   ],
   socialMedia: [
     // { name: 'facebook', icon: IconBrandFacebook, href: '/' },
