@@ -5,10 +5,7 @@ import type { Second } from '~/types/time'
 
 const TZ_ID = { locale: id }
 
-export function formatDate(
-  date: string | Date,
-  formatString: string = 'dd/MM/yyyy',
-): string {
+export function formatDate(date: string | Date, formatString: string = 'dd/MM/yyyy'): string {
   return format(new Date(date), formatString, TZ_ID)
 }
 
@@ -46,9 +43,7 @@ export function ms(value: string | number): Second {
   )
 
   if (!match) {
-    throw new Error(
-      `Invalid time format: "${value}". Expected format like "2d", "1.5h", "30min"`,
-    )
+    throw new Error(`Invalid time format: "${value}". Expected format like "2d", "1.5h", "30min"`)
   }
 
   const [, numStr, unit] = match
@@ -112,9 +107,7 @@ export function ms(value: string | number): Second {
 
   // Check for overflow
   if (!isFinite(result)) {
-    throw new Error(
-      `Result overflow: "${value}" produces infinite milliseconds`,
-    )
+    throw new Error(`Result overflow: "${value}" produces infinite milliseconds`)
   }
 
   return Math.round(result)

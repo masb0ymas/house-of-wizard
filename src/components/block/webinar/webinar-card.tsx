@@ -84,11 +84,9 @@ export function WebinarCard({
   const renderButton = () => {
     if (isLive) {
       return (
-        <RainbowButton className="w-full h-10 rounded-xl gap-2" asChild>
+        <RainbowButton className="h-10 w-full gap-2 rounded-xl" asChild>
           <Link to={slug}>
-            <span className="font-serif font-semibold tracking-wider">
-              Join Now
-            </span>
+            <span className="font-serif font-semibold tracking-wider">Join Now</span>
             <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </RainbowButton>
@@ -97,7 +95,7 @@ export function WebinarCard({
 
     if (isPremium) {
       return (
-        <Button className="w-full h-10" asChild>
+        <Button className="h-10 w-full" asChild>
           <Link to="/webinar/watch/$slug" params={{ slug }}>
             <IconLock className="h-6 w-6" />
             <span className="font-semibold tracking-wide">Buy Now</span>
@@ -108,14 +106,14 @@ export function WebinarCard({
 
     if (!isRecording) {
       return (
-        <Button className="w-full h-10" variant={'secondary'}>
+        <Button className="h-10 w-full" variant={'secondary'}>
           <span className="font-medium tracking-wide">No Recording</span>
         </Button>
       )
     }
 
     return (
-      <Button className="w-full h-10" variant="primary" asChild>
+      <Button className="h-10 w-full" variant="primary" asChild>
         <Link to="/webinar/watch/$slug" params={{ slug }}>
           <span className="font-medium tracking-wide">Watch Recording</span>
         </Link>
@@ -129,9 +127,7 @@ export function WebinarCard({
     <Card className="w-[400px]" variant="accent">
       <CardHeader>
         <CardHeading>
-          <CardTitle className="text-purple-900 ring-purple-200">
-            {speaker}
-          </CardTitle>
+          <CardTitle className="text-purple-900 ring-purple-200">{speaker}</CardTitle>
         </CardHeading>
         <CardToolbar>
           <Button variant="outline" size="sm" className="text-purple-800">
@@ -140,21 +136,19 @@ export function WebinarCard({
           </Button>
         </CardToolbar>
       </CardHeader>
-      <CardContent className="py-2 mt-auto flex flex-col">
-        <div className="space-y-2 flex-1 min-h-[96px]">
-          <p className="text-base font-semibold leading-snug text-slate-900 [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
+      <CardContent className="mt-auto flex flex-col py-2">
+        <div className="min-h-[96px] flex-1 space-y-2">
+          <p className="[display:-webkit-box] overflow-hidden text-base leading-snug font-semibold text-slate-900 [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
             {title}
           </p>
-          <p className="text-sm leading-relaxed text-slate-600 [display:-webkit-box] [-webkit-line-clamp:3] [-webkit-box-orient:vertical] overflow-hidden">
+          <p className="[display:-webkit-box] overflow-hidden text-sm leading-relaxed text-slate-600 [-webkit-box-orient:vertical] [-webkit-line-clamp:3]">
             {description}
           </p>
         </div>
         {schedule && (
-          <div className="mt-6 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <div className="mt-6 flex items-center justify-between text-xs font-semibold tracking-wider text-slate-400 uppercase">
             <span>{duration ? 'Duration' : 'Schedule'}</span>
-            <span className="text-sm font-medium normal-case text-slate-700">
-              {schedule}
-            </span>
+            <span className="text-sm font-medium text-slate-700 normal-case">{schedule}</span>
           </div>
         )}
       </CardContent>

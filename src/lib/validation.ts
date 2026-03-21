@@ -64,9 +64,7 @@ export function getValidationMessage<T extends ValidationMessagesKey>(
     if (resolvedType in message) {
       template = (message as Record<string, string>)[resolvedType as string]
     } else {
-      throw new Error(
-        `Type "${String(resolvedType)}" is not valid for rule "${rule}"`,
-      )
+      throw new Error(`Type "${String(resolvedType)}" is not valid for rule "${rule}"`)
     }
   } else {
     template = message
@@ -77,9 +75,7 @@ export function getValidationMessage<T extends ValidationMessagesKey>(
   }
 
   return template.replace(/:([a-zA-Z_]+)/g, (_, key) => {
-    return (params as any)[key] !== undefined
-      ? String((params as any)[key])
-      : `:${key}`
+    return (params as any)[key] !== undefined ? String((params as any)[key]) : `:${key}`
   })
 }
 
@@ -105,9 +101,7 @@ export const requiredEmail = (attribute: string) =>
  * @returns
  */
 export const requiredNumber = (attribute: string) =>
-  z
-    .number()
-    .refine(Number.isInteger, getValidationMessage('numeric', { attribute }))
+  z.number().refine(Number.isInteger, getValidationMessage('numeric', { attribute }))
 
 /**
  * Required date validation

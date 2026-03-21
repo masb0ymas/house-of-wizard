@@ -9,7 +9,7 @@ export const Route = createFileRoute('/(public)/webinar')({
 function RouteComponent() {
   return (
     <MainLayout>
-      <div className="flex flex-col justify-center items-center bg-linear-to-br from-indigo-100 via-white to-purple-100 py-36 pb-24">
+      <div className="flex flex-col items-center justify-center bg-linear-to-br from-indigo-100 via-white to-purple-100 py-36 pb-24">
         <Outlet />
       </div>
     </MainLayout>

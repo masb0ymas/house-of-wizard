@@ -4,10 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 
-import {
-  WebinarCard,
-  WebinarCardSkeleton,
-} from '~/components/block/webinar/webinar-card'
+import { WebinarCard, WebinarCardSkeleton } from '~/components/block/webinar/webinar-card'
 import { Button } from '~/components/ui/button'
 import { Input, InputWrapper } from '~/components/ui/input'
 import { queries } from '~/lib/api/queries'
@@ -39,9 +36,7 @@ function RouteComponent() {
 
   const renderContent = () => {
     if (loading) {
-      return Array.from({ length: 4 }, (_, index) => (
-        <WebinarCardSkeleton key={index} />
-      ))
+      return Array.from({ length: 4 }, (_, index) => <WebinarCardSkeleton key={index} />)
     }
 
     if (webinars.length > 0) {
@@ -64,18 +59,18 @@ function RouteComponent() {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col">
-        <h1 className="text-center text-4xl font-bold font-serif tracking-wide text-gray-800 dark:text-gray-100">
+        <h1 className="text-center font-serif text-4xl font-bold tracking-wide text-gray-800 dark:text-gray-100">
           Webinar
         </h1>
         <h4 className="text-center text-lg text-gray-600 dark:text-gray-300">
-          To become a greater wizard, learn how to analyze Web3 data and start
-          your career in the decentralized future.
+          To become a greater wizard, learn how to analyze Web3 data and start your career in the
+          decentralized future.
         </h4>
       </div>
 
-      <div className="flex justify-center items-center gap-2 mt-8">
+      <div className="mt-8 flex items-center justify-center gap-2">
         <Button variant={'outline'} className="h-10">
           <IconFilter className="h-5 w-5" />
           <span>Filter</span>
@@ -86,7 +81,7 @@ function RouteComponent() {
         </InputWrapper>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-center justify-center mt-8">
+      <div className="mt-8 grid grid-cols-1 items-center justify-center gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {renderContent()}
       </div>
     </section>

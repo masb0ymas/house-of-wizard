@@ -81,6 +81,4 @@ export type ValidationMessagesParams = {
 export type ValidationMessagesKey = keyof ValidationMessagesParams
 
 export type NestedValidationMessagesKey<T extends ValidationMessagesKey> =
-  (typeof VALIDATION_MESSAGES)[T] extends string
-    ? never
-    : keyof (typeof VALIDATION_MESSAGES)[T]
+  (typeof VALIDATION_MESSAGES)[T] extends string ? never : keyof (typeof VALIDATION_MESSAGES)[T]

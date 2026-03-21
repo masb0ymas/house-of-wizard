@@ -16,9 +16,7 @@ export function throwAxiosError(error: Error) {
       throw new Error(`${message || 'Validation failed'}: ${errorMessages}`)
     }
 
-    throw new Error(
-      message || 'An error occurred while creating source of fund',
-    )
+    throw new Error(message || 'An error occurred while creating source of fund')
   }
 
   throw new Error(error.message)

@@ -51,11 +51,7 @@ export function serverResource<
  * @param methods
  * @returns
  */
-export function resource<
-  TPath extends string,
-  TMethods extends readonly HTTP_METHOD[],
-  TData,
->(
+export function resource<TPath extends string, TMethods extends readonly HTTP_METHOD[], TData>(
   fetchInstance: AxiosInstance,
   path: TPath,
   methods: TMethods,
@@ -121,11 +117,10 @@ export function resource<
  * @param methods
  * @returns
  */
-export function resources<
-  TPaths extends string[],
-  TMethods extends readonly HTTP_METHOD[],
-  TData,
->(paths: TPaths, methods: TMethods): Partial<ResourceMethods<TData>>[] {
+export function resources<TPaths extends string[], TMethods extends readonly HTTP_METHOD[], TData>(
+  paths: TPaths,
+  methods: TMethods,
+): Partial<ResourceMethods<TData>>[] {
   const clientFetch = new ServerFetchApi({
     baseURL: String(env.SERVER_URL),
     storageKey: AUTH_STORAGE_KEYS.AUTH_STORAGE,

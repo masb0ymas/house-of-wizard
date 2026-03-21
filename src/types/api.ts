@@ -52,14 +52,8 @@ export type ResourceMethods<TData> = {
   index: (params?: Record<string, unknown>) => Promise<AxiosListResponse<TData>>
   show: (id: string | number) => Promise<AxiosItemResponse<TData>>
   store: (data?: Record<string, unknown>) => Promise<AxiosItemResponse<TData>>
-  edit: (
-    id: string | number,
-    data?: Record<string, unknown>,
-  ) => Promise<AxiosItemResponse<TData>>
-  update: (
-    id: string | number,
-    data?: Record<string, unknown>,
-  ) => Promise<AxiosItemResponse<TData>>
+  edit: (id: string | number, data?: Record<string, unknown>) => Promise<AxiosItemResponse<TData>>
+  update: (id: string | number, data?: Record<string, unknown>) => Promise<AxiosItemResponse<TData>>
   delete: (id: string | number) => Promise<AxiosDeleteResponse>
 }
 
