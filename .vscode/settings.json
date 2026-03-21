@@ -1,14 +1,28 @@
 {
-  "files.exclude": {
-    "node_modules/": true,
-    ".next/": true,
-    ".idea/": true
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
   },
   "search.exclude": {
+    "**/routeTree.gen.ts": true,
     "**/node_modules": true,
     "ios": true,
     "android": true,
-    "vendor": true
+    "vendor": true,
+    ".tanstack/": true
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "files.exclude": {
+    "node_modules/": true,
+    "dist/": true,
+    ".idea/": true,
+    ".tanstack/": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.tslint": "explicit",
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  }
 }

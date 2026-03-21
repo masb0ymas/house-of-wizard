@@ -1,16 +1,16 @@
-import { useId } from "react";
+import { useId } from 'react'
 
-import { cn } from "~/lib/utils";
+import { cn } from '~/lib/utils'
 
-interface GridPatternProps {
-  width?: number;
-  height?: number;
-  x?: number;
-  y?: number;
-  squares?: Array<[x: number, y: number]>;
-  strokeDasharray?: string;
-  className?: string;
-  [key: string]: unknown;
+interface GridPatternProps extends React.SVGProps<SVGSVGElement> {
+  width?: number
+  height?: number
+  x?: number
+  y?: number
+  squares?: Array<[x: number, y: number]>
+  strokeDasharray?: string
+  className?: string
+  [key: string]: unknown
 }
 
 export function GridPattern({
@@ -18,18 +18,18 @@ export function GridPattern({
   height = 40,
   x = -1,
   y = -1,
-  strokeDasharray = "0",
+  strokeDasharray = '0',
   squares,
   className,
   ...props
 }: GridPatternProps) {
-  const id = useId();
+  const id = useId()
 
   return (
     <svg
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30",
+        'pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30',
         className,
       )}
       {...props}
@@ -53,20 +53,18 @@ export function GridPattern({
       <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${id})`} />
       {squares && (
         <svg x={x} y={y} className="overflow-visible">
-          {squares.map(([x, y]) => (
+          {squares.map(([xAxis, yAxis]) => (
             <rect
               strokeWidth="0"
-              key={`${x}-${y}`}
+              key={`${xAxis}-${yAxis}`}
               width={width - 1}
               height={height - 1}
-              x={x * width + 1}
-              y={y * height + 1}
+              x={xAxis * width + 1}
+              y={yAxis * height + 1}
             />
           ))}
         </svg>
       )}
     </svg>
-  );
+  )
 }
-
-export default GridPattern;
