@@ -4,6 +4,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 
+import Loading from '~/components/block/common/loading'
+import NotFound from '~/components/block/common/not-found'
 import { WebinarCard, WebinarCardSkeleton } from '~/components/block/webinar/webinar-card'
 import { Button } from '~/components/ui/button'
 import { Input, InputWrapper } from '~/components/ui/input'
@@ -15,6 +17,8 @@ export const Route = createFileRoute('/(public)/webinar/')({
     return queryClient.ensureQueryData(queryOptions)
   },
   component: RouteComponent,
+  pendingComponent: Loading,
+  notFoundComponent: NotFound,
 })
 
 function RouteComponent() {
