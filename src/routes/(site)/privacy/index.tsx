@@ -1,9 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
 
+import Loading from '~/components/block/common/loading'
+import NotFound from '~/components/block/common/not-found'
 import { Separator } from '~/components/ui/separator'
 
 export const Route = createFileRoute('/(site)/privacy/')({
   component: RouteComponent,
+  pendingComponent: Loading,
+  notFoundComponent: NotFound,
 })
 
 function RouteComponent() {

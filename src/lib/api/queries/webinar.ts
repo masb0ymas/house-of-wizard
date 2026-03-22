@@ -15,6 +15,13 @@ const listWebinars = (params?: PaginateDto) =>
       }),
   })
 
+const getWebinarBySlug = (slug: string) =>
+  queryOptions({
+    queryKey: ['webinar', slug],
+    queryFn: () => servers.webinar.slug({ data: slug }),
+  })
+
 export const webinarQueries = {
   list: listWebinars,
+  slug: getWebinarBySlug,
 } as const

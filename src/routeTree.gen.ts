@@ -316,7 +316,9 @@ const siteRouteRouteChildren: siteRouteRouteChildren = {
   siteTermsIndexRoute: siteTermsIndexRoute,
 }
 
-const siteRouteRouteWithChildren = siteRouteRoute._addFileChildren(siteRouteRouteChildren)
+const siteRouteRouteWithChildren = siteRouteRoute._addFileChildren(
+  siteRouteRouteChildren,
+)
 
 interface publicWebinarRouteRouteChildren {
   publicWebinarIndexRoute: typeof publicWebinarIndexRoute
@@ -330,9 +332,8 @@ const publicWebinarRouteRouteChildren: publicWebinarRouteRouteChildren = {
   publicWebinarBatchIndexRoute: publicWebinarBatchIndexRoute,
 }
 
-const publicWebinarRouteRouteWithChildren = publicWebinarRouteRoute._addFileChildren(
-  publicWebinarRouteRouteChildren,
-)
+const publicWebinarRouteRouteWithChildren =
+  publicWebinarRouteRoute._addFileChildren(publicWebinarRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   siteRouteRoute: siteRouteRouteWithChildren,

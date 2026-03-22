@@ -7,9 +7,17 @@ export const listWebinarsFn = createServerFn({ method: 'GET' })
   .inputValidator((data: PaginateDto) => data)
   .handler(async ({ data }) => {
     const res = await services.webinars.index({
-      offset: data.offset,
-      limit: data.limit,
+      page: data.offset,
+      pageSize: data.limit,
     })
+
+    return res.data
+  })
+
+export const getWebinarBySlugFn = createServerFn({ method: 'GET' })
+  .inputValidator((slug: string) => slug)
+  .handler(async ({ data }) => {
+    const res = await services.webinars.slug(data)
 
     return res.data
   })

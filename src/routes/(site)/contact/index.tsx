@@ -1,35 +1,17 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 
+import Loading from '~/components/block/common/loading'
+import NotFound from '~/components/block/common/not-found'
 import { Separator } from '~/components/ui/separator'
+import { DIRECT_CONTACTS } from '~/data/mock-site'
 
 export const Route = createFileRoute('/(site)/contact/')({
   component: RouteComponent,
+  pendingComponent: Loading,
+  notFoundComponent: NotFound,
 })
 
 function RouteComponent() {
-  const directContacts = [
-    {
-      name: 'Email',
-      value: 'info@house-of-wizard.xyz',
-      href: 'mailto:info@house-of-wizard.xyz',
-    },
-    {
-      name: 'Telegram',
-      value: '@HouseOfWizard',
-      href: 'https://t.me/HouseofWizard',
-    },
-    {
-      name: 'Community office hours',
-      value: 'Wednesdays, 19:00-21:00 GMT+7',
-      href: '#',
-    },
-    {
-      name: 'Response time',
-      value: 'Within 24 hours on business days',
-      href: '#',
-    },
-  ]
-
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-amber-50 py-24 sm:py-28">
       <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
@@ -144,7 +126,7 @@ function RouteComponent() {
             <div className="rounded-lg border border-slate-200/70 bg-white/90 p-6 shadow-xs">
               <h3 className="text-lg font-semibold text-slate-900">Direct channels</h3>
               <div className="mt-4 space-y-4 text-slate-600">
-                {directContacts.map((item) => (
+                {DIRECT_CONTACTS.map((item) => (
                   <div key={item.name}>
                     <p className="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase">
                       {item.name}
