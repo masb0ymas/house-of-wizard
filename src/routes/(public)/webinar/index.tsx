@@ -13,7 +13,7 @@ import { queries } from '~/lib/api/queries'
 
 export const Route = createFileRoute('/(public)/webinar/')({
   loader: ({ context: { queryClient } }) => {
-    const queryOptions = queries.webinar.list({ offset: 0, limit: 10 })
+    const queryOptions = queries.webinar.list({ offset: 0, limit: 9 })
     return queryClient.ensureQueryData(queryOptions)
   },
   component: RouteComponent,
@@ -26,7 +26,7 @@ function RouteComponent() {
   const [queryPageSize] = useQueryState('pageSize')
 
   const page = queryPage ? Number(queryPage) : 0
-  const pageSize = queryPageSize ? Number(queryPageSize) : 10
+  const pageSize = queryPageSize ? Number(queryPageSize) : 9
   const offset = Math.max(page * pageSize, 0)
 
   const {

@@ -58,7 +58,7 @@ function RouteComponent() {
 
   const renderWebinarContent = () => {
     if (queryListWebinars.isLoading || queryListWebinars.isFetching) {
-      return Array.from({ length: 4 }, (_, index) => <WebinarCardSkeleton key={index} />)
+      return Array.from({ length: 3 }, (_, index) => <WebinarCardSkeleton key={index} />)
     }
 
     if (webinars.length > 0) {
