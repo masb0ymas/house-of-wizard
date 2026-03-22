@@ -1,0 +1,159 @@
+---
+name: Build and Push Image to ECR
+on:
+  push:
+    tags:
+      - '*'
+
+concurrency:
+  group: ecr-main-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-push-ecr-release:
+    name: Build and Push to ECR ( Release )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      image-tag: ${{ steps.meta.outputs.image-tag }}
+      image-uri: ${{ steps.build-image.outputs.image-uri }}
+      commit-sha: ${{ github.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Create .env.production File
+        run: echo "${{ vars.ENV_PRODUCTION }}" > .env.production
+
+      - name: Set Image Metadata
+        id: meta
+        run: |-
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
+          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          echo "Short SHA: $SHORT_SHA"
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "RELEASE_VERSION=release-${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+          echo "COMMIT_SHA=${{ github.sha }}" >> $GITHUB_ENV
+          echo "ECR_REPOSITORY_IMAGE=${{ vars.AWS_PROJECT_ID }}/${{ vars.AWS_IMAGE_NAME }}" >> $GITHUB_ENV
+          echo "image-tag=release-${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, Tag, and Push the Image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_IMAGE }}
+          IMAGE_TAG: ${{ env.RELEASE_VERSION }}
+        run: |
+          IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker buildx build \
+            --platform linux/amd64 \
+            --file Dockerfile \
+            --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            --push \
+            .
+          echo "image-uri=$IMAGE_URI" >> $GITHUB_OUTPUT
+          echo "Image pushed: $IMAGE_URI"
+
+      - name: Call Webhook
+        uses: joelwmale/webhook-action@2.3.2
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_IMAGE }}
+          IMAGE_REGISTRY: Amazon Elastic Container Registry
+          IMAGE_REPOSITORY: ecr.${{ vars.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY_IMAGE }}
+          IMAGE_TAG: ${{ env.RELEASE_VERSION }}
+        with:
+          url: ${{ secrets.WEBHOOK_URL }}/api/v1/workflow-github?telegram_chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&registry=${{ env.IMAGE_REGISTRY }}
+          body: '{"push_data":{"tag":"${{ env.IMAGE_TAG }}"},"repository":{"name":"${{ env.IMAGE_REPOSITORY }}"}}'
+
+  build-push-ecr-staging:
+    name: Build and Push to ECR ( Staging )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      image-tag: ${{ steps.meta.outputs.image-tag }}
+      image-uri: ${{ steps.build-image.outputs.image-uri }}
+      commit-sha: ${{ github.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Create .env.staging File
+        run: echo "${{ vars.ENV_STAGING }}" > .env.staging
+
+      - name: Set Image Metadata
+        id: meta
+        run: |-
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
+          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          echo "Short SHA: $SHORT_SHA"
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "STAGING_VERSION=staging-${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+          echo "COMMIT_SHA=${{ github.sha }}" >> $GITHUB_ENV
+          echo "ECR_REPOSITORY_IMAGE=${{ vars.AWS_PROJECT_ID }}/${{ vars.AWS_IMAGE_NAME }}" >> $GITHUB_ENV
+          echo "image-tag=staging-${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, Tag, and Push the Image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_IMAGE }}
+          IMAGE_TAG: ${{ env.STAGING_VERSION }}
+        run: |
+          IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker buildx build \
+            --platform linux/amd64 \
+            --file Dockerfile.dev \
+            --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            --push \
+            .
+          echo "image-uri=$IMAGE_URI" >> $GITHUB_OUTPUT
+          echo "Image pushed: $IMAGE_URI"
+
+      - name: Call Webhook
+        uses: joelwmale/webhook-action@2.3.2
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_IMAGE }}
+          IMAGE_REGISTRY: Amazon Elastic Container Registry
+          IMAGE_REPOSITORY: ecr.${{ vars.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY_IMAGE }}
+          IMAGE_TAG: ${{ env.STAGING_VERSION }}
+        with:
+          url: ${{ secrets.WEBHOOK_URL }}/api/v1/workflow-github?telegram_chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&registry=${{ env.IMAGE_REGISTRY }}
+          body: '{"push_data":{"tag":"${{ env.IMAGE_TAG }}"},"repository":{"name":"${{ env.IMAGE_REPOSITORY }}"}}'
