@@ -73,3 +73,26 @@ export const FAQS = [
       'Yes, our Enterprise plan includes comprehensive job placement assistance, including resume reviews, interview preparation, and direct connections with hiring partners.',
   },
 ]
+
+export const DIRECT_CONTACTS = [
+  {
+    name: 'Email',
+    value: 'info@house-of-wizard.xyz',
+    href: 'mailto:info@house-of-wizard.xyz',
+  },
+  {
+    name: 'Telegram',
+    value: '@HouseOfWizard',
+    href: 'https://t.me/HouseofWizard',
+  },
+  {
+    name: 'Community office hours',
+    value: 'Wednesdays, 19:00-21:00 GMT+7',
+    href: '#',
+  },
+  {
+    name: 'Response time',
+    value: 'Within 24 hours on business days',
+    href: '#',
+  },
+]
