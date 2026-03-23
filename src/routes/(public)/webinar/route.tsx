@@ -1,9 +1,11 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
+import NotFound from '~/components/block/common/not-found'
 import MainLayout from '~/components/layout/main-layout'
 
 export const Route = createFileRoute('/(public)/webinar')({
   component: RouteComponent,
+  notFoundComponent: NotFound,
 })
 
 function RouteComponent() {

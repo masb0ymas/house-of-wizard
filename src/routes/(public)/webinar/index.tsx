@@ -1,6 +1,6 @@
 import { IconFilter, IconSearch } from '@tabler/icons-react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, ErrorComponent } from '@tanstack/react-router'
 import { useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 
@@ -12,13 +12,14 @@ import { Input, InputWrapper } from '~/components/ui/input'
 import { queries } from '~/lib/api/queries'
 
 export const Route = createFileRoute('/(public)/webinar/')({
-  loader: ({ context: { queryClient } }) => {
+  loader: async ({ context: { queryClient } }) => {
     const queryOptions = queries.webinar.list({ offset: 0, limit: 9 })
     return queryClient.ensureQueryData(queryOptions)
   },
   component: RouteComponent,
   pendingComponent: Loading,
   notFoundComponent: NotFound,
+  errorComponent: ErrorComponent,
 })
 
 function RouteComponent() {
@@ -40,7 +41,7 @@ function RouteComponent() {
 
   const renderContent = () => {
     if (loading) {
-      return Array.from({ length: 4 }, (_, index) => <WebinarCardSkeleton key={index} />)
+      return Array.from({ length: 3 }, (_, index) => <WebinarCardSkeleton key={index} />)
     }
 
     if (webinars.length > 0) {

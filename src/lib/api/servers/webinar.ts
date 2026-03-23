@@ -21,3 +21,20 @@ export const getWebinarBySlugFn = createServerFn({ method: 'GET' })
 
     return res.data
   })
+
+export const listWebinarPrivatePlansFn = createServerFn({ method: 'GET' })
+  .inputValidator((data: PaginateDto) => data)
+  .handler(async ({ data }) => {
+    const res = await services.webinarPrivatePlan.index({
+      page: data.offset,
+      pageSize: data.limit,
+    })
+
+    return res.data
+  })
+
+export const getWebinarPrivatePlanFn = createServerFn({ method: 'GET' }).handler(async () => {
+  const res = await services.webinarPrivatePlan.open()
+
+  return res.data
+})

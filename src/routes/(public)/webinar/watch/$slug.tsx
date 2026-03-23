@@ -1,27 +1,33 @@
+import { IconVideoOff } from '@tabler/icons-react'
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, ErrorComponent } from '@tanstack/react-router'
 import _ from 'lodash'
+import { ArrowLeft } from 'lucide-react'
 import { useMemo } from 'react'
 
 import Loading from '~/components/block/common/loading'
 import NotFound from '~/components/block/common/not-found'
 import Plyr from '~/components/block/common/plyr'
+import SimpleEmpty from '~/components/block/common/simple-empty'
 import { WebinarCard, WebinarCardSkeleton } from '~/components/block/webinar/webinar-card'
+import { Button } from '~/components/ui/button'
 import { Separator } from '~/components/ui/separator'
 import { queries } from '~/lib/api/queries'
 
 export const Route = createFileRoute('/(public)/webinar/watch/$slug')({
-  loader: ({ params, context: { queryClient } }) => {
+  loader: async ({ params, context: { queryClient } }) => {
     const queryOptions = queries.webinar.slug(params.slug)
     return queryClient.ensureQueryData(queryOptions)
   },
   component: RouteComponent,
   pendingComponent: Loading,
   notFoundComponent: NotFound,
+  errorComponent: ErrorComponent,
 })
 
 function RouteComponent() {
   const { slug } = Route.useParams()
+  const navigate = Route.useNavigate()
 
   const queryWebinar = useSuspenseQuery(queries.webinar.slug(slug))
   const queryListWebinars = useQuery(queries.webinar.list({ offset: 0, limit: 3 }))
@@ -34,6 +40,23 @@ function RouteComponent() {
       return <WebinarCardSkeleton />
     }
 
+    if (_.isEmpty(webinar.recording_url)) {
+      return (
+        <div className="flex items-center justify-center py-20">
+          <SimpleEmpty
+            title="No Recording Available"
+            description="The webinar you are looking for does not have a recording yet."
+            icon={IconVideoOff}
+          >
+            <Button onClick={() => navigate({ to: '/webinar' })}>
+              <ArrowLeft />
+              <span>Back</span>
+            </Button>
+          </SimpleEmpty>
+        </div>
+      )
+    }
+
     return (
       <>
         <h1 className="font-serif text-4xl font-semibold tracking-wide">{webinar?.title}</h1>
@@ -41,17 +64,7 @@ function RouteComponent() {
           Elevate your expertise by learning how to analyze Web3 data and take the first step toward
           a career in the decentralized future.
         </h4>
-
-        {_.isEmpty(webinar?.recording_url) ? (
-          <>
-            <h4 className="mt-10 font-serif text-2xl font-semibold tracking-wide">
-              No recording available
-            </h4>
-            <Separator />
-          </>
-        ) : (
-          <Plyr title={String(webinar?.title)} src={String(webinar?.recording_url)} />
-        )}
+        <Plyr title={String(webinar?.title)} src={String(webinar?.recording_url)} />
       </>
     )
   }

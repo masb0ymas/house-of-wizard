@@ -1,4 +1,5 @@
 import { IconBook, IconTrophy, IconUsers } from '@tabler/icons-react'
+import { BookOpen, Calendar, Clock, Sparkles, Trophy, Users } from 'lucide-react'
 
 export const FEATURES = [
   {
@@ -94,5 +95,71 @@ export const DIRECT_CONTACTS = [
     name: 'Response time',
     value: 'Within 24 hours on business days',
     href: '#',
+  },
+]
+
+export const COURSE_DETAIL_FEATURES = [
+  {
+    icon: BookOpen,
+    title: 'Comprehensive Curriculum',
+    description: 'Master Web3 data analysis through hands-on projects and real-world case studies',
+  },
+  {
+    icon: Users,
+    title: 'Small Batch Size',
+    description: 'Limited to 20 students for personalized attention and better learning',
+  },
+  {
+    icon: Clock,
+    title: '16 Weeks Program',
+    description: '3 live sessions per week, 2 hours each with recorded sessions',
+  },
+  {
+    icon: Calendar,
+    title: 'Flexible Schedule',
+    description: 'Evening classes designed for working professionals',
+  },
+  {
+    icon: Trophy,
+    title: 'Industry Certificate',
+    description: 'Earn a verified certificate upon course completion',
+  },
+  {
+    icon: Sparkles,
+    title: 'Career Support',
+    description: '1-on-1 mentorship and job placement assistance',
+  },
+]
+
+export const COURSE_CURRICULUM = [
+  {
+    week: 'Week 1-2',
+    title: 'Foundations of Web3',
+    topics: ['Blockchain fundamentals', 'Smart contracts', 'DeFi basics'],
+  },
+  {
+    week: 'Week 3-4',
+    title: 'Data Analysis Tools',
+    topics: ['Python for blockchain', 'Web3 libraries', 'Data visualization'],
+  },
+  {
+    week: 'Week 5-6',
+    title: 'DeFi Analytics',
+    topics: ['Liquidity analysis', 'Yield farming metrics', 'Risk assessment'],
+  },
+  {
+    week: 'Week 7-8',
+    title: 'NFT Market Analysis',
+    topics: ['Collection analytics', 'Market trends', 'Rarity analysis'],
+  },
+  {
+    week: 'Week 9-10',
+    title: 'Advanced Topics',
+    topics: ['MEV analysis', 'Cross-chain analytics', 'Protocol metrics'],
+  },
+  {
+    week: 'Week 11-12',
+    title: 'Final Project',
+    topics: ['Real-world analysis', 'Portfolio building', 'Presentation'],
   },
 ]

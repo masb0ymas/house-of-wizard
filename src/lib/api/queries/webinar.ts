@@ -21,7 +21,17 @@ const getWebinarBySlug = (slug: string) =>
     queryFn: () => servers.webinar.slug({ data: slug }),
   })
 
+const getWebinarPrivatePlan = () =>
+  queryOptions({
+    queryKey: ['webinar-private-plan'],
+    queryFn: () => servers.webinarPrivatePlan.get(),
+  })
+
 export const webinarQueries = {
   list: listWebinars,
   slug: getWebinarBySlug,
+} as const
+
+export const webinarPrivatePlanQueries = {
+  get: getWebinarPrivatePlan,
 } as const

@@ -15,7 +15,7 @@ export default function NotFound() {
   const { navigate } = useRouter()
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex min-h-[calc(100vh-15rem)] items-center justify-center">
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">
