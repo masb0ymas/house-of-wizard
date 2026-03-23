@@ -4,11 +4,15 @@ import { cn } from '~/lib/utils'
 
 export default function CoursesDetailSection() {
   return (
-    <section className="relative mb-20">
-      <h2 className="mb-10 text-center font-serif text-xl font-bold tracking-wide text-slate-800 sm:text-3xl">
-        {"What You'll Get"}
-      </h2>
-      <CourseDetails />
+    <section className="relative mb-20 overflow-hidden">
+      <div className="relative px-4 sm:px-6 lg:px-8">
+        <h2 className="mb-10 text-center font-serif text-2xl font-semibold tracking-[0.08em] text-slate-900 sm:text-3xl">
+          {"What You'll Get"}
+        </h2>
+        <div className="relative z-10 w-full py-6 sm:py-8">
+          <CourseDetails />
+        </div>
+      </div>
 
       <GridPattern
         squares={[
@@ -36,20 +40,20 @@ export default function CoursesDetailSection() {
 
 function CourseDetails() {
   return (
-    <div className="grid gap-2 sm:gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+    <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
       {COURSE_DETAIL_FEATURES.map((feature, index) => (
         <div
           key={index}
-          className="bg-background z-10 flex flex-row items-center gap-4 rounded-xl p-6 transition-all duration-300 hover:shadow-lg"
+          className="group relative flex items-start gap-4 rounded-2xl border border-slate-200/60 bg-linear-to-br from-white via-white to-slate-50/80 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
         >
-          <div className="shrink-0 text-gray-900">
+          <div className="shrink-0 rounded-2xl bg-slate-900/5 p-3 text-slate-900 ring-1 ring-slate-200/70 transition duration-300 group-hover:bg-slate-900/10">
             <feature.icon className="size-6" />
           </div>
           <div>
-            <h3 className="mb-1 font-serif font-semibold tracking-wide text-gray-900">
+            <h3 className="mb-1 font-serif text-lg font-semibold tracking-wide text-slate-900">
               {feature.title}
             </h3>
-            <p className="text-gray-900">{feature.description}</p>
+            <p className="text-sm leading-relaxed text-slate-600">{feature.description}</p>
           </div>
         </div>
       ))}
