@@ -16,3 +16,6 @@ todos.json
 .env.development
 .env.staging
 .env.production
+
+# Local Netlify folder
+.netlify

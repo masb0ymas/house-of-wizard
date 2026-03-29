@@ -4,5 +4,8 @@ yarn.lock
 
 /src/routeTree.gen.ts
 
+# Local Netlify folder
+.netlify
+
 .tanstack
 node_modules
