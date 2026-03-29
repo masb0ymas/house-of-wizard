@@ -7,7 +7,7 @@ import { useMemo } from 'react'
 
 import Loading from '~/components/block/common/loading'
 import NotFound from '~/components/block/common/not-found'
-import Plyr from '~/components/block/common/plyr'
+import YoutubePlyr from '~/components/block/common/plyr'
 import SimpleEmpty from '~/components/block/common/simple-empty'
 import { WebinarCard, WebinarCardSkeleton } from '~/components/block/webinar/webinar-card'
 import { Button } from '~/components/ui/button'
@@ -64,7 +64,7 @@ function RouteComponent() {
           Elevate your expertise by learning how to analyze Web3 data and take the first step toward
           a career in the decentralized future.
         </h4>
-        <Plyr title={String(webinar?.title)} src={String(webinar?.recording_url)} />
+        <YoutubePlyr src={String(webinar?.recording_url)} />
       </>
     )
   }

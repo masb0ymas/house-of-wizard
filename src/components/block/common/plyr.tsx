@@ -1,26 +1,30 @@
-import '@vidstack/react/player/styles/base.css'
-import '@vidstack/react/player/styles/plyr/theme.css'
+import 'plyr-react/plyr.css'
 
-import { MediaPlayer, MediaProvider } from '@vidstack/react'
-import { PlyrLayout, plyrLayoutIcons } from '@vidstack/react/player/layouts/plyr'
+import { Plyr } from 'plyr-react'
+import { useRef } from 'react'
 
-interface PlyrProps {
-  title: string
+interface YoutubePlyrProps {
+  title?: string
   src: string
 }
 
-export default function Plyr({ title, src }: PlyrProps) {
+export default function YoutubePlyr({ src }: YoutubePlyrProps) {
+  const ref = useRef(null)
+  const youtubeID = src.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)?.[1]
+
+  const youtubeVideoSrc = {
+    type: 'video' as const,
+    sources: [
+      {
+        src: youtubeID ?? '', // YouTube video ID or URL
+        provider: 'youtube' as const,
+      },
+    ],
+  }
+
   return (
-    <MediaPlayer
-      title={title}
-      src={src}
-      crossOrigin="anonymous"
-      playsInline
-      viewType="video"
-      streamType="on-demand"
-    >
-      <MediaProvider />
-      <PlyrLayout icons={plyrLayoutIcons} />
-    </MediaPlayer>
+    <div className="relative w-full">
+      <Plyr ref={ref} source={youtubeVideoSrc} />
+    </div>
   )
 }
