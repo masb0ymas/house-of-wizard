@@ -11,7 +11,7 @@ export function getRouter() {
     routeTree,
     context: { ...rqContext },
     defaultPreload: 'intent',
-    defaultPreloadStaleTime: 0,
+    defaultPreloadStaleTime: 30_000, // 30 seconds
     scrollRestoration: true,
     Wrap: (props: { children: React.ReactNode }) => {
       return <ReactQueryProvider {...rqContext}>{props.children}</ReactQueryProvider>
