@@ -6,6 +6,6 @@ yarn.lock
 
 # Local Netlify folder
 .netlify
-
+.wrangler
 .tanstack
 node_modules
