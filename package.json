@@ -11,6 +11,7 @@
     "lint": "eslint",
     "format": "prettier --check .",
     "check": "prettier --write . && eslint --fix",
+    "deploy": "netlify deploy --build",
     "release": "release-it",
     "release:pre": "release-it --preRelease=beta",
     "release:patch": "release-it patch",
@@ -51,6 +52,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@netlify/vite-plugin-tanstack-start": "^1.3.2",
     "@tailwindcss/typography": "^0.5.19",
     "@tanstack/devtools-vite": "^0.3.12",
     "@tanstack/eslint-config": "^0.3.4",
