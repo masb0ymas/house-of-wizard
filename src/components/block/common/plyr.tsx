@@ -23,7 +23,7 @@ export default function YoutubePlyr({ src }: YoutubePlyrProps) {
   }
 
   return (
-    <div className="relative w-full">
+    <div className="h-full w-full [&_.plyr]:h-full [&_.plyr]:w-full [&_.plyr__video-wrapper]:h-full [&_.plyr__video-wrapper]:w-full [&_iframe]:h-full! [&_iframe]:w-full!">
       <Plyr ref={ref} source={youtubeVideoSrc} />
     </div>
   )

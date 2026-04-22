@@ -11,6 +11,7 @@ import YoutubePlyr from '~/components/block/common/plyr'
 import SimpleEmpty from '~/components/block/common/simple-empty'
 import { WebinarCard, WebinarCardSkeleton } from '~/components/block/webinar/webinar-card'
 import { Button } from '~/components/ui/button'
+import { Container } from '~/components/ui/container'
 import { Separator } from '~/components/ui/separator'
 import { queries } from '~/lib/api/queries'
 
@@ -58,14 +59,16 @@ function RouteComponent() {
     }
 
     return (
-      <>
+      <Container className="relative grid gap-7.5 pb-4 lg:pb-6">
         <h1 className="font-serif text-4xl font-semibold tracking-wide">{webinar?.title}</h1>
         <h4 className="text-base text-gray-600 sm:text-lg dark:text-gray-300">
           Elevate your expertise by learning how to analyze Web3 data and take the first step toward
           a career in the decentralized future.
         </h4>
-        <YoutubePlyr src={String(webinar?.recording_url)} />
-      </>
+        <div className="bg-muted aspect-video overflow-hidden rounded-lg">
+          <YoutubePlyr src={String(webinar?.recording_url)} />
+        </div>
+      </Container>
     )
   }
 
