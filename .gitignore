@@ -1,21 +1,10 @@
 node_modules
-.DS_Store
-dist
-dist-ssr
-*.local
-.nitro
-.tanstack
-.wrangler
-.output
-.vinxi
-__unconfig*
-todos.json
+.env*
+.next
+/dist/
+.vinext/
+.wrangler/
 
-.env
-.env.local
-.env.development
-.env.staging
-.env.production
-
-# Local Netlify folder
-.netlify
+.dev.vars*
+!.dev.vars.example
+!.env.example
