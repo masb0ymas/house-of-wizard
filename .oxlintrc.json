@@ -16,5 +16,13 @@
   },
   "env": {
     "builtin": true
-  }
+  },
+  "ignorePatterns": [
+    "next-env.d.ts",
+    "tsconfig.tsbuildinfo",
+    ".next",
+    "dist",
+    ".wrangler",
+    ".vinext"
+  ]
 }
