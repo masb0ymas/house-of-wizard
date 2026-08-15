@@ -1,5 +1,4 @@
 import "vinext/types";
-
 import "./.next/types/routes.d.ts";
 
 // NOTE: This file should not be edited
