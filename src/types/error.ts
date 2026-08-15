@@ -1,9 +1,0 @@
-export enum AUTH_ERROR_TYPE {
-  INVALID_LOGIN_CREDENTIALS = 'INVALID_LOGIN_CREDENTIALS',
-  INVALID_CREDENTIALS = 'INVALID_CREDENTIALS',
-}
-
-export interface AuthError {
-  code: number
-  message: AUTH_ERROR_TYPE
-}

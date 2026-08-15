@@ -1,29 +1,25 @@
 {
-  "files.watcherExclude": {
-    "**/routeTree.gen.ts": true
-  },
-  "search.exclude": {
-    "**/routeTree.gen.ts": true,
-    "**/node_modules": true,
-    "ios": true,
-    "android": true,
-    "vendor": true,
-    ".tanstack/": true
-  },
-  "files.readonlyInclude": {
-    "**/routeTree.gen.ts": true
-  },
-  "files.exclude": {
-    "node_modules/": true,
-    "dist/": true,
-    ".idea/": true,
-    ".tanstack/": true
+  "files.associations": {
+    "wrangler.json": "jsonc"
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.tslint": "explicit",
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
+    "source.fixAll.oxc": "always"
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "node_modules": true,
+    "dist": true,
+    ".next": true,
+    ".vinext": true,
+    ".wrangler": true
+  },
+  "prettier.printWidth": 100,
+  "prettier.tabWidth": 2,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5"
 }
