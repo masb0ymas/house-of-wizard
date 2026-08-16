@@ -11,7 +11,7 @@ import { NavMenu } from './menu'
 import Profile from './profile'
 
 interface PublicHeaderProps {
-  auth?: AuthSession
+  auth?: AuthSession | null
 }
 
 export default function PublicHeader({ auth }: PublicHeaderProps) {

@@ -26,18 +26,10 @@ export default function LoginForm({ title, className, ...props }: LoginFormProps
             </FieldSeparator>
 
             <FieldGroup>
-              <Field className="grid grid-cols-3 gap-4">
-                <Button variant="outline" type="button">
-                  <Icons.github className="size-4.5" />
-                  <span className="sr-only">Login with Github</span>
-                </Button>
-                <Button variant="outline" type="button">
+              <Field className="w-full">
+                <Button variant="outline" type="button" className="w-full h-10 text-base">
                   <Icons.googleColorful className="size-6" />
-                  <span className="sr-only">Login with Google</span>
-                </Button>
-                <Button variant="outline" type="button">
-                  <Icons.twitter className="size-4" />
-                  <span className="sr-only">Login with Twitter</span>
+                  <span>Login with Google</span>
                 </Button>
               </Field>
               <FieldDescription className="text-center">
