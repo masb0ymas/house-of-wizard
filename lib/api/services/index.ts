@@ -1,6 +1,6 @@
 import { authServices } from './auth'
 import { osmServices } from './osm'
-import { webinarPrivatePlanService, webinarService } from './webinar'
+import { webinarLogAttendanceService, webinarPrivatePlanService, webinarService } from './webinar'
 
 export const services = {
   auth: authServices,
@@ -8,5 +8,6 @@ export const services = {
   webinar: {
     main: webinarService,
     privatePlan: webinarPrivatePlanService,
+    logAttendance: webinarLogAttendanceService,
   },
 } as const

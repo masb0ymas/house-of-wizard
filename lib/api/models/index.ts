@@ -5,6 +5,7 @@ import type { Session as SessionModel } from './session'
 import type { User as UserModel } from './user'
 import type {
   WebinarBatchEntity as WebinarBatchEntityModel,
+  WebinarLogAttendance as WebinarLogAttendanceModel,
   Webinar as WebinarModel,
   WebinarPrivatePlan as WebinarPrivatePlanModel,
 } from './webinar'
@@ -16,4 +17,5 @@ export namespace Models {
   export type Webinar = WebinarModel
   export type WebinarPrivatePlan = WebinarPrivatePlanModel
   export type WebinarBatchEntity = WebinarBatchEntityModel
+  export type WebinarLogAttendance = WebinarLogAttendanceModel
 }

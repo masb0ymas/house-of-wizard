@@ -1,4 +1,6 @@
-import { IconArrowRight, IconLock, IconUsers } from '@tabler/icons-react'
+'use client'
+
+import { IconArrowRight, IconLock, IconLogin, IconUsers } from '@tabler/icons-react'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -23,6 +25,7 @@ interface WebinarCardProps {
   isLive?: boolean
   isPremium?: boolean
   isRecording?: boolean
+  isAuth?: boolean
   slug: string
   date?: Date
   duration?: string
@@ -36,13 +39,14 @@ export function WebinarCard({
   isLive = false,
   isPremium = false,
   isRecording = false,
+  isAuth = false,
   slug,
   date,
   duration,
 }: WebinarCardProps) {
   const renderDays = () => {
     if (isLive || date) {
-      return `${formatDate(date!, 'dd/MM/yyyy')} WIB`
+      return `${formatDate(date!, 'dd/MM/yyyy HH:mm')} WIB`
     }
 
     if (duration) {
@@ -53,6 +57,17 @@ export function WebinarCard({
   }
 
   const renderButton = () => {
+    if (!isAuth) {
+      return (
+        <Button className="h-10 w-full rounded-lg" variant="primary" asChild>
+          <Link href="/sign-in">
+            <span className="font-serif font-semibold tracking-wider">Sign In</span>
+            <IconLogin className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        </Button>
+      )
+    }
+
     if (isLive) {
       return (
         <RainbowButton className="h-10 w-full gap-2 rounded-xl" asChild>
@@ -95,7 +110,7 @@ export function WebinarCard({
   const schedule = renderDays()
 
   return (
-    <Card className="w-[400px]" variant="accent">
+    <Card className="w-100" variant="accent">
       <CardHeader>
         <CardHeading>
           <CardTitle className="text-purple-900 ring-purple-200">{speaker}</CardTitle>
@@ -108,7 +123,7 @@ export function WebinarCard({
         </CardToolbar>
       </CardHeader>
       <CardContent className="mt-auto flex flex-col py-2">
-        <div className="min-h-[96px] flex-1 space-y-2">
+        <div className="min-h-24 flex-1 space-y-2">
           <p className="[display:-webkit-box] overflow-hidden text-base leading-snug font-semibold text-slate-900 [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
             {title}
           </p>
@@ -130,19 +145,19 @@ export function WebinarCard({
 
 export function WebinarCardSkeleton() {
   return (
-    <div className="h-full w-[400px] rounded-2xl border border-gray-200/80 bg-white p-5 shadow-[0_10px_30px_-18px_rgba(15,23,42,0.45)]">
+    <div className="h-full w-100 rounded-2xl border border-gray-200/80 bg-white p-5 shadow-[0_10px_30px_-18px_rgba(15,23,42,0.45)]">
       <div className="flex h-full flex-col gap-3">
         <div className="flex items-center justify-between">
-          <Skeleton className="h-6 w-[120px] rounded-full" />
-          <Skeleton className="h-6 w-[80px] rounded-full" />
+          <Skeleton className="h-6 w-30 rounded-full" />
+          <Skeleton className="h-6 w-20 rounded-full" />
         </div>
-        <Skeleton className="h-6 w-[220px]" />
-        <Skeleton className="h-4 w-[260px]" />
-        <Skeleton className="h-4 w-[240px]" />
+        <Skeleton className="h-6 w-56" />
+        <Skeleton className="h-4 w-64" />
+        <Skeleton className="h-4 w-60" />
 
         <div className="mt-4 flex flex-row justify-between">
-          <Skeleton className="h-4 w-[120px]" />
-          <Skeleton className="h-4 w-[80px]" />
+          <Skeleton className="h-4 w-30" />
+          <Skeleton className="h-4 w-20" />
         </div>
 
         <Skeleton className="mt-3 h-10 w-full" />

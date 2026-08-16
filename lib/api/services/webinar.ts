@@ -3,11 +3,13 @@ import { AUTH_STORAGE_KEYS } from '@/lib/constants/auth'
 import { AxiosItemResponse, AxiosListResponse, HTTP_METHOD, ResourceMethods } from '@/types/api'
 
 import { ClientFetchApi } from '../client-fetch'
+import { PaginateDto } from '../dtos/paginate'
 import { Models } from '../models'
 import { clientResource, generateURL } from '../resource'
 
 const webinarPath = `/v1/webinars`
 const webinarPrivatePlanPath = `/v1/webinar-private-plans`
+const webinarLogAttendancePath = `/v1/webinar-log-attendances`
 
 const methods = [HTTP_METHOD.GET, HTTP_METHOD.POST, HTTP_METHOD.PUT, HTTP_METHOD.DELETE]
 
@@ -46,5 +48,21 @@ const webinarPrivatePlanResources = (): WebinarPrivatePlanResource => {
   }
 }
 
+// Webinar Log Attendance Resources
+type WebinarLogAttendanceResource = ResourceMethods<Models.WebinarLogAttendance> & {
+  me: (params: PaginateDto) => Promise<AxiosListResponse<Models.WebinarLogAttendance>>
+}
+
+const webinarLogAttendanceResources = (): WebinarLogAttendanceResource => {
+  return {
+    ...clientResource(webinarLogAttendancePath, methods),
+    me: (params) => {
+      const url = generateURL([webinarLogAttendancePath, 'me'])
+      return api.get(url, { params })
+    },
+  }
+}
+
 export const webinarService = webinarResources()
 export const webinarPrivatePlanService = webinarPrivatePlanResources()
+export const webinarLogAttendanceService = webinarLogAttendanceResources()

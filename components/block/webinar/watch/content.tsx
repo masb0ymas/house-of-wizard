@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container'
 import { Separator } from '@/components/ui/separator'
 import { queries } from '@/lib/api/queries'
+import { AuthSession } from '@/types/auth'
 
 import YoutubePlyr from '../../common/plyr'
 import SimpleEmpty from '../../common/simple-empty'
@@ -17,9 +18,10 @@ import { WebinarCard, WebinarCardSkeleton } from '../webinar-card'
 
 interface WebinarWatchContentProps {
   slug: string
+  auth?: AuthSession
 }
 
-export default function WebinarWatchContent({ slug }: WebinarWatchContentProps) {
+export default function WebinarWatchContent({ slug, auth }: WebinarWatchContentProps) {
   const router = useRouter()
 
   const queryWebinar = useQuery(queries.webinar.main.slug(slug))
@@ -32,6 +34,13 @@ export default function WebinarWatchContent({ slug }: WebinarWatchContentProps) 
     }
     return []
   }, [queryListWebinars.data, slug])
+
+  const isAuth = useMemo(() => {
+    if (auth?.user) {
+      return true
+    }
+    return false
+  }, [auth])
 
   const renderContent = () => {
     if (queryWebinar.isLoading || queryWebinar.isFetching) {
@@ -86,6 +95,7 @@ export default function WebinarWatchContent({ slug }: WebinarWatchContentProps) 
           date={webinar.start_date ? new Date(webinar.start_date) : undefined}
           isLive={false}
           isRecording={Boolean(webinar.recording_url)}
+          isAuth={isAuth}
         />
       ))
     }

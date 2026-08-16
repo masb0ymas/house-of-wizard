@@ -8,10 +8,15 @@ import { Button } from '@/components/ui/button'
 import { Input, InputWrapper } from '@/components/ui/input'
 import { usePaginationQuery } from '@/hooks/use-pagination-query'
 import { queries } from '@/lib/api/queries'
+import { AuthSession } from '@/types/auth'
 
 import { WebinarCard, WebinarCardSkeleton } from './webinar-card'
 
-export default function WebinarContent() {
+interface WebinarContentProps {
+  auth?: AuthSession
+}
+
+export default function WebinarContent({ auth }: WebinarContentProps) {
   const { offset, limit } = usePaginationQuery()
 
   const {
@@ -28,6 +33,13 @@ export default function WebinarContent() {
 
     return []
   }, [webinarResponse])
+
+  const isAuth = useMemo(() => {
+    if (auth?.user) {
+      return true
+    }
+    return false
+  }, [auth])
 
   const renderContent = () => {
     if (loading) {
@@ -46,6 +58,7 @@ export default function WebinarContent() {
           date={webinar.start_date ? new Date(webinar.start_date) : undefined}
           isLive={false}
           isRecording={Boolean(webinar.recording_url)}
+          isAuth={isAuth}
         />
       ))
     }

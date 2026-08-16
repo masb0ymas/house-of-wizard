@@ -2,18 +2,12 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+import { Field, FieldDescription, FieldGroup, FieldSeparator } from '@/components/ui/field'
 import { ASSETS } from '@/lib/constants/assets'
 import { cn } from '@/lib/utils'
 
 import { Icons } from '../common/icons'
+import SignInEmailForm from './email-form'
 
 interface LoginFormProps extends React.ComponentProps<'div'> {
   title: string
@@ -24,33 +18,14 @@ export default function LoginForm({ title, className, ...props }: LoginFormProps
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className="overflow-hidden rounded-lg p-0 shadow-none">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <div className="flex flex-col gap-6 p-6 md:p-8">
+            <SignInEmailForm title={title} />
+
+            <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+              Or continue with
+            </FieldSeparator>
+
             <FieldGroup>
-              <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="font-serif text-2xl font-bold">{title}</h1>
-                <p className="text-muted-foreground text-balance">Login to your account</p>
-              </div>
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input id="email" type="email" placeholder="m@example.com" required />
-              </Field>
-              <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <a href="#" className="ml-auto text-sm underline-offset-2 hover:underline">
-                    Forgot your password?
-                  </a>
-                </div>
-                <Input id="password" type="password" required />
-              </Field>
-              <Field>
-                <Button type="submit">Login</Button>
-              </Field>
-
-              <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or continue with
-              </FieldSeparator>
-
               <Field className="grid grid-cols-3 gap-4">
                 <Button variant="outline" type="button">
                   <Icons.github className="size-4.5" />
@@ -69,7 +44,8 @@ export default function LoginForm({ title, className, ...props }: LoginFormProps
                 Don&apos;t have an account? <a href="#">Sign up</a>
               </FieldDescription>
             </FieldGroup>
-          </form>
+          </div>
+
           <div className="bg-muted relative hidden md:block">
             <img
               src={ASSETS.LOGIN_IMAGE}
