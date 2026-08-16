@@ -1,6 +1,6 @@
 'use client'
 
-import { IconArrowRight, IconLock, IconLogin, IconUsers } from '@tabler/icons-react'
+import { IconArrowRight, IconLock, IconUsers } from '@tabler/icons-react'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -62,7 +62,7 @@ export function WebinarCard({
         <Button className="h-10 w-full rounded-lg" variant="primary" asChild>
           <Link href="/sign-in">
             <span className="font-serif font-semibold tracking-wider">Sign In</span>
-            <IconLogin className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </Button>
       )

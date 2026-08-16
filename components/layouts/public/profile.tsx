@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 import { AuthSession } from '@/types/auth'
 
 interface ProfileProps {
-  auth?: AuthSession
+  auth?: AuthSession | null
   isMobile?: boolean
 }
 

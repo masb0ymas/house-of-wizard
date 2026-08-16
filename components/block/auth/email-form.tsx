@@ -51,7 +51,7 @@ export default function SignInEmailForm({ title }: SignInEmailFormProps) {
       }}
     >
       <FieldGroup>
-        <div className="flex flex-col items-center gap-2 text-center">
+        <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="font-serif text-2xl font-bold">{title}</h1>
           <p className="text-muted-foreground text-balance">Login to your account</p>
         </div>
@@ -69,7 +69,7 @@ export default function SignInEmailForm({ title }: SignInEmailFormProps) {
         />
 
         <Field>
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading} className="h-10 w-full text-base">
             {loading ? 'Signing in...' : 'Login'}
           </Button>
         </Field>

@@ -13,7 +13,7 @@ import { AuthSession } from '@/types/auth'
 import { WebinarCard, WebinarCardSkeleton } from './webinar-card'
 
 interface WebinarContentProps {
-  auth?: AuthSession
+  auth?: AuthSession | null
 }
 
 export default function WebinarContent({ auth }: WebinarContentProps) {

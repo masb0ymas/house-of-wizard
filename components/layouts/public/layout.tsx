@@ -6,7 +6,7 @@ import PublicFooter from './footer'
 import PublicHeader from './header'
 
 interface PublicLayoutProps extends PropsWithChildren {
-  auth?: AuthSession
+  auth?: AuthSession | null
 }
 
 export default function PublicLayout({ children, auth }: PublicLayoutProps) {
