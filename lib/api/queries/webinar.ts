@@ -38,7 +38,7 @@ const listWebinarLogAttendances = (params?: PaginateDto) =>
   queryOptions({
     queryKey: ['webinar-log-attendances', params],
     queryFn: async () => {
-      const res = await services.webinar.logAttendance.list({
+      const res = await services.webinar.logAttendance.me({
         offset: params?.offset,
         limit: params?.limit,
       })

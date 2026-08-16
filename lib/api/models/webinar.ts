@@ -57,7 +57,7 @@ export type WebinarLogAttendance = {
   updated_at: ISO8601DateString
   deleted_at: ISO8601DateString | null
   user_id: string
-  type: string
+  type: 'MINI_COURSE' | 'PRIVATE'
   attendance_at: ISO8601DateString
   webinar: Webinar | null
 }
