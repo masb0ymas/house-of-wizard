@@ -1,3 +1,5 @@
+'use client'
+
 import { cva, type VariantProps } from 'class-variance-authority'
 import { useMemo } from 'react'
 
@@ -228,5 +230,6 @@ export {
   FieldLegend,
   FieldSeparator,
   FieldSet,
-  FieldTitle,
+  FieldTitle
 }
+

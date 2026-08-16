@@ -5,11 +5,16 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import { ASSETS } from '@/lib/constants/assets'
+import { AuthSession } from '@/types/auth'
 
 import { NavMenu } from './menu'
 import Profile from './profile'
 
-export default function PublicHeader() {
+interface PublicHeaderProps {
+  auth?: AuthSession
+}
+
+export default function PublicHeader({ auth }: PublicHeaderProps) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -46,7 +51,7 @@ export default function PublicHeader() {
 
             {/* Desktop Right Section */}
             <div className="hidden items-center gap-4 md:flex">
-              <Profile />
+              <Profile auth={auth} />
             </div>
 
             {/* Mobile Menu Button */}
@@ -75,7 +80,7 @@ export default function PublicHeader() {
                 ))}
 
                 <div className="pt-2">
-                  <Profile isMobile />
+                  <Profile auth={auth} isMobile />
                 </div>
               </div>
             </div>

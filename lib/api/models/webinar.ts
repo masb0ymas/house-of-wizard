@@ -50,3 +50,14 @@ export type WebinarPrivatePlan = {
   is_active: boolean
   webinar_batch: WebinarBatchEntity | null
 }
+
+export type WebinarLogAttendance = {
+  id: string
+  created_at: ISO8601DateString
+  updated_at: ISO8601DateString
+  deleted_at: ISO8601DateString | null
+  user_id: string
+  type: string
+  attendance_at: ISO8601DateString
+  webinar: Webinar | null
+}

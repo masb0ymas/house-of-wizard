@@ -8,10 +8,8 @@ const listWebinars = (params?: PaginateDto) =>
     queryKey: ['webinars', params],
     queryFn: async () => {
       const res = await services.webinar.main.list({
-        data: {
-          offset: params?.offset,
-          limit: params?.limit,
-        },
+        offset: params?.offset,
+        limit: params?.limit,
       })
 
       return res.data
@@ -36,6 +34,19 @@ const getActiveWebinarPrivatePlan = () =>
     },
   })
 
+const listWebinarLogAttendances = (params?: PaginateDto) =>
+  queryOptions({
+    queryKey: ['webinar-log-attendances', params],
+    queryFn: async () => {
+      const res = await services.webinar.logAttendance.list({
+        offset: params?.offset,
+        limit: params?.limit,
+      })
+
+      return res.data
+    },
+  })
+
 export const webinarQueries = {
   list: listWebinars,
   slug: getWebinarBySlug,
@@ -43,4 +54,8 @@ export const webinarQueries = {
 
 export const webinarPrivatePlanQueries = {
   active: getActiveWebinarPrivatePlan,
+} as const
+
+export const webinarLogAttendanceQueries = {
+  list: listWebinarLogAttendances,
 } as const

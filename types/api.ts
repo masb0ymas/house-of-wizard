@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios'
 
+import { PaginateDto } from '@/lib/api/dtos/paginate'
+
 export enum HTTP_METHOD {
   GET,
   POST,
@@ -49,7 +51,7 @@ export type AxiosItemResponse<TData> = AxiosResponse<ApiItemResponse<TData>>
 export type AxiosDeleteResponse = AxiosResponse<ApiDeleteResponse>
 
 export type ResourceMethods<TData> = {
-  list: (params?: Record<string, unknown>) => Promise<AxiosListResponse<TData>>
+  list: (params?: PaginateDto) => Promise<AxiosListResponse<TData>>
   get: (id: string | number) => Promise<AxiosItemResponse<TData>>
   store: (data?: Record<string, unknown>) => Promise<AxiosItemResponse<TData>>
   edit: (id: string | number, data?: Record<string, unknown>) => Promise<AxiosItemResponse<TData>>
