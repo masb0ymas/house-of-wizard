@@ -6,6 +6,7 @@ import { Models } from '../../models'
 
 export type AuthResources = {
   signIn: (reqBody: SignInDto) => Promise<AxiosItemResponse<SignInResponse>>
+  signInWithGoogle: () => Promise<AxiosItemResponse<{ targetURL: string }>>
   profile: () => Promise<AxiosItemResponse<Models.User>>
   refresh: (reqBody: RefreshDto) => Promise<AxiosItemResponse<RefreshTokenResponse>>
   signOut: () => Promise<AxiosItemResponse<void>>

@@ -1,13 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Field, FieldDescription, FieldGroup, FieldSeparator } from '@/components/ui/field'
+import { FieldDescription, FieldGroup, FieldSeparator } from '@/components/ui/field'
 import { ASSETS } from '@/lib/constants/assets'
 import { cn } from '@/lib/utils'
 
-import { Icons } from '../common/icons'
 import SignInEmailForm from './email-form'
+import SignInWithGoogle from './google'
 
 interface LoginFormProps extends React.ComponentProps<'div'> {
   title: string
@@ -26,12 +27,7 @@ export default function LoginForm({ title, className, ...props }: LoginFormProps
             </FieldSeparator>
 
             <FieldGroup>
-              <Field className="w-full">
-                <Button variant="outline" type="button" className="w-full h-10 text-base">
-                  <Icons.googleColorful className="size-6" />
-                  <span>Login with Google</span>
-                </Button>
-              </Field>
+              <SignInWithGoogle />
               <FieldDescription className="text-center">
                 Don&apos;t have an account? <a href="#">Sign up</a>
               </FieldDescription>

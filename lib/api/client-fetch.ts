@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
 import { isEmpty } from 'lodash'
 
-import { authClient, getAccessToken } from '../auth/auth-client'
+import { getAccessToken } from '../auth/auth-client'
 import { clearAuthTokens } from '../auth/token-storage'
 import { AUTH_STORAGE_KEYS } from '../constants/auth'
 import { ms } from '../date'
@@ -52,10 +52,7 @@ function createAxios({ baseURL, storageKey }: CreateAxiosProps) {
       if (error.response?.status === 401) {
         if (storageKey === AUTH_STORAGE_KEYS.AUTH_STORAGE) {
           clearAuthTokens()
-          const res = await authClient.signOut()
-          if (res.data?.success) {
-            window.location.href = '/'
-          }
+          window.location.href = '/'
         }
         throw new Error('Unauthorized')
       }
