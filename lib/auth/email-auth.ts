@@ -33,3 +33,14 @@ export async function signInWithEmail({ email, password }: SignInWithEmailParams
     throwAxiosError(error as Error)
   }
 }
+
+export async function signInWithGoogle() {
+  try {
+    const res = await services.auth.signInWithGoogle()
+    const payload = res?.data?.data
+
+    return payload.targetURL
+  } catch (error) {
+    throwAxiosError(error as Error)
+  }
+}

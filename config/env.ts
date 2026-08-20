@@ -9,9 +9,6 @@ export const env = createEnv({
   server: {
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string(),
-
-    GOOGLE_CLIENT_ID: z.string().optional(),
-    GOOGLE_CLIENT_SECRET: z.string().optional(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -36,8 +33,5 @@ export const env = createEnv({
 
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
-
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   },
 })

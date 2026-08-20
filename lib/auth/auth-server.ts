@@ -15,14 +15,6 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  socialProviders: {
-    google: {
-      clientId: env.GOOGLE_CLIENT_ID!,
-      clientSecret: env.GOOGLE_CLIENT_SECRET!,
-      accessType: 'offline',
-      prompt: 'select_account consent',
-    },
-  },
   session: {
     expiresIn: ONE_MONTH, // 30 days in seconds
     updateAge: ONE_WEEK, // Refresh every 7 days

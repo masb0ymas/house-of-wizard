@@ -18,6 +18,10 @@ const resources = (): AuthResources => {
       const url = `${path}/sign-in`
       return api.post(url, reqBody)
     },
+    signInWithGoogle: () => {
+      const url = `${path}/google/redirect`
+      return api.get(url)
+    },
     profile: () => {
       const url = `${path}/me`
       return api.get(url)
