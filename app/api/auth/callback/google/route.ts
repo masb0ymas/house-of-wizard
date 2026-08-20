@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { setAuthTokens } from '@/lib/auth/token-storage'
 import { AUTH_STORAGE_KEYS } from '@/lib/constants/auth'
 
 const GoogleCallbackSchema = z.object({
@@ -18,8 +17,8 @@ const GoogleCallbackSchema = z.object({
 const ACCESS_TOKEN_MAX_AGE = 60 * 60
 const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 30
 
-function setCookieHeader(name: string, value: string, maxAge: number): string {
-  return `${name}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAge}; SameSite=Lax; HttpOnly`
+function cookieString(name: string, value: string, maxAge: number): string {
+  return `${name}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAge}; SameSite=Lax`
 }
 
 export async function GET(request: Request) {
@@ -36,29 +35,22 @@ export async function GET(request: Request) {
 
     const accessMaxAge = parsed.expires_in ?? ACCESS_TOKEN_MAX_AGE
 
-    const headers = new Headers()
-    headers.append('Location', '/webinar')
-    headers.append(
+    const response = new Response(null, { status: 302 })
+    response.headers.set('Location', '/webinar')
+    response.headers.append(
       'Set-Cookie',
-      setCookieHeader(AUTH_STORAGE_KEYS.ACCESS_TOKEN, parsed.access_token, accessMaxAge)
+      cookieString(AUTH_STORAGE_KEYS.ACCESS_TOKEN, parsed.access_token, accessMaxAge)
     )
-    headers.append(
+    response.headers.append(
       'Set-Cookie',
-      setCookieHeader(AUTH_STORAGE_KEYS.REFRESH_TOKEN, parsed.refresh_token, REFRESH_TOKEN_MAX_AGE)
+      cookieString(AUTH_STORAGE_KEYS.REFRESH_TOKEN, parsed.refresh_token, REFRESH_TOKEN_MAX_AGE)
     )
-    headers.append(
+    response.headers.append(
       'Set-Cookie',
-      setCookieHeader(AUTH_STORAGE_KEYS.ID_TOKEN, parsed.id_token, accessMaxAge)
+      cookieString(AUTH_STORAGE_KEYS.ID_TOKEN, parsed.id_token, accessMaxAge)
     )
 
-    setAuthTokens({
-      accessToken: parsed.access_token,
-      refreshToken: parsed.refresh_token,
-      idToken: parsed.id_token,
-      expiresIn: parsed.expires_in,
-    })
-
-    return new Response(null, { status: 302, headers })
+    return response
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(`Invalid callback data: ${error.message}`, { status: 400 })
