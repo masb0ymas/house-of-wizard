@@ -8,17 +8,18 @@ import { cn } from '@/lib/utils'
 
 export default function LearningPhaseSection() {
   return (
-    <section id="learning-phase" className="relative overflow-hidden py-20">
+    <section id="learning-phase" className="relative isolate overflow-hidden py-20 sm:py-24">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-60" />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
-          <h2 className="font-serif text-3xl font-bold tracking-wide text-foreground sm:text-4xl">
-            Choose Your Learning Phase
+        <div className="relative z-10 mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+          <p className="text-xs font-semibold tracking-[0.25em] text-gold uppercase">Find your path</p>
+          <h2 className="mt-3 font-serif text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            Choose your learning phase
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground sm:text-xl">
+          <p className="mt-3 text-base text-muted-foreground sm:text-lg">
             Choose the plan that&apos;s right for you.
           </p>
         </div>
-
         <div className="relative z-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:mx-auto lg:max-w-4xl">
           <LearningCard
             title="Early Bird"
@@ -33,23 +34,21 @@ export default function LearningPhaseSection() {
               { text: 'Certificate of completion' },
             ]}
           />
-
           <LearningCard
             title="Regular"
             description="For serious analysts ready to level up"
             disabled
             features={[
               { text: '24 weeks live training' },
-              { text: 'Personal mentorship ( 1:1 sessions )' },
+              { text: 'Personal mentorship (1:1 sessions)' },
               { text: 'Project portfolio' },
-              { text: 'Career support ( Partner )' },
+              { text: 'Career support (Partner)' },
               { text: 'Lifetime community access' },
               { text: 'Certificate of completion' },
             ]}
           />
         </div>
       </div>
-
       <GridPattern
         squares={[
           [4, 4],
@@ -96,32 +95,28 @@ function LearningCard({
   function renderButton() {
     if (disabled) {
       return (
-        <Button
-          className="h-11 w-full rounded-xl px-4 py-3 text-sm font-semibold transition-colors"
-          disabled={disabled}
-        >
+        <Button className="h-11 w-full rounded-xl px-4 py-3 text-sm font-semibold transition-colors" disabled>
           Coming Soon
         </Button>
       )
     }
-
     return (
-      <Link href="/webinar/batch" className="inline-flex w-full items-center justify-center">
-        <RainbowButton className="h-11 w-full gap-2 rounded-xl">
+      <RainbowButton className="h-11 w-full gap-2 rounded-xl" asChild>
+        <Link href="/webinar/batch">
           <span>Join Now</span>
           <IconArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-        </RainbowButton>
-      </Link>
+        </Link>
+      </RainbowButton>
     )
   }
 
   return (
     <div
       className={cn(
-        'relative z-10 flex h-full flex-col rounded-2xl border bg-card/80 p-[1px] backdrop-blur transition-all duration-300',
+        'group relative z-10 flex h-full flex-col rounded-2xl border p-[1px] backdrop-blur-sm transition-all duration-300',
         highlight
-          ? 'border-primary/40 shadow-[0_0_40px_-12px_var(--glow-a)]'
-          : 'bg-border/40 hover:shadow-lg'
+          ? 'border-primary/30 bg-card/90 shadow-lg shadow-primary/10 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/15'
+          : 'border-border/80 bg-card/70 hover:border-border hover:bg-card/90 hover:shadow-lg'
       )}
     >
       {highlight && (
@@ -130,21 +125,17 @@ function LearningCard({
           Enrollment Open
         </span>
       )}
-      <div className="flex grow flex-col rounded-[calc(1rem-1px)] p-8">
-        {/* Header */}
+      <div className="flex grow flex-col rounded-[calc(1rem-1px)] p-7 sm:p-8">
         <div className="mb-6">
-          <h3 className="mb-2 font-serif text-xl font-bold tracking-wide text-foreground">
-            {title}
-          </h3>
+          <h3 className="mb-2 font-serif text-xl font-bold tracking-wide text-foreground">{title}</h3>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
-
-        {/* Features */}
         <div className="grow">
           <ul className="space-y-4">
-            {features.map((feature, index) => (
-              <li key={index} className="flex items-start gap-3">
+            {features.map((feature) => (
+              <li key={feature.text} className="flex items-start gap-3">
                 <IconCheck
+                  aria-hidden="true"
                   className={cn(
                     'mt-0.5 h-5 w-5 shrink-0',
                     highlight ? 'text-gold' : 'text-muted-foreground/60'
@@ -155,8 +146,6 @@ function LearningCard({
             ))}
           </ul>
         </div>
-
-        {/* CTA Button */}
         <div className="mt-8">{renderButton()}</div>
       </div>
     </div>

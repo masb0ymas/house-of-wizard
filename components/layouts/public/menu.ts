@@ -13,15 +13,15 @@ export const NavMenu = [
   },
   {
     name: 'Courses',
-    link: '/',
+    link: '#',
   },
   {
     name: 'Resources',
-    link: '/',
+    link: '#',
   },
   {
     name: 'Community',
-    link: '/',
+    link: '#',
   },
 ]
 
