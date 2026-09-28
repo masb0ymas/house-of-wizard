@@ -32,10 +32,15 @@ function ReviewCard({ name, username, quote, image }: ReviewCardProps) {
 export default function TestimonySection() {
   return (
     <section id="testimonials" className="relative isolate overflow-hidden py-20 sm:py-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-70" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-70"
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center sm:mb-14">
-          <p className="text-xs font-semibold tracking-[0.25em] text-gold uppercase">Student voices</p>
+          <p className="text-xs font-semibold tracking-[0.25em] text-gold uppercase">
+            Student voices
+          </p>
           <h2 className="mt-3 font-serif text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             What our students say
           </h2>

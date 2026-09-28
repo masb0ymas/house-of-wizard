@@ -3,10 +3,15 @@ import { FEATURES } from '@/data/mock-site'
 export default function AboutSection() {
   return (
     <section id="about" className="relative isolate overflow-hidden py-20 sm:py-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-55" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-55"
+      />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-16">
-          <p className="text-xs font-semibold tracking-[0.3em] text-gold uppercase">House of Wizard</p>
+          <p className="text-xs font-semibold tracking-[0.3em] text-gold uppercase">
+            House of Wizard
+          </p>
           <h2 className="mt-4 font-serif text-3xl leading-tight font-semibold tracking-tight text-foreground sm:text-5xl">
             Learn to see what the chain is{' '}
             <span className="text-gradient-brand">really saying.</span>
@@ -38,7 +43,9 @@ function FeatureCard({ feature }: { feature: (typeof FEATURES)[0] }) {
           {feature.name}
         </span>
       </div>
-      <h3 className="mt-6 font-serif text-xl font-semibold tracking-wide text-foreground">{feature.name}</h3>
+      <h3 className="mt-6 font-serif text-xl font-semibold tracking-wide text-foreground">
+        {feature.name}
+      </h3>
       <p className="mt-3 text-sm leading-6 text-muted-foreground">{feature.description}</p>
     </div>
   )

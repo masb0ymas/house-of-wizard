@@ -7,7 +7,10 @@ import { RainbowButton } from '@/components/ui/rainbow-button'
 export default function CallToAction() {
   return (
     <section className="relative isolate overflow-hidden py-16 sm:py-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-section-wash" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-section-wash"
+      />
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6">

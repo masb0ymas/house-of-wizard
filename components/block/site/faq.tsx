@@ -9,10 +9,15 @@ import { FAQS } from '@/data/mock-site'
 export default function FAQSection() {
   return (
     <section id="faq" className="relative isolate overflow-hidden py-20 sm:py-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-70" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-70"
+      />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 text-center">
-          <p className="text-xs font-semibold tracking-[0.25em] text-gold uppercase">Good to know</p>
+          <p className="text-xs font-semibold tracking-[0.25em] text-gold uppercase">
+            Good to know
+          </p>
           <h2 className="mt-3 font-serif text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Frequently asked questions
           </h2>

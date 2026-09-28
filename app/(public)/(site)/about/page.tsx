@@ -24,13 +24,7 @@ export const metadata: Metadata = {
   title: 'About | House of Wizard',
 }
 
-function IconChip({
-  icon: Icon,
-  tone,
-}: {
-  icon: typeof IconTarget
-  tone: 'gold' | 'primary'
-}) {
+function IconChip({ icon: Icon, tone }: { icon: typeof IconTarget; tone: 'gold' | 'primary' }) {
   return (
     <span
       aria-hidden="true"
@@ -209,8 +203,8 @@ export default function AboutPage() {
                 className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent"
               />
               <p className="text-sm leading-6 text-muted-foreground">
-                Ready to turn insight into impact? Join House of Wizard and shape the future of
-                web3 analytics with us.
+                Ready to turn insight into impact? Join House of Wizard and shape the future of web3
+                analytics with us.
               </p>
             </div>
           </aside>

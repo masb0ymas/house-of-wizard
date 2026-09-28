@@ -9,10 +9,15 @@ import { cn } from '@/lib/utils'
 export default function LearningPhaseSection() {
   return (
     <section id="learning-phase" className="relative isolate overflow-hidden py-20 sm:py-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-60" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-section-wash opacity-60"
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative z-10 mx-auto mb-12 max-w-2xl text-center sm:mb-16">
-          <p className="text-xs font-semibold tracking-[0.25em] text-gold uppercase">Find your path</p>
+          <p className="text-xs font-semibold tracking-[0.25em] text-gold uppercase">
+            Find your path
+          </p>
           <h2 className="mt-3 font-serif text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Choose your learning phase
           </h2>
@@ -95,7 +100,10 @@ function LearningCard({
   function renderButton() {
     if (disabled) {
       return (
-        <Button className="h-11 w-full rounded-xl px-4 py-3 text-sm font-semibold transition-colors" disabled>
+        <Button
+          className="h-11 w-full rounded-xl px-4 py-3 text-sm font-semibold transition-colors"
+          disabled
+        >
           Coming Soon
         </Button>
       )
@@ -127,7 +135,9 @@ function LearningCard({
       )}
       <div className="flex grow flex-col rounded-[calc(1rem-1px)] p-7 sm:p-8">
         <div className="mb-6">
-          <h3 className="mb-2 font-serif text-xl font-bold tracking-wide text-foreground">{title}</h3>
+          <h3 className="mb-2 font-serif text-xl font-bold tracking-wide text-foreground">
+            {title}
+          </h3>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
         <div className="grow">
