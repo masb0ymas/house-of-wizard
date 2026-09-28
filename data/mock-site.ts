@@ -1,7 +1,10 @@
 import {
   IconBook,
+  IconBrandTelegram,
   IconCalendar,
+  IconCalendarTime,
   IconClock,
+  IconMail,
   IconSparkles,
   IconTrophy,
   IconUsers,
@@ -86,21 +89,25 @@ export const DIRECT_CONTACTS = [
     name: 'Email',
     value: 'info@house-of-wizard.xyz',
     href: 'mailto:info@house-of-wizard.xyz',
+    icon: IconMail,
   },
   {
     name: 'Telegram',
     value: '@HouseOfWizard',
     href: 'https://t.me/HouseofWizard',
+    icon: IconBrandTelegram,
   },
   {
     name: 'Community office hours',
     value: 'Wednesdays, 19:00-21:00 GMT+7',
     href: '#',
+    icon: IconCalendarTime,
   },
   {
     name: 'Response time',
     value: 'Within 24 hours on business days',
     href: '#',
+    icon: IconClock,
   },
 ]
 
