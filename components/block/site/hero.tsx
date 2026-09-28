@@ -91,22 +91,22 @@ export default function HeroSection() {
               aria-label="Radar chart comparing this week's on-chain activity against last week across DEX volume, active wallets, bridge flows, protocol fees, and TVL"
               className="relative"
             >
-              <div className="flex items-center justify-between pb-1">
+              <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:pb-2">
                 <span className="text-[10px] font-medium tracking-[0.18em] text-white/55 uppercase">
                   On-chain activity · Ethereum
                 </span>
-                <div className="flex items-center gap-4 text-[10px] text-white/70">
+                <div className="flex items-center gap-4 text-[10px] whitespace-nowrap text-white/70">
                   <span className="inline-flex items-center gap-1.5">
                     <span
                       aria-hidden="true"
-                      className="h-2 w-2 rounded-[2px] bg-[oklch(0.702_0.183_293.541)]"
+                      className="h-2 w-2 shrink-0 rounded-[2px] bg-[oklch(0.702_0.183_293.541)]"
                     />
                     This week
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <span
                       aria-hidden="true"
-                      className="h-2 w-2 rounded-[2px] bg-[oklch(0.828_0.189_84.429)]"
+                      className="h-2 w-2 shrink-0 rounded-[2px] bg-[oklch(0.828_0.189_84.429)]"
                     />
                     Last week
                   </span>
@@ -115,23 +115,23 @@ export default function HeroSection() {
               <HeroRadarChart />
             </div>
 
-            <div className="relative mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="relative mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
               {marketSignals.map(({ label, value }) => (
                 <div
                   key={label}
-                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 backdrop-blur-sm"
+                  className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-2.5 backdrop-blur-sm sm:px-3"
                 >
-                  <p className="text-[8px] tracking-[0.12em] text-white/50 uppercase sm:text-[9px]">
+                  <p className="text-[8px] tracking-[0.1em] whitespace-nowrap text-white/50 uppercase sm:text-[9px]">
                     {label}
                   </p>
-                  <p className="mt-1 text-xs font-semibold tabular-nums text-white sm:text-sm">
+                  <p className="mt-1.5 text-xs font-semibold tabular-nums text-white sm:text-sm">
                     {value}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="relative grid grid-cols-3 border-t border-white/10 pt-4 text-center">
+            <div className="relative mt-5 grid grid-cols-3 border-t border-white/10 pt-4 text-center sm:pt-5">
               {['Data', 'DeFi', 'Contracts'].map((label, index) => (
                 <div key={label} className={index > 0 ? 'border-l border-white/10' : undefined}>
                   <p className="text-[10px] font-medium tracking-[0.18em] text-white/75 uppercase">
